@@ -1,0 +1,12 @@
+
+<div class="container">
+  <ag-grid-angular
+  style="width:100%; height: 600px;"
+      class="ag-theme-material text-info"
+      [rowData]="bankStatementBranchFull$|async"
+      [columnDefs]="columnDefs"
+      (gridReady)="onGridReady($event)"
+      (cellClicked)="exportExcel($event)"
+      >
+ </ag-grid-angular>
+</div>

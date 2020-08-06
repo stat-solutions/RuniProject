@@ -168,7 +168,7 @@ exports. reduceSMSs=function(){
 exports. getTheUserRoles=function(){
   return new Promise(function (resolve,next) {
     var sql = "CALL getTheUserRoles()";
-    // console.log(sql);
+    // console.log(dbconnection);
     dbconnection.query(sql, null, function( error, results) {
     if(error){    
         return next(error);
@@ -185,7 +185,7 @@ exports. getTheUserRoles=function(){
 exports. getTheBrachesDb=function(){
   return new Promise(function (resolve,next) {
     var sql = "CALL getTheBranchesNow()";
-    // console.log(sql);
+    // console.log(dbconnection);
     dbconnection.query(sql, null, function( error, results) {
     if(error){    
         return next(error);

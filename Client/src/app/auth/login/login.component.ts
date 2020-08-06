@@ -3,17 +3,28 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
-import { CustomValidator } from 'src/app/validators/custom-validator';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { AlertService } from 'ngx-alerts';
 import { LayoutManageService } from 'src/app/services/layout-manage.service';
 import { UserRole } from 'src/app/models/user-role';
+import {
+  fromEvent,
+  from,
+  interval,
+  of,
+  combineLatest,
+  generate,
+  merge,
+  race,
+  concat,
+  forkJoin,
+} from 'rxjs';
+import { withLatestFrom, take, combineAll, map, tap } from 'rxjs/operators';
 // import { BootstrapAlertService, BootstrapAlert } from 'ngx-bootstrap-alert';
-import { Observable } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   registered = false;
@@ -23,9 +34,10 @@ export class LoginComponent implements OnInit {
   userForm: FormGroup;
   loginStatus: string;
   value: string;
+  fieldType: boolean;
   stationBalanceExits: boolean;
   mySubscription: any;
-  userRoleInfo1$: Observable< UserRole[]>;
+  userRoleInfo1$: UserRole[];
   serviceErrors: any = {};
   // initialSetUpData: SetupData[];
 
@@ -40,25 +52,20 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.createFormGroup();
-    this.  userRoleInfo1$ = this.authService.getUserRoles();
+    this.userRoleData1();
   }
-
-
-
 
   createFormGroup() {
     return new FormGroup({
       email: new FormControl(
         '',
-        Validators.compose([
-          Validators.required,
-          Validators.email        ])
+        Validators.compose([Validators.required, Validators.email])
       ),
 
       user_role11: new FormControl(
         '',
         Validators.compose([
-          Validators.required
+          Validators.required,
           // CustomValidator.
           //   patternValidator(
           //     /^(([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9]))$/, { hasNumber: true })
@@ -71,9 +78,9 @@ export class LoginComponent implements OnInit {
         Validators.compose([
           // 1. Password Field is Required
 
-          Validators.required
+          Validators.required,
         ])
-      )
+      ),
     });
   }
 
@@ -85,7 +92,30 @@ export class LoginComponent implements OnInit {
     return this.userForm.controls;
   }
 
+  userRoleData1() {
+    this.authService.getUserRoles().subscribe(
+      (data) => {
+        this.userForm.controls.user_role11.reset();
+        this.userRoleInfo1$ = data;
+        // this.alertService.info({
+        // html: '<b> User Roles Updated</b>' + '<br/>'
+        // });
+      },
 
+      (error: string) => {
+        this.errored = true;
+        this.serviceErrors = error;
+        this.alertService.danger({
+          html: '<b>' + this.serviceErrors + '</b>' + '<br/>',
+        });
+      }
+    );
+  }
+
+  //toggle visibility of password field
+  toggleFieldType() {
+    this.fieldType = !this.fieldType;
+  }
 
   login() {
     this.submitted = true;
@@ -99,8 +129,7 @@ export class LoginComponent implements OnInit {
         .loginNormalUser(this.userForm)
 
         .subscribe(
-          (info: boolean) =>
-           {
+          (info: boolean) => {
             if (info) {
               this.posted = true;
 
@@ -110,7 +139,7 @@ export class LoginComponent implements OnInit {
               ) {
                 this.alertService.danger({
                   html:
-                    '<strong>This account Requires Approval first, please contact system admin!!</strong>'
+                    '<strong>This account Requires Approval first, please contact system admin!!</strong>',
                 });
                 this.spinner.hide();
                 return;
@@ -118,27 +147,26 @@ export class LoginComponent implements OnInit {
                 jwt_decode(this.authService.getJwtToken()).user_status ===
                 'Approved'
               ) {
-                // console.log( jwt_decode(this.authService.getJwtToken()).user_role);
                 if (
                   jwt_decode(this.authService.getJwtToken()).user_role === 1000
                 ) {
                   this.alertService.info({
-                    html: '<strong>Signed In successfully!!</strong>'
+                    html: '<strong>Signed In infofully!!</strong>',
                   });
                   // if (!this.stationBalanceExits) {
 
                   // } else {
                   this.alertService.info({
                     html:
-                      '<strong>Signed In successfully into branch user module!!</strong>'
+                      '<strong>Signed In infofully into pump user module!!</strong>',
                   });
                   this.spinner.hide();
                   setTimeout(() => {
                     this.spinner.hide();
 
-                    // this.layoutService.emitChangePumpUser(true);
-                    // this.layoutService.emitLoginLogout(true);
-                    this.router.navigate(['dashboardbranch/landingpage']);
+                    this.layoutService.emitChangePumpUser(true);
+                    this.layoutService.emitLoginLogout(true);
+                    this.router.navigate(['dashboardpump/shiftmanagement']);
                     // location.reload();
                   }, 1000);
 
@@ -148,9 +176,9 @@ export class LoginComponent implements OnInit {
                 ) {
                   this.spinner.hide();
                   setTimeout(() => {
-                    // this.layoutService.emitChangeAdminUser(true);
-                    // this.layoutService.emitLoginLogout(true);
-                    this.router.navigate(['dashboardadmin/landingpage']);
+                    this.layoutService.emitChangeAdminUser(true);
+                    this.layoutService.emitLoginLogout(true);
+                    this.router.navigate(['dashboarduser/loans']);
                   }, 1000);
                 } else if (
                   jwt_decode(this.authService.getJwtToken()).user_role === 1002
@@ -158,12 +186,13 @@ export class LoginComponent implements OnInit {
                   this.spinner.hide();
                   setTimeout(() => {
                     this.router.navigate([
-                      'superuserdashboard/thesuperuserdashboard'
+                      'superuserdashboard/thesuperuserdashboard',
                     ]);
                   }, 1000);
                 } else {
                   this.alertService.danger({
-                    html: '<strong>User not registered for this role!!</strong>'
+                    html:
+                      '<strong>User not registered for this role!!</strong>',
                   });
                   this.spinner.hide();
                 }
@@ -173,7 +202,7 @@ export class LoginComponent implements OnInit {
               ) {
                 this.alertService.danger({
                   html:
-                    '<strong>This account has been deactivated!!, please contact system admin!!</strong>'
+                    '<strong>This account has been deactivated!!, please contact system admin!!</strong>',
                 });
                 this.spinner.hide();
                 return;
@@ -190,7 +219,7 @@ export class LoginComponent implements OnInit {
             this.loginStatus = error;
             // this.alertService.danger(this.loginStatus);
             this.alertService.danger({
-              html: '<b>' + this.loginStatus + '</b>' + '<br/>'
+              html: '<b>' + this.loginStatus + '</b>' + '<br/>',
             });
             // this.alertService.warning({html: '<b>Signed In infofully</b>'});
             if (
@@ -201,13 +230,8 @@ export class LoginComponent implements OnInit {
               }, 1000);
             }
             this.spinner.hide();
-
           }
         );
     }
   }
-
-
-
 }
-

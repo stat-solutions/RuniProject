@@ -37,7 +37,7 @@ router.use(bodyParser.json());
 
 
 router.get('/getUserRoles', function(req, res,next) {
-   
+  //  console.log("ddddddddddddddddddddddddddddddddddddddd");
   authDbService.getTheUserRoles().then( function(results) {
     res.setHeader('Content-Type', 'application/json');
     res.json(results);
@@ -50,7 +50,7 @@ router.get('/getUserRoles', function(req, res,next) {
   });
 
   router.get('/getTheBranches', function(req, res,next) {
-   
+    // console.log("ddddddddddddddddddddddddddddddddddddddd");
     authDbService.getTheBrachesDb().then( function(results) {
       res.setHeader('Content-Type', 'application/json');
       res.json(results);

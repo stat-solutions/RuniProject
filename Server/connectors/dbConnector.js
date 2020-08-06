@@ -2,7 +2,7 @@ var mysql = require('mysql');
 
 // connect to the db
 dbConnectionInfo = {
-  host: "localhost",
+  host: "94.176.238.72",
   port: "3306",
   user: "root",
   password: "PRINCE?;=2020",
@@ -27,10 +27,11 @@ dbConnectionInfo = {
 */
 
 //create mysql connection pool
+// console.log(dbConnectionInfo);
 var dbconnection = mysql.createPool(
   dbConnectionInfo
 );
-
+// console.log(dbConnectionInfo);
 // Attempt to catch disconnects 
 dbconnection.on('connection', function (connection) {
   console.log('DB Connection established');

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('passport');
-var serviceU=require('../services/db_services/pumpUserDashboardService');
+var serviceU=require('../services/db_services/branchUserDashboardService');
 var collections=require('../connectors/momoCollectionsConnector');
 const  jwt  =  require('jsonwebtoken');
 var request = require('request');
@@ -228,12 +228,13 @@ function verifyTokens(req,res,next){
               ).catch(next);
               });
 
-              router.post('/postTheTxn', function(req, res,next) {
-                serviceU.postTheTxnNow(req.body).then( function(results) {
-                  res.status(200).json(results);
-                }
-                ).catch(next);
-                });
+              // router.post('/postTheTxn', function(req, res,next) {
+              //   serviceU.postTheTxnNow(req.body).then( function(results) {
+              //     res.status(200).json(results);
+              //   }
+              //   ).catch(next);
+              //   });
+
               router.post('/loanRepayNow', function(req, res,next) {
                 serviceU.repayLoanNow(req.body).then( function(results) {
                   res.status(200).json(results);

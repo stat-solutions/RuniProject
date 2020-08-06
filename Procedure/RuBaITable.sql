@@ -150,13 +150,12 @@ DEFAULT CHARACTER SET = utf8;
 -- ---------------------------------------------------
 -- Table `common_bio_data`
 -- -----------------------------------------------------
-
+DROP TABLE IF EXISTS  `common_bio_data`;
 CREATE TABLE IF NOT EXISTS `common_bio_data`(
   
  `common_bio_data_id` INT(11) NOT NULL AUTO_INCREMENT,
 `full_name` VARCHAR(100) NULL,
-`sex` VARCHAR(45) NULL DEFAULT 'Male',
-`date_of_birth` VARCHAR(45) NULL DEFAULT '1983-10-04',
+`mobile_contact` VARCHAR(60) NULL DEFAULT '0782231039',
 `fk_users_id_common_bio_data` INT(11) NULL,
    `created_at` TIMESTAMP,
   `update_at` TIMESTAMP,
@@ -188,17 +187,24 @@ DROP TABLE IF EXISTS `trn_general_ledger`;
 
 CREATE TABLE IF NOT EXISTS `trn_general_ledger` (
   `trn_general_ledger_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `trn_date` TIMESTAMP NULL DEFAULT NULL,
-  `trn_type` VARCHAR(100) NULL DEFAULT NULL,
+  `trn_date` DATE NULL DEFAULT NULL,
+  `trn_narration` VARCHAR(500) NULL DEFAULT NULL,
   `trn_debit` DOUBLE NULL DEFAULT NULL,
   `trn_credit` DOUBLE NULL DEFAULT NULL,
    `fk_branch_id_trn_general_ledger` INT(11) NULL DEFAULT NULL,
+    `fk_account_types_id_trn_general_ledger` INT(11) NULL DEFAULT NULL,
   `fk_user_id_posted_by_trn_general_ledger_id` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`trn_general_ledger_id`),
 
   CONSTRAINT `fk_branch_id_trn_general_ledger`
   FOREIGN KEY (`fk_branch_id_trn_general_ledger`)
   REFERENCES `branch`(`branch_id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION,
+  
+   CONSTRAINT `fk_account_types_id_trn_general_ledger`
+  FOREIGN KEY (`fk_account_types_id_trn_general_ledger`)
+  REFERENCES `account_types`(`account_types_id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION,
 
@@ -212,9 +218,12 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 4000
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `fk_user_id_posted_by_trn_general_ledger_id_indx` ON `trn_general_ledger`(`fk_user_id_posted_by_trn_general_ledger_id` ASC);
+CREATE INDEX `fk_branch_id_trn_general_ledger_indx` ON `trn_general_ledger`(`fk_branch_id_trn_general_ledger` ASC);
 
-CREATE INDEX `fk_user_id_belongs_to_trn_general_ledger_id_indx` ON `trn_general_ledger`(`fk_user_id_belongs_to_trn_general_ledger_id` ASC);
+CREATE INDEX `fk_account_types_id_trn_general_ledger_indx` ON `trn_general_ledger`(`fk_account_types_id_trn_general_ledger` ASC);
+
+
+CREATE INDEX `fk_user_id_posted_by_trn_general_ledger_id_indx` ON `trn_general_ledger`(`fk_user_id_posted_by_trn_general_ledger_id` ASC);
 
 
 
@@ -224,14 +233,22 @@ CREATE INDEX `fk_user_id_belongs_to_trn_general_ledger_id_indx` ON `trn_general_
 DROP TABLE IF EXISTS `balance_per_day`;
 CREATE TABLE IF NOT EXISTS `balance_per_day` (
   `balance_per_day_id` INT(11) NOT NULL AUTO_INCREMENT,
+   `trn_date` DATE,
   `the_balance` DOUBLE NULL,
   `fk_branch_id_balance_per_day` INT NULL,
-  `trn_date` TIMESTAMP,
+  `fk_account_types_id_balance_per_day` INT NULL,
+ 
   PRIMARY KEY (`balance_per_day_id`),
   
   CONSTRAINT `fk_branch_id_balance_per_day`
   FOREIGN KEY (`fk_branch_id_balance_per_day`)
   REFERENCES `branch`(`branch_id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION,
+  
+    CONSTRAINT `fk_account_types_id_balance_per_day`
+  FOREIGN KEY (`fk_account_types_id_balance_per_day`)
+  REFERENCES `account_types`(`account_types_id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION
     
@@ -240,9 +257,42 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 4750
 DEFAULT CHARACTER SET = utf8;
 
--- CREATE INDEX `the_balance_indx` ON `balance_per_day` (`the_balance` ASC) VISIBLE;
+ CREATE INDEX `fk_branch_id_balance_per_day_indx` ON `balance_per_day` (`fk_branch_id_balance_per_day` ASC) VISIBLE;
 
--- CREATE INDEX `fk_branch_id_balance_per_day_indx` ON `balance_per_day` (`fk_branch_id_balance_per_day` ASC) VISIBLE;
+ CREATE INDEX `fk_account_types_id_balance_per_day_indx` ON `balance_per_day` (`fk_account_types_id_balance_per_day` ASC) VISIBLE;
+
+
+
+
+
+
+-- -----------------------------------------------------
+-- Table `balance_per_day_total`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `balance_per_day_total`;
+
+CREATE TABLE IF NOT EXISTS `balance_per_day_total` (
+  
+  `balance_per_day_total_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `trn_date` DATE,
+  `the_balance` DOUBLE NULL,
+  `fk_account_types_id_balance_per_day_total` INT NULL,
+  
+  PRIMARY KEY (`balance_per_day_total_id`),
+  
+  CONSTRAINT `fk_account_types_id_balance_per_day_total`
+  FOREIGN KEY (`fk_account_types_id_balance_per_day_total`)
+  REFERENCES `account_types`(`account_types_id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION
+    
+    )
+ENGINE = InnoDB
+AUTO_INCREMENT = 47501
+DEFAULT CHARACTER SET = utf8;
+
+ CREATE INDEX `fk_account_types_id_balance_per_day_total_indx` ON `balance_per_day_total` (`fk_account_types_id_balance_per_day_total` ASC) VISIBLE;
+
 
 
 
@@ -270,6 +320,23 @@ CREATE TABLE IF NOT EXISTS `sms_management` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET=utf8;
+
+
+-- -----------------------------------------------------
+-- Table `runningBalHoleder`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS runningBalHoleder;
+
+CREATE TABLE runningBalHoleder(
+  id INT NOT NULL AUTO_INCREMENT ,
+  balance  DOUBLE,
+  PRIMARY KEY(id)
+) ENGINE=innoDB
+AUTO_INCREMENT=1
+DEFAULT CHARACTER SET=utf8;
+
+
 
 
 

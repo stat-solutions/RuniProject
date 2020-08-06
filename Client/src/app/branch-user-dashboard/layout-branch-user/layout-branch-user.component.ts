@@ -10,118 +10,123 @@ import * as jwt_decode from 'jwt-decode';
   styleUrls: ['./layout-branch-user.component.scss']
 })
 export class LayoutBranchUserComponent implements OnInit {
+ 
 
-    loggedInPumpUser: boolean;
-    loggedInAdminUser: boolean;
-    loggedIn: boolean;
-    shiftDetails: any;
+        loggedInPumpUser: boolean;
+        loggedInAdminUser: boolean;
+        loggedIn: boolean;
+  show = false;
+        shiftDetails: any;
+        boxUsage = 'Loans';
+        usage = ['View Loans'];
+        boxUsage2 = 'Revenue';
+        usage2 = ['Check Revenues'];
 
-    imageUrl = './assets/blimassLead.jpg';
-    boxUsage = 'Loans';
-    usage = ['View Loans'];
-    boxUsage2 = 'Revenue';
-    usage2 = ['Check Revenues'];
+        boxUsage3 = 'Clients';
+        usage3 = ['Check Clients'];
 
-    boxUsage3 = 'Clients';
-    usage3 = ['Check Clients'];
+        isCollapsed: boolean;
 
-    isCollapsed: boolean;
+        toggleClass: string;
 
-    toggleClass: string;
+        boxUsage12 = 'Loans';
+        usage12 = ['View Loans'];
+        errored: boolean;
+        serviceErrors: string;
+        alertService: any;
 
-    boxUsage12 = 'Loans';
-    usage12 = ['View Loans'];
-    errored: boolean;
-    serviceErrors: string;
-    alertService: any;
+        constructor(
+          private authService: AuthServiceService,
+          private router: Router,
+          private layoutService: LayoutManageService,
 
-    constructor(
-      private authService: AuthServiceService,
-      private router: Router,
-      private layoutService: LayoutManageService,
+        ) {}
+        // private pumpService: DashboardPumpService,
+        ngOnInit() {
+          // this.getTheShiftDetails();
 
-    ) {}
-    // private pumpService: DashboardPumpService,
-    ngOnInit() {
-      // this.getTheShiftDetails();
+          this.toggleArial();
 
-      this.toggleArial();
-
-      // this.updateLayout();
-    }
-
-
-    // getTheShiftDetails() {
+          // this.updateLayout();
+        }
 
 
+        // getTheShiftDetails() {
 
-    //   this.pumpService.shiftDetails(jwt_decode(this.authService.getJwtToken()).user_station).subscribe(
 
-    //     (datab) => {
 
-    //       this.shiftDetails = datab[0];
-    //       this.setActionStatus();
-          // this.alertService.success({ html: '<b> Shift details fetched</b>' + '<br/>' });
-    //     },
+        //   this.pumpService.shiftDetails(jwt_decode(this.authService.getJwtToken()).user_station).subscribe(
 
-    //     (error: string) => {
-    //       this.errored = true;
-    //       this.serviceErrors = error;
-    //       this.alertService.danger({ html: '<b>' + this.serviceErrors + '</b>' + '<br/>' });
-    //     });
+        //     (datab) => {
 
-    // }
-    setActionStatus() {
+        //       this.shiftDetails = datab[0];
+        //       this.setActionStatus();
+              // this.alertService.success({ html: '<b> Shift details fetched</b>' + '<br/>' });
+        //     },
 
-      // console.log(this.shiftDetails.shift_status);
-      if (this.shiftDetails.shift_status === 'OPENED') {
-        this.loggedIn = true;
-        this.loggedInPumpUser = true;
-        this.loggedInAdminUser = true;
+        //     (error: string) => {
+        //       this.errored = true;
+        //       this.serviceErrors = error;
+        //       this.alertService.danger({ html: '<b>' + this.serviceErrors + '</b>' + '<br/>' });
+        //     });
 
-      } else if (this.shiftDetails.shift_status === 'CLOSED') {
-        this.loggedIn = false;
-        this.loggedInPumpUser = false;
-        this.loggedInAdminUser = false;
-      }
-    }
+        // }
+        setActionStatus() {
 
-    // updateLayout() {
-    //   this.layoutService.changeEmittedlogoutin$.subscribe(status1 => {
-    //     this.loggedIn = status1;
-    //   });
+          // console.log(this.shiftDetails.shift_status);
+          if (this.shiftDetails.shift_status === 'OPENED') {
+            this.loggedIn = true;
+            this.loggedInPumpUser = true;
+            this.loggedInAdminUser = true;
 
-    //   this.layoutService.changeEmittedpumpuser$.subscribe(status2 => {
-    //     this.loggedInPumpUser = status2;
-    //   });
+          } else if (this.shiftDetails.shift_status === 'CLOSED') {
+            this.loggedIn = false;
+            this.loggedInPumpUser = false;
+            this.loggedInAdminUser = false;
+          }
+        }
 
-    //   this.layoutService.changeEmittedpadminuser$.subscribe(status3 => {
-    //     this.loggedInAdminUser = status3;
-    //   });
-    // }
+        // updateLayout() {
+        //   this.layoutService.changeEmittedlogoutin$.subscribe(status1 => {
+        //     this.loggedIn = status1;
+        //   });
 
-    toggleArial() {
-      this.isCollapsed = !this.isCollapsed;
-      this.toggletheClass(this.isCollapsed);
-    }
+        //   this.layoutService.changeEmittedpumpuser$.subscribe(status2 => {
+        //     this.loggedInPumpUser = status2;
+        //   });
 
-    toggletheClass(theTogler: boolean) {
-      if (theTogler) {
-        this.toggleClass = 'collapse navbar-collapse';
+        //   this.layoutService.changeEmittedpadminuser$.subscribe(status3 => {
+        //     this.loggedInAdminUser = status3;
+        //   });
+        // }
 
-        // console.log(this.toggleClass);
-      } else {
-        this.toggleClass = 'navbar-collapse';
-        // console.log(this.toggleClass);
-      }
-    }
+        toggleArial() {
+          this.isCollapsed = !this.isCollapsed;
+          this.toggletheClass(this.isCollapsed);
+        }
 
-    logMeout() {
-      this.authService.doLogoutUser();
-      this.layoutService.emitChangePumpUser(false);
-      this.layoutService.emitChangeAdminUser(false);
-      this.layoutService.emitLoginLogout(false);
-    }
+        toggletheClass(theTogler: boolean) {
+          if (theTogler) {
+            this.toggleClass = 'collapse navbar-collapse';
+
+            // console.log(this.toggleClass);
+          } else {
+            this.toggleClass = 'navbar-collapse';
+            // console.log(this.toggleClass);
+          }
+        }
+
+        logMeout() {
+          this.authService.doLogoutUser();
+          this.layoutService.emitChangePumpUser(false);
+          this.layoutService.emitChangeAdminUser(false);
+          this.layoutService.emitLoginLogout(false);
+        }
+
+
+
+
+
 
 
 }

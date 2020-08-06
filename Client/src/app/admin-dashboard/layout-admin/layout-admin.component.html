@@ -31,10 +31,10 @@
      Post Banking
     </button>
 
-    <!-- <button class="btn btn-info mx-2" type="button" *ngIf='loggedInPumpUser'  routerLink="/dashboardadmin/depositwithdraw"  (click)="toggleArial()">
-      <i class="fas fa-coins"></i>
-      Deposit/Withdrawal
-    </button> -->
+    <button class="btn btn-danger mx-2" type="button" (click)="toggleArial()" routerLink="/dashboardadmin/postinvestmentperbranch" >
+      <i class="fas fa-file-invoice" ></i>
+    Post Investments
+    </button>
 
     <li></li>
 
@@ -69,10 +69,7 @@
 
 <ul class="navbar-nav mr-2 my-2 my-lg-0">
 
-  <button class="btn btn-danger mx-2" type="button" (click)="toggleArial()" routerLink="/dashboardadmin/postinvestmentperbranch" >
-    <i class="fas fa-file-invoice" ></i>
-  Post Investments
-  </button>
+
 </ul>
 
 
@@ -85,20 +82,20 @@
 <ul class="navbar-nav mr-2 my-2 my-lg-0">
 
 
-  <button class="btn btn-success mx-2" type="button"   (click)="toggleArial()" routerLink="/dashboardadmin/viewbranchbankings" >
+  <button class="btn btn-success mx-2" type="button"   (click)="toggleArial()" routerLink="/dashboardadmin/viewbranchbankings/viewportbankings" >
     <i class="far fa-address-book"></i>
     View Bankings
   </button>
 
-  <button class="btn btn-secondary mx-2" type="button"   (click)="toggleArial()" routerLink="/dashboardadmin/viewbranchinvestemnts" >
+  <button class="btn btn-secondary mx-2" type="button"   (click)="toggleArial()" routerLink="/dashboardadmin/viewbranchinvestemnts/viewportinvestments" >
     <i class="far fa-address-book"></i>
     View Investements
   </button>
 
-  <button class="btn btn-secondary mx-2" type="button"   (click)="toggleArial()" routerLink="/dashboardadmin/viewandeditusers" >
+  <!-- <button class="btn btn-secondary mx-2" type="button"   (click)="toggleArial()" routerLink="/dashboardadmin/viewandeditusers" >
     <i class="far fa-address-book"></i>
     View And Edit Users
-  </button>
+  </button> -->
 
 
  <ul></ul>

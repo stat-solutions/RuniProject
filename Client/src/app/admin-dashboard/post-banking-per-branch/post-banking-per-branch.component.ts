@@ -44,7 +44,10 @@ export class PostBankingPerBranchComponent implements OnInit {
     createFormGroup() {
       return new FormGroup({
         user_id: new FormControl(''),
+        txn_family: new FormControl(''),
+        narration: new FormControl('', Validators.compose([Validators.required])),
         branch_name: new FormControl('', Validators.compose([Validators.required])),
+
         txn_type: new FormControl('', Validators.compose([Validators.required])),
         txn_amount: new FormControl('', Validators.compose([Validators.required
         // CustomValidator.patternValidator(/^\d+$/, { hasNumber: true }
@@ -70,6 +73,7 @@ export class PostBankingPerBranchComponent implements OnInit {
 
       this.userForm.controls.txn_amount.setValue(this.values);
     }
+
     postTxn() {
 
       this.userForm.patchValue({
@@ -84,11 +88,12 @@ export class PostBankingPerBranchComponent implements OnInit {
 
         this.userForm.patchValue({
           user_station: jwt_decode(this.authService.getJwtToken()).user_station,
+          txn_family: 'BANK',
           user_id: jwt_decode(this.authService.getJwtToken()).user_id
         });
 
 
-        this.adminUserService.postTheBankingTxn(this.userForm)
+        this.adminUserService.postTheTxn(this.userForm)
           .subscribe(
 
             (success: boolean) => {

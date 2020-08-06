@@ -10,8 +10,8 @@ var indexRouter = require('./routes/index');
 var auth=require('./controllers/auth');
 var outBoundRequests = require('./controllers/outBoundRequests');
 
-var branchUser = require('./controllers/adminUser');
-var adminUser = require('./controllers/branchUser');
+var  adminUser = require('./controllers/adminUser');
+var branchUser = require('./controllers/branchUser');
 var otherUser = require('./controllers/otherUser');
 
 

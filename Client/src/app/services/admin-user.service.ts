@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { catchError, mapTo, map } from 'rxjs/operators';
+import { catchError, mapTo } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
+import { LedgerStatementBranch } from '../models/ledger-statement-branch';
+import { LedgerStatement } from '../models/ledger-statement';
 
 @Injectable({
   providedIn: 'root'
@@ -19,94 +20,17 @@ export class AdminUserService {
       })
     };
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient) {}
 
 
 
 
-    // customerSecret(id: string): Observable<UserSecret[]> {
-    //   const options1 = { params: new HttpParams().set('id', id) };
-    //   return this.http
-    //     .get<UserSecret[]>(
-    //       `${this.API_URL}/api/pumpUserDashboard/userSecrete`,
-    //       options1
-    //     )
-
-    //     .pipe(
-          // tap(response => console.log(`${response}`)),
-
-    //       catchError(this.handleError)
-    //     );
-    // }
-
-    // theNumberPlates(id: string): Observable<NumberPlates[]> {
-    //   const options1 = { params: new HttpParams().set('id', id) };
-    //   return this.http
-    //     .get<NumberPlates[]>(
-    //       `${this.API_URL}/api/pumpUserDashboard/theNumberPlates`,
-    //       options1
-    //     )
-
-    //     .pipe(
-          // tap(response => console.log(`${response}`)),
-
-    //       catchError(this.handleError)
-    //     );
-    // }
-
-    // checkWhetherTheCLoanPayable(id: string): Observable<LoanPayability[]> {
-    //   const options1 = { params: new HttpParams().set('id', id) };
-
-    //   return this.http
-    //     .get<LoanPayability[]>(
-    //       `${this.API_URL}/api/pumpUserDashboard/theClientLoanPayability`,
-    //       options1
-    //     )
-
-    //     .pipe(
-          // tap(response => console.log(`${response}`)),
-
-    //       catchError(this.handleError)
-    //     );
-    // }
-
-    // checkWhetherTheCLoanable(id: string): Observable<LoanabilityDetails[]> {
-    //   const options1 = { params: new HttpParams().set('id', id) };
-    //   return this.http
-    //     .get<LoanabilityDetails[]>(
-    //       `${this.API_URL}/api/pumpUserDashboard/theClientLoanable`,
-    //       options1
-    //     )
-
-    //     .pipe(
-          // tap(response => console.log(`${response}`)),
-
-    //       catchError(this.handleError)
-    //     );
-    // }
-
-    // shiftDetails(id: string): Observable<ShiftDetails[]> {
-    //   const options1 = { params: new HttpParams().set('id', id) };
-
-    //   return this.http
-    //     .get<ShiftDetails[]>(
-    //       `${this.API_URL}/api/pumpUserDashboard/shiftDetails`,
-    //       options1
-    //     )
-
-    //     .pipe(
-          // tap(response => console.log(`${response}`)),
-
-    //       catchError(this.handleError)
-    //     );
-    // }
-
-    isBalanceIsEnoughOrExists(id: string): Observable<boolean> {
+    investmentStatementByBranch(id: string): Observable<LedgerStatementBranch[]> {
       const options1 = { params: new HttpParams().set('id', id) };
 
       return this.http
-        .get<boolean>(
-          `${this.API_URL}/api/pumpUserDashboard/checkBalExistEnough`,
+        .get<LedgerStatementBranch[]>(
+          `${this.API_URL}/api/adminUser/branchLedgerStatementInvestment`,
           options1
         )
 
@@ -117,122 +41,51 @@ export class AdminUserService {
         );
     }
 
-    // createLoan(postData: FormGroup): Observable<LendingDetails[]> {
-    //   return this.http
-    //     .post<LendingDetails[]>(
-    //       `${this.API_URL}/api/pumpUserDashboard/createLoan`,
-    //       postData.value,
-    //       this.httpOptions
-    //     )
 
-    //     .pipe(
+    bankStatementByBranchBank(id: string): Observable<LedgerStatementBranch[]> {
+      const options1 = { params: new HttpParams().set('id', id) };
+
+      return this.http
+        .get<LedgerStatementBranch[]>(
+          `${this.API_URL}/api/adminUser/branchLedgerStatementBank`,
+          options1
+        )
+
+        .pipe(
           // tap(response => console.log(`${response}`)),
 
-    //       catchError(this.handleError)
-    //     );
-    // }
-
-    // theRunningLoans(postData: FormGroup): Observable<LoanStatement[]> {
-
-    //   return this.http
-    //   .post<LoanStatement[]>(
-    //     `${this.API_URL}/api/pumpUserDashboard/getTheRunningLoans`,
-    //     postData.value,
-    //     this.httpOptions
-    //   )
-
-    //   .pipe(
-        // tap(response => console.log(`${response}`)),
-
-    //     catchError(this.handleError)
-    //   );
-    // }
-
-
-    theRevenueDetailsAll(postData: FormGroup): Observable<RevenueDetails[]> {
-
-      return this.http
-      .post<RevenueDetails[]>(
-        `${this.API_URL}/api/pumpUserDashboard/getTheRevenueDetails`,
-        postData.value,
-        this.httpOptions
-      )
-
-      .pipe(
-        // tap(response => console.log(`${response}`)),
-
-        catchError(this.handleError)
-      );
-    }
-
-
-    theLedgerDetails(postData: FormGroup): Observable<GeneralLedgerDetails[]> {
-
-      return this.http
-      .post<GeneralLedgerDetails[]>(
-        `${this.API_URL}/api/pumpUserDashboard/getTheLedgerDetails`,
-        postData.value,
-        this.httpOptions
-      )
-
-      .pipe(
-        // tap(response => console.log(`${response}`)),
-
-        catchError(this.handleError)
-      );
+          catchError(this.handleError)
+        );
     }
 
 
 
-    // repayLoan(postData: FormGroup): Observable<LoanRepayDetails[]> {
-    //   return this.http
-    //     .post<LoanRepayDetails[]>(
-    //       `${this.API_URL}/api/pumpUserDashboard/loanRepayNow`,
-    //       postData.value,
-    //       this.httpOptions
-    //     )
+    bankStatementAllBank(): Observable<LedgerStatement[]> {
 
-    //     .pipe(
-          // tap(response => console.log(`${response}`)),
+      return this.http.get<LedgerStatement[]>( `${this.API_URL}/api/adminUser/bankLedgerStatement`, this.httpOptions)
 
-    //       catchError(this.handleError)
-    //     );
-    // }
+        .pipe(
 
-    // openClosedShift(postData: FormGroup): Observable<boolean> {
-    //   return this.http
-    //     .post<boolean>(
-    //       `${this.API_URL}/api/pumpUserDashboard/openClosedShift`,
-    //       postData.value,
-    //       this.httpOptions
-    //     )
+          catchError(this.handleError)
+        );
+    }
 
-    //     .pipe(
-          // tap(response => console.log(`${response}`)),
 
-    //       catchError(this.handleError)
-    //     );
-    // }
+    investmentStatementAll(): Observable<LedgerStatement[]> {
 
-    // closeOpenShift(postData: FormGroup): Observable<boolean> {
-    //   return this.http
-    //     .post<boolean>(
-    //       `${this.API_URL}/api/pumpUserDashboard/closeOpenShift`,
-    //       postData.value,
-    //       this.httpOptions
-    //     )
+      return this.http.get<LedgerStatement[]>( `${this.API_URL}/api/adminUser/investmentLedgerStatement`, this.httpOptions)
 
-    //     .pipe(
-          // tap(response => console.log(`${response}`)),
+        .pipe(
 
-    //       catchError(this.handleError)
-    //     );
-    // }
+          catchError(this.handleError)
+        );
+    }
 
-    postTheBankingTxn(postData: FormGroup) {
+
+    postTheTxn(postData: FormGroup) {
       return this.http
-        .post<string>(
-          `${this.API_URL}/api/pumpUserDashboard/postTheTxn`,
+        .post<boolean>(
+          `${this.API_URL}/api/adminUser/postTheTxn`,
           postData.value,
           this.httpOptions
         )
@@ -240,86 +93,7 @@ export class AdminUserService {
         .pipe(mapTo(true), catchError(this.handleError));
     }
 
-    // areSavingsRegistered(id: string): Observable<boolean> {
-    //   const options1 = { params: new HttpParams().set('id', id) };
 
-    //   return this.http
-    //     .get<boolean>(
-    //       `${this.API_URL}/api/allEdadBoxRelatedTxns/areSavingsAdded`,
-    //       options1
-    //     )
-
-    //     .pipe(
-          // tap(response => console.log(`${response}`)),
-
-    //       catchError(this.handleError)
-    //     );
-    // }
-
-    // registerSmartSavings(postData: FormGroup) {
-    //   return this.http
-    //     .post<string>(
-    //       `${this.API_URL}/api/allEdadBoxRelatedTxns/registerSmartSavings`,
-    //       postData.value,
-    //       this.httpOptions
-    //     )
-
-    //     .pipe(
-    //       map((res: string) => res),
-          // tap(res => console.log(`AFTER MAP: ${res}`)),
-    //       catchError(this.handleSmartSavingRegError)
-    //     );
-    // }
-
-    private handleTokensPurchaseError(errorResponse: HttpErrorResponse) {
-      if (errorResponse.error instanceof ErrorEvent) {
-        // A client-side or network error occurred. Handle it accordingly.
-        console.error('An error occurred:', errorResponse.error.message);
-      } else {
-        // The backend returned an unsuccessful response code.
-        // The response body may contain clues as to what went wrong,
-        console.error(
-          `Backend returned code ${errorResponse.status}, ` +
-            `body was: ${errorResponse.error}`
-        );
-      }
-      // return an observable with a user-facing error message
-      return throwError(`Tokens Purchase failed!!
-         ${
-           errorResponse.status === 500 ||
-           errorResponse.status === 0 ||
-           errorResponse.status === 200 ||
-           errorResponse.status === 404
-             ? 'The Back End was not able to Handle this Request'
-             : errorResponse.error
-         }
-     !!`);
-    }
-
-    private handleSmartSavingRegError(errorResponse: HttpErrorResponse) {
-      if (errorResponse.error instanceof ErrorEvent) {
-        // A client-side or network error occurred. Handle it accordingly.
-        console.error('An error occurred:', errorResponse.error.message);
-      } else {
-        // The backend returned an unsuccessful response code.
-        // The response body may contain clues as to what went wrong,
-        console.error(
-          `Backend returned code ${errorResponse.status}, ` +
-            `body was: ${errorResponse.error}`
-        );
-      }
-      // return an observable with a user-facing error message
-      return throwError(`Smart Savings Registration failed!!
-         ${
-           errorResponse.status === 500 ||
-           errorResponse.status === 0 ||
-           errorResponse.status === 200 ||
-           errorResponse.status === 404
-             ? 'The Back End was not able to Handle this Request'
-             : errorResponse.error
-         }
-     !!`);
-    }
 
     private handleError(errorResponse: HttpErrorResponse) {
       if (errorResponse.error instanceof ErrorEvent) {
