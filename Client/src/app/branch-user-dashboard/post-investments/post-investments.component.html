@@ -1,111 +1,59 @@
 <div
-  class="jumbotron jumbotron-fluid shadow-lg"
-  style="background: transparent !important;"
+  class="container-fluid d-flex flex-row justify-content-center mb-0 mt-md-1 mt-1 pt-md-0 pt-0 pb-3 shadow-lg col-xs-12 col-lg-8"
 >
-  <div class="row">
-    <div class="col-12">
-      <!-- <div class="card"> -->
-      <div class="card-header">
-        <h4 class="text-info text-center">Investment Transactions</h4>
-      </div>
-      <div class="card-body">
-        <!-- <div class="row"> -->
-        <!-- <div class="col"> -->
+  <div class="jumbotron-fluid">
+    <div class="d-flex justify-content-center mt-3 mb-3 pb-0">
+      <img
+        class="mx-auto mb-0 pb-0"
+        src="assets/img/rubai-1.svg"
+        width="30"
+        height="30"
+      />
+    </div>
+    <div class="card-body mt-1 pt-2 mb-0 pb-3 shadow-lg">
+      <h5 class="rub-head1 text-info font-weight-bold mt-3 mb-4">
+        <hr class="top mt-1 mb-0" />
+        Investment Transactions
+        <hr class="bottom mt-0 mb-0" />
+      </h5>
 
-        <form [formGroup]="userForm" (ngSubmit)="postTxn()">
-          <!-- <table class="table table-striped table-responsive jumbotron jumbotron-fluid shadow-lg"  style="background:transparent !important" > -->
-          <!-- <tbody> -->
-          <!-- <tr > -->
-          <!-- <td > -->
-          <h4>
-            <span class="badge badge-pill badge-info"> TRANSACTION TYPE:</span>
-          </h4>
-          <!-- </td> -->
-
-          <div class="form-group">
-            <select
-              formControlName="txn_type"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid':
-                  (fval.txn_type.touched || fval.txn_type.dirty) &&
-                  fval.txn_type.errors
-              }"
-              autocomplete="off"
-              placeholder="Txn Type"
-              ><i *ngIf="fval.txn_type.valid" class="material-icons"
-                >check_circle</i
-              >
-              <option selected>Select TXN Type</option>
-              <option>DEPOSIT</option>
-              <option>WITHDRAWAL</option>
-            </select>
-            <div
-              class="text-danger col"
-              *ngIf="
-                (fval.txn_type.touched || fval.txn_type.dirty) &&
-                fval.txn_type.errors?.required
-              "
-            >
-              The Txn Type is required
-            </div>
-
-            <div
-              class="text-secondary col"
-              *ngIf="
-                (fval.txn_type.touched || fval.txn_type.dirty) &&
-                fval.txn_type.errors?.belongTotxn_types
-              "
-            >
-              Please select a valid Txn Type
-            </div>
-          </div>
-          <div class="form-group">
+      <form [formGroup]="userForm" (ngSubmit)="postTxn()">
+          <div class="form-group text-primary">
             <label
-              for="narration"
-              [ngClass]="fval.narration.valid ? 'text-info' : ''"
-              >Narration:<i *ngIf="fval.narration.valid" class="material-icons"
-                >check_circle</i
-              ></label
+              for="txn_type"
+              >Transaction type</label
             >
-            <!-- <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId"> -->
-            <textarea
-              formControlName="narration"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid':
-                  (fval.narration.touched || fval.narration.dirty) &&
-                  fval.narration.errors
-              }"
-              rows="2"
-              cols="50"
-            >
-Bank Posting for Branch</textarea
-            >
-
-            <div
-              class="text-danger col"
-              *ngIf="
-                (fval.narration.touched || fval.narration.dirty) &&
-                fval.narration.errors?.required
-              "
-            >
-              The narration is required
+            <div class="input-group mb-0">
+              <select    formControlName="txn_type" class="form-control"  [ngClass]=" { 'is-invalid': (fval.txn_type.touched||fval.txn_type.dirty) && fval.txn_type.errors }" autocomplete="off" placeholder="Txn Type"><i  *ngIf="fval.txn_type.valid" class="material-icons">check_circle</i>
+                <option selected>Select TXN Type</option>
+                <option>Deposit</option>
+                <option>Withdrawal</option>
+                    </select>
             </div>
-          </div>
+            <div class="text-danger col" *ngIf="(fval.txn_type.touched||fval.txn_type.dirty)  && fval.txn_type.errors?.required">The Txn Type is required</div>
 
-          <div class="form-group">
-            <label
-              for="branch_name"
-              [ngClass]="fval.branch_name.valid ? 'text-info' : ''"
-              >The Branch:<i
-                *ngIf="fval.branch_name.valid"
-                class="material-icons"
-                >check_circle</i
-              ></label
-            >
-            <!-- <input type="text"  list="branch_name"  formControlName="branch_name" class="form-control"  [ngClass]=" { 'is-invalid': (fval.branch_name.touched||fval.branch_name.dirty) && fval.branch_name.errors }" autocomplete="off" placeholder="Select The Branch"> -->
+            <div class="text-danger col" *ngIf="(fval.txn_type.touched||fval.txn_type.dirty)  && fval.txn_type.errors?.belongTotxn_types">Please select a valid Txn Type</div>
 
+
+
+        </div>
+        <div class="form-group text-primary">
+          <label for="narration" [ngClass]="fval.narration.valid ? 'text-info' : ''">Narration<i  *ngIf="fval.narration.valid" class="material-icons">check_circle</i></label>
+                  <div class="input-group mb-1">
+                    <textarea formControlName="narration" class="form-control"  [ngClass]=" { 'is-invalid': (fval.narration.touched||fval.narration.dirty) && fval.narration.errors }"  rows="2" cols="50">Bank Posting for Branch</textarea>
+                  </div>
+                  <div class="text-danger col" *ngIf="(fval.narration.touched||fval.narration.dirty)  && fval.narration.errors?.required">The narration is required</div>
+                </div>
+
+        <div class="form-group text-primary">
+          <label
+            for="branch_name"
+            [ngClass]="fval.branch_name.valid ? 'text-info' : ''"
+            >Branch<i *ngIf="fval.branch_name.valid" class="material-icons"
+              >check_circle</i
+            ></label
+          >
+          <div class="input-group mb-0">
             <select
               formControlName="branch_name"
               class="form-control"
@@ -115,127 +63,97 @@ Bank Posting for Branch</textarea
                   fval.branch_name.errors
               }"
               autocomplete="off"
-              placeholder="Select The Branch"
+              placeholder="Select the branch name"
             >
-              <option selected>Select The Branch</option>
               <option *ngFor="let branch of theBranches$ | async">{{
                 branch.branch_name
               }}</option>
             </select>
-            <div
-              class="text-danger col"
-              *ngIf="
-                (fval.branch_name.touched || fval.branch_name.dirty) &&
-                fval.branch_name.errors?.required
-              "
-            >
-              The branch_name is required
-            </div>
-            <div
-              class="text-danger col"
-              *ngIf="
-                (fval.branch_name.touched || fval.branch_name.dirty) &&
-                fval.branch_name.errors?.belongTobranch_names
-              "
-            >
-              Please select a valid branch_name
-            </div>
-            <!-- <ngx-alerts></ngx-alerts> -->
           </div>
+          <div
+            class="text-danger col"
+            *ngIf="
+              (fval.branch_name.touched || fval.branch_name.dirty) &&
+              fval.branch_name.errors?.required
+            "
+          >
+            The branch name is required!
+          </div>
+          <div
+            class="text-danger col"
+            *ngIf="
+              (fval.branch_name.touched || fval.branch_name.dirty) &&
+              fval.branch_name.errors?.belongTobranch_names
+            "
+          >
+            Please select a valid branch name!
+          </div>
+          <!-- <ngx-alerts></ngx-alerts> -->
+        </div>
 
-          <!-- </td> -->
-          <!-- <td>  -->
-          <div class="form-group">
-            <h4><span class="badge badge-pill badge-success">AMOUNT:</span></h4>
 
-            <input
-              id="txn_amount"
-              formControlName="txn_amount"
-              type="text"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid':
-                  (fval.txn_amount.touched || fval.txn_amount.dirty) &&
-                  fval.txn_amount.errors
-              }"
-              placeholder="Txn Amount"
-              autocomplete="off"
-              (keyup)="onKey($event)"
-            /><i *ngIf="fval.txn_amount.valid" class="material-icons"
+        <div class="form-group text-primary">
+          <label
+            for="txn_amount"
+            [ngClass]="fval.txn_amount.valid ? 'text-info' : ''"
+            >Amount<i
+              *ngIf="fval.txn_amount.valid"
+              class="material-icons"
               >check_circle</i
-            >
-
-            <div
-              class="text-danger col"
-              *ngIf="
-                (fval.txn_amount.touched || fval.txn_amount.dirty) &&
-                fval.txn_amount.errors?.required
-              "
-            >
-              The txn amount is required
-            </div>
-            <div
-              class="text-danger col"
-              *ngIf="
-                (fval.txn_amount.touched || fval.txn_amount.dirty) &&
-                fval.txn_amount.errors?.hasNumber
-              "
-            >
-              The txn amount should be in digits/numbers
-            </div>
-            <!-- <div class="text-danger col" *ngIf="(fval.txn_amount.touched||fval.txn_amount.dirty)  && fval.txn_amount.errors?.maxlength">The txn amount should not exceed 10 digits</div>
-                <div class="text-danger col" *ngIf="(fval.txn_amount.touched||fval.txn_amount.dirty)  && fval.txn_amount.errors?.minlength">The txn amount  should have atleast 10 digits</div> -->
+            ></label
+          >
+          <div class="input-group mb-0">
+            <input id="txn_amount" formControlName="txn_amount" type="text" class="form-control"  [ngClass]=" { 'is-invalid': (fval.txn_amount.touched||fval.txn_amount.dirty) && fval.txn_amount.errors }" placeholder="Txn Amount" autocomplete="off" (keyup)="onKey($event)" placeholder="Enter the amount"
+            autocomplete="off"
+/><i  *ngIf="fval.txn_amount.valid" class="material-icons">check_circle</i>
           </div>
-          <!-- </td> -->
-          <!-- </tr> -->
-          <!-- </tbody> -->
-          <!-- </table>                                         -->
-
-          <div class="row d-flex flex-row">
-            <div class="col-4">
-              <div class="form-group">
-                <button
-                  type="submit"
-                  class="btn btn-success"
-                  [disabled]="!userForm.valid"
-                >
-                  SAVE
-                </button>
-                <ngx-spinner
-                  class="bg-warning bg-success"
-                  size="medium"
-                  type="ball-scale-multiple"
-                >
-                  <p class="text-light">Loading...</p>
-                </ngx-spinner>
-              </div>
-              <ngx-alerts></ngx-alerts>
-            </div>
-            <!-- <div class="col-5"></div> -->
-            <div class="col-3 d-flex flex-row justify-content-start mr-auto">
-              <div class="form-group">
-                <button
-                  type="button"
-                  class="btn btn-info mr-5"
-                  (click)="revert()"
-                >
-                  CANCEL
-                </button>
-              </div>
-            </div>
+          <div class="text-danger col" *ngIf="(fval.txn_amount.touched||fval.txn_amount.dirty)  && fval.txn_amount.errors?.required">The txn amount is required!</div>
+          <div class="text-danger col" *ngIf="(fval.txn_amount.touched||fval.txn_amount.dirty)  && fval.txn_amount.errors?.hasNumber">The txn amount should be in digits/numbers!</div>
           </div>
-        </form>
-        <!-- </div> -->
+        <div class="d-flex my-2 py-2 mx-auto">
+          <button
+            type="submit"
+            class="btn btn-info col-5 mx-auto"
+            [disabled]="!userForm.valid"
+          >
+            Save
+          </button>
 
-        <!-- </div> -->
-      </div>
-      <div class="card-footer text-muted text-center">
-        The Company:<span class="badge badge-warning"
+          <ngx-spinner class="bg-info" size="medium" type="ball-scale-multiple">
+            <p class="text-light">Please wait...</p>
+          </ngx-spinner>
+
+            <ngx-alerts></ngx-alerts>
+
+           <button
+            type="button"
+            class="btn btn-danger col-5 mx-auto"
+            (click)="revert()"
+          >
+            Cancel
+          </button>
+
+
+
+        </div>
+      </form>
+      <!-- </div>  -->
+      <!-- </div>   -->
+    </div>
+    <!--footer -->
+    <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-3 mx-auto">
+      <div class="small text-center text-info">
+        The Company:<span class="text-primo font-weight-bold"
           ><strong> {{ theCompany }}</strong>
         </span>
-        The Branch:<span class="badge badge-danger"><strong></strong> </span>
+        The Branch:<span class="text-primo font-weight-bold"><strong></strong> </span>
       </div>
-      <!-- </div> -->
     </div>
+        <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-3 mx-auto">
+      <div class="small text-center text-info">
+        Copyright &copy; 2020 - Runicorp Holdings Ltd
+      </div>
+    </div>
+    <!--/ footer -->
   </div>
 </div>

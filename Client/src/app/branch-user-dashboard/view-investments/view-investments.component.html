@@ -1,6 +1,10 @@
-
-
 <div class="container">
+  <div class="card-body mt-1 pt-2 mb-0 pb-3 shadow-lg">
+    <h5 class="rub-head1 text-info font-weight-bold mt-3 mb-4">
+      <hr class="top mt-1 mb-0" />
+      Investments
+      <hr class="bottom mt-1 mb-0" />
+    </h5>
   <ag-grid-angular
   style="width:100%; height: 600px;"
       class="ag-theme-material text-info"
@@ -10,6 +14,14 @@
       (cellClicked)="exportExcel($event)"
       >
  </ag-grid-angular>
+</div>
+<!--footer -->
+<div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-3 mb-3 mx-auto">
+  <div class="small text-center text-info">
+    Copyright &copy; 2020 - Runicorp Holdings Ltd
+  </div>
+</div>
+<!--/ footer -->
 </div>
 
 

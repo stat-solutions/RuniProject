@@ -15,7 +15,7 @@ const routes: Routes = [
     path: 'branchuser', component: BranchUserDashboardComponent, children: [
       { path: 'landing', component: BranchUserDashboardLandingComponent },
       { path: 'postbanking', component: PostBankingComponent },
-      { path: 'postinvestments', component: PostInvestmentsComponent },
+      { path: 'postinvestment', component: PostInvestmentsComponent },
       { path: 'viewinvestments', component: ViewInvestmentsComponent },
       { path: 'viewbankings', component: ViewBankingsComponent },
 

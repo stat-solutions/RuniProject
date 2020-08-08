@@ -1,0 +1,124 @@
+.rub-head1{
+  position: relative;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+.rub-head1 hr.top{
+  width: 30%;
+  min-width: 15px;
+  max-width: 38px;
+  position: relative;
+  margin-right: 10px;
+  background-color: #00162dc0;
+  height: 3px;
+}
+.rub-head1 hr.bottom{
+  width: 10%;
+  min-width: 15px;
+  max-width: 30px;
+  position: relative;
+  margin-right: 10px;
+  background-color: #00162dc0;
+  height: 3px;
+}
+
+
+.card-body {
+  border-radius: 8px;
+}
+
+.btn-info {
+  color: #d9dbdd;
+  background-color: #51a416e0;
+  border-color: #51a416e0;
+}
+
+.btn-info:hover {
+  color: #d9dbdd;
+  background-color: #53a817e1;
+  border-color: #468d13d2
+}
+
+.btn-info:focus {
+  color: #d9dbdd;
+  background-color: #53a817e1;
+  border-color: #468d13d2
+}
+
+button.btn {
+  border-radius: 15px;
+}
+
+.text-danger {
+  color: #d3112bf3 !important;
+}
+
+.text-warning {
+  color: #eee206ef !important;
+}
+
+.bg-danger {
+  background-color: #d3112bf3 !important;
+}
+
+.pointerCursor {
+  cursor: pointer;
+}
+
+h3 {
+  font-size: 13px !important;
+}
+
+
+//media queries
+@media (min-width: 280px) {}
+
+
+@media (min-width: 360px) {
+  h3 {
+    font-size: 15px !important;
+  }
+}
+
+@media (min-width: 375px) {}
+
+
+@media (min-width: 400px) {}
+
+
+@media (min-width: 568px) {
+  .card-body {
+    width: 345px !important;
+    margin-bottom: 0rem;
+  }
+
+  h3 {
+    font-size: 20px !important;
+  }
+}
+
+
+@media (min-width: 640px) {}
+
+
+@media (min-width: 768px) {}
+
+@media (min-width: 812px) {
+  h3 {
+    font-size: 24px !important;
+  }
+}
+
+
+@media (min-width: 1024px) {}
+
+@media (min-width: 1100px) {
+      h3 {
+    font-size: 27px !important;
+  }
+}
+
+@media (min-width: 1280px) {}
+
+
+@media (min-width: 1320px) {}
