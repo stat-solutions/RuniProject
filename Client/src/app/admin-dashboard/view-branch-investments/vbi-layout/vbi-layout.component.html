@@ -1,16 +1,57 @@
+<div class="container">
+  <h5 class="rub-head1 text-info font-weight-bold mt-4 mb-3">
+  <hr class="top mt-1 mb-0" />
+  Investments
+  <hr class="bottom mt-1 mb-0" />
+</h5>
 
-  <div class="col">
+  <div class="col mt-0">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
-    <div class="form-group">
-      <label for="branch_name" [ngClass]="fval.branch_name.valid ? 'text-success' : ''">The Branch:<i  *ngIf="fval.branch_name.valid" class="material-icons">check_circle</i></label>
-
-  <select formControlName="branch_name" class="form-control"   (change)="setSelectedChanges($event)" [ngClass]=" { 'is-invalid': (fval.branch_name.touched||fval.branch_name.dirty) && fval.branch_name.errors }" autocomplete="off" placeholder="Select The Branch">
-    <option selected>Select The Branch</option>
-      <option *ngFor="let branch of theBranches$|async">{{branch.branch_name}}</option>
-    </select>
-<div class="text-danger col" *ngIf="(fval.branch_name.touched||fval.branch_name.dirty)  && fval.branch_name.errors?.required">The branch_name is required</div>
-<div class="text-danger col" *ngIf="(fval.branch_name.touched||fval.branch_name.dirty)  && fval.branch_name.errors?.belongTobranch_names">Please select a valid branch_name</div>
-<!-- <ngx-alerts></ngx-alerts> -->
-</div>
+      <div class="form-group text-primary">
+        <label
+          for="branch_name"
+          [ngClass]="fval.branch_name.valid ? 'text-info' : ''"
+          >Branch<i *ngIf="fval.branch_name.valid" class="material-icons"
+            >check_circle</i
+          ></label
+        >
+        <div class="input-group mb-0">
+          <select
+            formControlName="branch_name"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                (fval.branch_name.touched || fval.branch_name.dirty) &&
+                fval.branch_name.errors
+            }"
+            autocomplete="off"
+            placeholder="Select the branch name"
+          >
+            <option *ngFor="let branch of theBranches$ | async">{{
+              branch.branch_name
+            }}</option>
+          </select>
+        </div>
+        <div
+          class="text-danger col"
+          *ngIf="
+            (fval.branch_name.touched || fval.branch_name.dirty) &&
+            fval.branch_name.errors?.required
+          "
+        >
+          The branch name is required!
+        </div>
+        <div
+          class="text-danger col"
+          *ngIf="
+            (fval.branch_name.touched || fval.branch_name.dirty) &&
+            fval.branch_name.errors?.belongTobranch_names
+          "
+        >
+          Please select a valid branch name!
+        </div>
+        <!-- <ngx-alerts></ngx-alerts> -->
+      </div>
     </form>
+</div>
 </div>

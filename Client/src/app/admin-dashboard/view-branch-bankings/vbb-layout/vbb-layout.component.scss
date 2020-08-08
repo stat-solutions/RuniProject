@@ -1,3 +1,33 @@
 .is-invalid{
   border-bottom: 3px solid red;
 }
+
+.rub-head1{
+  position: relative;
+  margin-left: 110px;
+  margin-right: 110px;
+}
+.rub-head1 hr.top{
+  width: 30%;
+  min-width: 15px;
+  max-width: 30px;
+  position: relative;
+  margin-right: 25px;
+  background-color: #00162dc0;
+  height: 3px;
+}
+.rub-head1 hr.bottom{
+  width: 10%;
+  min-width: 15px;
+  max-width: 30px;
+  position: relative;
+  margin-right: 25px;
+  background-color: #00162dc0;
+  height: 3px;
+}
+
+
+.card-body {
+  border-radius: 8px;
+}
+
