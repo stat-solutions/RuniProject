@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   userForm: FormGroup;
   loginStatus: string;
   value: string;
+  fieldType: boolean;
   stationBalanceExits: boolean;
   mySubscription: any;
   userRoleInfo1$: Observable< UserRole[]>;
@@ -83,6 +84,12 @@ export class LoginComponent implements OnInit {
 
   get fval() {
     return this.userForm.controls;
+  }
+
+
+  //toggle visibility of password field
+  toggleFieldType() {
+    this.fieldType = !this.fieldType;
   }
 
 
