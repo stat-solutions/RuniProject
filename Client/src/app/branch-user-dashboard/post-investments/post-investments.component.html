@@ -2,21 +2,12 @@
   class="container-fluid d-flex flex-row justify-content-center mb-0 mt-md-1 mt-1 pt-md-0 pt-0 pb-3 shadow-lg col-xs-12 col-lg-8"
 >
   <div class="jumbotron-fluid">
-    <div class="d-flex justify-content-center mt-3 mb-3 pb-0">
-      <img
-        class="mx-auto mb-0 pb-0"
-        src="assets/img/rubai-1.svg"
-        width="30"
-        height="30"
-      />
-    </div>
-    <div class="card-body mt-1 pt-2 mb-0 pb-3 shadow-lg">
-      <h5 class="rub-head1 text-info font-weight-bold mt-3 mb-4">
-        <hr class="top mt-1 mb-0" />
-        Investment Transactions
-        <hr class="bottom mt-0 mb-0" />
-      </h5>
-
+    <h5 class="rub-head1 text-info font-weight-bold mt-4 mb-4">
+      <hr class="top mt-1 mb-0" />
+      Investment Transactions
+      <hr class="bottom mt-0 mb-0" />
+    </h5>
+  <div class="card-body mt-1 pt-4 mb-0 pb-3 shadow-lg">
       <form [formGroup]="userForm" (ngSubmit)="postTxn()">
           <div class="form-group text-primary">
             <label

@@ -64,6 +64,10 @@
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+.dropdown:hover::after .dropdown-menu {
+  content: "";
+  display: none;
+}
 
 .dropdown:hover .dropbtn {
   background-color: transparent;

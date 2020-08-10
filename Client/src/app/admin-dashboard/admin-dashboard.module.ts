@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TabsModule } from "ngx-bootstrap/tabs";
 import { AdminDashboardRoutingModule } from './admin-dashboard-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { LayoutAdminComponent } from './layout-admin/layout-admin.component';
@@ -50,6 +51,7 @@ import { VbiViewPortBranchesComponent } from './view-branch-investments/vbi-view
     ReactiveFormsModule,
     BsDatepickerModule,
     DatepickerModule,
+    TabsModule.forRoot(),
     NgxSpinnerModule,
     AlertModule.forRoot({maxMessages: 5, timeout: 7000, position: 'left'}),
     AgGridModule.withComponents([]),
