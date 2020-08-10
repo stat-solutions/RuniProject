@@ -226,6 +226,7 @@ bankingsTable = [
     return banked[1];
 }
 
+  //method for filtering out last investment posting
   lastInvestment() {
     let removed = this.investmentsTable.pop();
     let item=Object.entries(removed);
