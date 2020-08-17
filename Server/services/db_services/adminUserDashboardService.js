@@ -46,7 +46,24 @@ exports.postTheTxnNow = function (data) {
 
 
 
+exports.makeAllocationsNow = function (data) {
 
+  return new Promise(function (resolve,next) {
+
+    var sql = "CALL postTheTxnNow("+ "'" + JSON.stringify(data) + "'" +")";
+  console.log(sql);
+  dbconnection.query(sql, null, function (error, results, fields) {
+    if (error) {
+      return next(error);
+    } else {
+      // console.log(results[0]);
+
+      resolve(Boolean(results[0][0].posted_successfully>0));
+    }
+  });
+});
+
+}
 
 
 

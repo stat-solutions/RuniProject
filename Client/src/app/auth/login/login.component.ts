@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   fieldType: boolean;
   stationBalanceExits: boolean;
   mySubscription: any;
-  userRoleInfo1$: Observable< UserRole[]>;
+  userRoleInfo1$: Observable<UserRole[]>;
   serviceErrors: any = {};
   // initialSetUpData: SetupData[];
 
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.createFormGroup();
-    this.  userRoleInfo1$ = this.authService.getUserRoles();
+    this.userRoleInfo1$ = this.authService.getUserRoles();
   }
 
 

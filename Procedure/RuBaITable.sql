@@ -73,6 +73,7 @@ CREATE INDEX `fk_the_company_details_id_branch_idx` ON `branch`(`fk_the_company_
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `branch_constants` (
   `branch_constants_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `branch_percentages` DOUBLE NULL,
   `fk_branch_id_branch_constants` INT(11) NULL ,
    `created_at` TIMESTAMP,
   `update_at` TIMESTAMP,
@@ -89,6 +90,121 @@ DEFAULT CHARACTER SET = utf8;
 
  CREATE INDEX `fk_branch_id_branch_constants_idx` ON `branch_constants`(`fk_branch_id_branch_constants` ASC) VISIBLE;
 
+
+-- -----------------------------------------------------
+-- Table `allocations_total`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `allocations_total` (
+  `allocations_total_id` INT(11) NOT NULL AUTO_INCREMENT,
+      `allocations_total_made` DOUBLE NULL,
+       `allocations_total_deposited` DOUBLE NULL,
+        `allocations_total_balance` DOUBLE NULL,
+  `fk_branch_id_allocations_total` INT(11) NULL ,-- The branch whose an allocation is made
+
+   `created_at` TIMESTAMP,
+  `update_at` TIMESTAMP,
+  PRIMARY KEY (`allocations_total_id`),
+  CONSTRAINT `fk_branch_id_allocations_total` 
+  FOREIGN KEY (`fk_branch_id_allocations_total`) 
+  REFERENCES `branch`(`branch_id`)
+   ON DELETE CASCADE 
+   ON UPDATE NO ACTION
+   
+   )
+ENGINE = InnoDB
+AUTO_INCREMENT = 76000
+DEFAULT CHARACTER SET = utf8;
+
+ CREATE INDEX `fk_branch_id_allocations_total_idx` ON `allocations_total`(`fk_branch_id_allocations_total` ASC) VISIBLE;
+
+
+
+
+-- -----------------------------------------------------
+-- Table `allocations_details`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `allocations_details` (
+  `allocations_details_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `allocations_details_percentage` DOUBLE NULL,
+      `allocations_details_made` DOUBLE NULL,
+  `fk_branch_id_allocations_details` INT(11) NULL ,-- Branch being allocated the funds
+    `fk_amount_allocated_id_allocations_details` INT(11) NULL ,  --  Table containing the original amount being allocated
+        `fk_users_id_allocations_details` INT(11) NULL ,  --  The id of the user making the allocation
+          `fk_allocations_total_id_allocations_details` INT(11) NULL , 
+   `created_at` TIMESTAMP,   
+  `update_at` TIMESTAMP,
+  PRIMARY KEY (`allocations_details_id`),
+
+  CONSTRAINT `fk_branch_id_allocations_details` 
+  FOREIGN KEY (`fk_branch_id_allocations_details`) 
+  REFERENCES `branch`(`branch_id`)
+   ON DELETE CASCADE 
+   ON UPDATE NO ACTION,
+   
+     CONSTRAINT `fk_amount_allocated_id_allocations_details` 
+  FOREIGN KEY (`fk_amount_allocated_id_allocations_details`) 
+  REFERENCES `amount_allocated`(`amount_allocated_id`)
+   ON DELETE CASCADE 
+   ON UPDATE NO ACTION,
+
+     CONSTRAINT `fk_users_id_allocations_details` 
+  FOREIGN KEY (`fk_users_id_allocations_details`) 
+  REFERENCES `users`(`users_id`)
+   ON DELETE CASCADE 
+   ON UPDATE NO ACTION,
+
+   
+     CONSTRAINT `fk_allocations_total_id_allocations_details` 
+  FOREIGN KEY (`fk_allocations_total_id_allocations_details`) 
+  REFERENCES `allocations_total`(`allocations_total_id`)
+   ON DELETE CASCADE 
+   ON UPDATE NO ACTION
+   
+   )
+ENGINE = InnoDB
+AUTO_INCREMENT = 76000
+DEFAULT CHARACTER SET = utf8;
+
+ CREATE INDEX `fk_branch_id_branch_allocations_idx` ON `allocations_details`(`fk_branch_id_allocations_details` ASC) VISIBLE;
+
+  CREATE INDEX `fk_amount_allocated_id_allocations_details_idx` ON `allocations_details`(`fk_amount_allocated_id_allocations_details` ASC) VISIBLE;
+
+
+  CREATE INDEX `fk_users_id_allocations_details_idx` ON `allocations_details`(`fk_users_id_allocations_details` ASC) VISIBLE;
+
+
+  CREATE INDEX `fk_allocations_total_id_allocations_details_idx` ON `allocations_details`(`fk_allocations_total_id_allocations_details` ASC) VISIBLE;
+
+
+
+-- -----------------------------------------------------
+-- Table `amount_available`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `amount_allocated` (
+  `amount_allocated_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `amount_allocatedX` DOUBLE NULL,
+ 
+`fk_users_id_amount_allocated` INT(11) NULL ,
+   
+   `created_at` TIMESTAMP,
+  `update_at` TIMESTAMP,
+  PRIMARY KEY (`amount_allocated_id`),
+
+  CONSTRAINT `fk_users_id_amount_allocated` 
+  FOREIGN KEY (`fk_users_id_amount_allocated`) 
+  REFERENCES `users`(`users_id`)
+   ON DELETE CASCADE 
+   ON UPDATE NO ACTION
+   
+   )
+ENGINE = InnoDB
+AUTO_INCREMENT = 8800
+DEFAULT CHARACTER SET = utf8;
+
+ CREATE INDEX `fk_users_id_amount_allocated_idx` ON `amount_allocated`(`fk_users_id_amount_allocated` ASC) VISIBLE;
+ 
+
+ 
 
 
 

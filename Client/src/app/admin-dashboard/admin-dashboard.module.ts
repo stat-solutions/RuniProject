@@ -1,6 +1,8 @@
+import { ViewBranchAllocationsComponent } from './view-branch-allocations/view-branch-allocations.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabsModule } from "ngx-bootstrap/tabs";
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminDashboardRoutingModule } from './admin-dashboard-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { LayoutAdminComponent } from './layout-admin/layout-admin.component';
@@ -11,7 +13,7 @@ import { ViewBranchInvestmentsComponent } from './view-branch-investments/view-b
 import { ViewAndEditUsersComponent } from './view-and-edit-users/view-and-edit-users.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AlertModule } from 'ngx-alerts';
-import { ReactiveFormsModule } from '@angular/forms';
+
 import { AgGridModule } from 'ag-grid-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +26,10 @@ import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { VbiViewPortComponent } from './view-branch-investments/vbi-view-port/vbi-view-port.component';
 import { VbiLayoutComponent } from './view-branch-investments/vbi-layout/vbi-layout.component';
 import { VbiViewPortBranchesComponent } from './view-branch-investments/vbi-view-port-branches/vbi-view-port-branches.component';
+import { VbaViewPortBranchesComponent } from './view-branch-allocations/vba-view-port-branches/vba-view-port-branches.component';
+import { VbaViewPortComponent } from './view-branch-allocations/vba-view-port/vba-view-port.component';
+import { VbaLayoutComponent } from './view-branch-allocations/vba-layout/vba-layout.component';
+import { MakeAllocationsPerBranchComponent } from './make-allocations-per-branch/make-allocations-per-branch.component';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
@@ -39,8 +45,12 @@ import { VbiViewPortBranchesComponent } from './view-branch-investments/vbi-view
          VbbViewPortBranchesComponent,
          VbiViewPortComponent,
          VbiLayoutComponent,
-         VbiViewPortBranchesComponent
-
+         VbiViewPortBranchesComponent,
+         ViewBranchAllocationsComponent,
+         VbaViewPortBranchesComponent,
+         VbaViewPortComponent,
+         VbaLayoutComponent,
+         MakeAllocationsPerBranchComponent
          ],
   imports: [
     CommonModule,
@@ -48,7 +58,9 @@ import { VbiViewPortBranchesComponent } from './view-branch-investments/vbi-view
     BrowserAnimationsModule,
     HttpClientModule,
     AdminDashboardRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
+
     BsDatepickerModule,
     DatepickerModule,
     TabsModule.forRoot(),

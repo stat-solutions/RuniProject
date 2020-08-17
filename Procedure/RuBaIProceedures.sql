@@ -18,6 +18,8 @@
 
 --INSERT INTO sms_management VALUES(NULL,5);
 
+-- INSERT INTO branch_constants VALUES (NULL,10, 500,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP()),(NULL,20, 501,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP()),(NULL,30, 502,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP()),(NULL,30, 503,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP()),(NULL,10, 504,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP());
+
 /*SELECT THE INITIAL SETUP */
 /* ALL BRANCHES*/
 
@@ -211,6 +213,14 @@ CALL postWithdrawTxn(
   JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_type')),
   JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_amount')),
   JSON_UNQUOTE(JSON_EXTRACT(data, '$.branch_name')),
+  JSON_UNQUOTE(JSON_EXTRACT(data, '$.user_id'))
+    ) ;
+
+    ELSEIF JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_type')) = 'ALLOCATE' THEN
+
+CALL makeAllocationsNow(
+
+  JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_amount')),
   JSON_UNQUOTE(JSON_EXTRACT(data, '$.user_id'))
     ) ;
 
@@ -654,272 +664,113 @@ DELIMITER ;
 
 
 
+/* 
+ DESCRIBE allocations_total;
++--------------------------------+-----------+------+-----+---------+----------------+
+| Field                          | Type      | Null | Key | Default | Extra          |
++--------------------------------+-----------+------+-----+---------+----------------+
+| allocations_total_id           | int(11)   | NO   | PRI | NULL    | auto_increment |
+| allocations_total_made         | double    | YES  |     | NULL    |                |
+| allocations_total_deposited    | double    | YES  |     | NULL    |                |
+| allocations_total_balance      | double    | YES  |     | NULL    |                |
+| fk_branch_id_allocations_total | int(11)   | YES  | MUL | NULL    |                |
+| created_at                     | timestamp | YES  |     | NULL    |                |
+| update_at                      | timestamp | YES  |     | NULL    |                |
+
+*/
 
 
 
-
-/* CREATE EVENTS*/
-
-
-CREATE EVENT manage_interest ON SCHEDULE EVERY 120 MINUTE STARTS CURRENT_TIMESTAMP  DO CALL manage_interest(CURRENT_TIMESTAMP());
-
-CREATE EVENT change_daily_balances ON SCHEDULE EVERY 24 HOUR STARTS TIMESTAMP(CURRENT_DATE)  DO CALL changeBalance(CURRENT_TIMESTAMP());
-
-
-
-
-/* GET SHIFT DETAILS */
-
-DROP PROCEDURE IF EXISTS changeBalance;
-
+/* ALLOCATIONS COMPUTATIONS */
+DROP FUNCTION IF EXISTS alloTotalComp;
 DELIMITER ##
-
-CREATE PROCEDURE   changeBalance(IN timeLStampIN TIMESTAMP) 
-
+CREATE FUNCTION alloTotalComp(totalAlloc DOUBLE,percBranchId INT,typeC VARCHAR (45) ) 
+RETURNS DOUBLE 
+DETERMINISTIC
 BEGIN
+DECLARE allocMade, runningBal,newRunningBal,branchPercent DOUBLE;
 
 
+SELECT branch_percentages INTO branchPercent FROM branch_constants WHERE fk_branch_id_branch_constants=percBranchId;
+IF typeC='ALLOCTOTALMADE' THEN
 
-DECLARE newBalance DOUBLE;
+SELECT allocations_total_made INTO runningBal FROM allocations_total WHERE fk_branch_id_allocations_total=percBranchId;
 
-DECLARE balanceId,balExists,stationId,l_done INT;
+SET allocMade=((totalAlloc)*(branchPercent/100));
 
-DECLARE forStations CURSOR FOR SELECT petrol_station_id  FROM petrol_station;
- 
- DECLARE CONTINUE HANDLER FOR NOT FOUND SET l_done=1;
- 
-
- OPEN forStations;
-
-accounts_loop: LOOP 
-
- FETCH  forStations INTO stationId;
- 
- 
- IF l_done=1 THEN
-
-LEAVE accounts_loop;
-
- END IF;
- 
- 
-SELECT COUNT(balance_per_day_id) INTO balExists FROM balance_per_day W HHERE fk_petrol_station_id_balance_per_day=stationId  ORDER BY balance_per_day_id DESC LIMIT 1;
-
-IF balExists>0 THEN
-
- SELECT the_balance INTO newBalance FROM balance_per_day WHERE fk_petrol_station_id_balance_per_day=stationId ORDER BY balance_per_day_id DESC LIMIT 1;
-
-INSERT INTO balance_per_day VALUES(NULL,newBalance,stationId,CURRENT_TIMESTAMP);
-
-ELSEIF balExists<=0 THEN
-
-INSERT INTO balance_per_day VALUES(NULL,0,stationId,CURRENT_TIMESTAMP);
+SET newRunningBal=runningBal+allocMade;
 
 END IF;
 
-SET l_done=0;
 
- END LOOP accounts_loop;
 
- CLOSE forStations;
+IF typeC='ALLOCBALANCE' THEN
+
+SELECT allocations_total_balance INTO runningBal FROM allocations_total WHERE fk_branch_id_allocations_total=percBranchId;
+
+SET allocMade=((totalAlloc)*(branchPercent/100));
+
+SET newRunningBal=runningBal+allocMade;
+
+END IF;
+
+
+
+RETURN newRunningBal;
+END ##
+DELIMITER ;
+/* mysql> SHOW COLUMNS FROM branch_constants;
++-------------------------------+-----------+------+-----+---------+----------------+
+| Field                         | Type      | Null | Key | Default | Extra          |
++-------------------------------+-----------+------+-----+---------+----------------+
+| branch_constants_id           | int(11)   | NO   | PRI | NULL    | auto_increment |
+| branch_percentages            | double    | YES  |     | NULL    |                |
+| fk_branch_id_branch_constants | int(11)   | YES  | MUL | NULL    |                |
+| created_at                    | timestamp | YES  |     | NULL    |                |
+| update_at                     | timestamp | YES  |     | NULL    | */
+
+/* GET SHIFT DETAILS */
+
+DROP PROCEDURE IF EXISTS makeAllocationsNow;
+
+DELIMITER ##
+
+CREATE PROCEDURE   makeAllocationsNow(IN amount DOUBLE,IN userId INT) 
+
+BEGIN
+
+DECLARE lastAmountAllocatedId,lasteTotalAllocations,existingTotalAllocations,branchId INT;
+
+DECLARE allocMadeX,allocBalX DOUBLE;
+
+INSERT INTO amount_allocated VALUES(NULL,amount,userId,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+SET lastAmountAllocatedId=LAST_INSERT_ID();
+
+SELECT COUNT(allocations_total_id) INTO existingTotalAllocations FROM allocations_total;
+
+IF existingTotalAllocations<1 THEN
+
+INSERT INTO allocations_total (allocations_total_id ,
+ allocations_total_made,
+ allocations_total_deposited  ,
+ allocations_total_balance  ,
+ fk_branch_id_allocations_total ,
+ created_at  ,
+ update_at ) SELECT NULL,0.0,0.0,0.0,b.branch_id,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP FROM branch b;
+
+
+END IF;
+
+UPDATE allocations_total AS ft, (SELECT alloTotalComp(amount,branch_id,'ALLOCTOTALMADE') AS totalAllocation,alloTotalComp(amount,branch_id,'ALLOCBALANCE') AS balanceAllocation,branch_id as idX  FROM branch ) AS b SET ft.allocations_total_made=b.totalAllocation,ft.allocations_total_balance=b.balanceAllocation WHERE ft.fk_branch_id_allocations_total=b.idX;
+
+
  
 END ##
 DELIMITER ;
 
 
-
-
-/* GET SHIFT DETAILS */
-DROP PROCEDURE IF EXISTS manage_interestOld;
-
-DELIMITER ##
-
-CREATE PROCEDURE   manage_interestOld(IN timeStatmp TIMESTAMP) 
-BEGIN
-
-
-
-  DECLARE lcId,noPAccruals, maxNoPAccruals,interestRateAccrual,interestId,n,newnoPAccruals INT;
-
-    DECLARE newexpirelyTime ,expirelyTime TIMESTAMP;
-
-   DECLARE loanAmountR,interestCPMPU,existInterestAmountRemain,NewExistInterestAmountRemain,existingInterest,NewExistingInterest DOUBLE;
-
-
-  DECLARE l_done INTEGER DEFAULT 0;
-  
- DECLARE selectTrnIds CURSOR FOR SELECT lc.lc_manager_id  FROM lc_manager lc INNER JOIN loans l ON lc.fk_loans_id_lc_manager=l.loans_id WHERE lc.lc_manager_status=1 AND l.loan_status=1;
- 
- DECLARE CONTINUE HANDLER FOR NOT FOUND SET l_done=1;
-
- OPEN selectTrnIds;
-
-
-LedgerIds_loop: LOOP 
-
- FETCH selectTrnIds into lcId;
-
- IF l_done=1 THEN
-
-LEAVE LedgerIds_loop;
-
- END IF;
-SELECT timeStatmp;
- 
-SELECT lc.lc_manager_expirely_time, psl.ps_l_accrual_p_number,lc.lc_manager_no_accruals,psr.petrol_station_interest,i.interest_amount,i.interest_id INTO expirelyTime,maxNoPAccruals,noPAccruals,interestRateAccrual,existingInterest,interestId FROM lc_manager lc INNER JOIN loans l ON lc.fk_loans_id_lc_manager=l.loans_id INNER JOIN customers c ON l.fk_customers_id_loans=c.customers_id INNER JOIN users u ON c.fk_user_id_created_by_customers=u.users_id INNER JOIN petrol_station ps ON u.fk_petrol_station_id_users=ps.petrol_station_id INNER JOIN petrol_station_rates psr ON psr.fk_petrol_station_id_petrol_station_rates=ps.petrol_station_id INNER JOIN ps_l_accrual_p psl ON psl.fk_petrol_station_id_ps_l_accrual_p=ps.petrol_station_id  INNER JOIN interest i ON i.fk_loans_id_interest=l.loans_id  WHERE lc.lc_manager_id=lcId;
-
-
-SELECT lp.loan_amount_remaining INTO loanAmountR FROM loan_payments lp INNER JOIN loans l ON lp.fk_loans_id_loan_payment=l.loans_id INNER JOIN interest i ON i.fk_loans_id_interest=l.loans_id INNER JOIN lc_manager lc ON lc. fk_loans_id_lc_manager=l.loans_id WHERE lc.lc_manager_id=lcId ORDER BY lp.loan_payments_id DESC LIMIT 1;
-
-SELECT ip.interest_amount_remaining,ip.no_days_paid INTO existInterestAmountRemain,n FROM interest_payments ip INNER JOIN interest i ON ip. fk_interest_id_interest_payment=i.interest_id INNER JOIN loans l ON i.fk_loans_id_interest=l.loans_id INNER JOIN lc_manager lc ON lc.fk_loans_id_lc_manager=l.loans_id WHERE lc.lc_manager_id=lcId ORDER BY ip.interest_payments_id DESC LIMIT 1;
-
-
-IF expirelyTime<=timeStatmp THEN
-
-SET interestCPMPU=ROUND(((loanAmountR*interestRateAccrual)/100));
-SELECT interestCPMPU;
-SET NewExistInterestAmountRemain=existInterestAmountRemain+interestCPMPU;
-
-SET NewExistingInterest=existingInterest+interestCPMPU;
-SELECT NewExistingInterest;
-
-SET newnoPAccruals=noPAccruals+1;
-SELECT newnoPAccruals;
-SET newexpirelyTime=expirelyTime + INTERVAL 24 HOUR;
-SELECT newexpirelyTime;
-UPDATE interest SET interest_amount=NewExistingInterest WHERE interest_id=interestId;
-
-
-INSERT INTO interest_payments VALUES(NULL,interestCPMPU,0,NewExistInterestAmountRemain,CURRENT_TIMESTAMP,n,interestId);
-
-
-UPDATE lc_manager SET lc_manager_expirely_time=newexpirelyTime,lc_manager_no_accruals=newnoPAccruals WHERE lc_manager_id=lcId;
-
-IF newnoPAccruals>=maxNoPAccruals THEN
-
-UPDATE lc_manager SET lc_manager_status=2 WHERE lc_manager_id=lcId;
-
-END IF;
-
-
-END IF;
-
-
-SET l_done=0;
-
- END LOOP LedgerIds_loop;
-
-
-
-CLOSE selectTrnIds;
-
-END ##
-DELIMITER ;
-
-
-
-
-
-
-
-
-
-
-/* GET SHIFT DETAILS */
-DROP PROCEDURE IF EXISTS manage_interest;
-
-DELIMITER ##
-
-CREATE PROCEDURE   manage_interest(IN timeStatmp TIMESTAMP) 
-BEGIN
-
-
-
-  DECLARE lcId,noPAccruals, maxNoPAccruals,interestRateAccrual,interestId,n,newnoPAccruals INT;
-
-    DECLARE newexpirelyTime ,expirelyTime TIMESTAMP;
-
-   DECLARE loanAmountR,interestCPMPU,existInterestAmountRemain,NewExistInterestAmountRemain,existingInterest,NewExistingInterest DOUBLE;
-
-
-  DECLARE l_done INTEGER DEFAULT 0;
-  
- DECLARE selectTrnIds CURSOR FOR SELECT lc.lc_manager_id  FROM lc_manager lc INNER JOIN loans l ON lc.fk_loans_id_lc_manager=l.loans_id WHERE lc.lc_manager_status=1 AND l.loan_status=1;
- 
- DECLARE CONTINUE HANDLER FOR NOT FOUND SET l_done=1;
-
- OPEN selectTrnIds;
-
-
-LedgerIds_loop: LOOP 
-
- FETCH selectTrnIds into lcId;
-
- IF l_done=1 THEN
-
-LEAVE LedgerIds_loop;
-
- END IF;
- 
-SELECT timeStatmp;
- 
-SELECT lc.lc_manager_expirely_time, psl.ps_l_accrual_p_number,lc.lc_manager_no_accruals,psr.petrol_station_interest,i.interest_amount,i.interest_remaining,i.no_days_accrued,i.interest_id,l.loan_amount_remaining INTO expirelyTime,maxNoPAccruals,noPAccruals,interestRateAccrual,existingInterest,existInterestAmountRemain,n,interestId,loanAmountR FROM lc_manager lc INNER JOIN loans l ON lc.fk_loans_id_lc_manager=l.loans_id INNER JOIN customers c ON l.fk_customers_id_loans=c.customers_id INNER JOIN users u ON c.fk_user_id_created_by_customers=u.users_id INNER JOIN petrol_station ps ON u.fk_petrol_station_id_users=ps.petrol_station_id INNER JOIN petrol_station_rates psr ON psr.fk_petrol_station_id_petrol_station_rates=ps.petrol_station_id INNER JOIN ps_l_accrual_p psl ON psl.fk_petrol_station_id_ps_l_accrual_p=ps.petrol_station_id  INNER JOIN interest i ON i.fk_loans_id_interest=l.loans_id  WHERE lc.lc_manager_id=lcId;
-
-
--- SELECT lp.loan_amount_remaining INTO loanAmountR FROM loan_payments lp INNER JOIN loans l ON lp.fk_loans_id_loan_payment=l.loans_id INNER JOIN interest i ON i.fk_loans_id_interest=l.loans_id INNER JOIN lc_manager lc ON lc. fk_loans_id_lc_manager=l.loans_id WHERE lc.lc_manager_id=lcId ORDER BY lp.loan_payments_id DESC LIMIT 1;
-
--- SELECT ip.interest_amount_remaining,ip.no_days_paid INTO existInterestAmountRemain,n FROM interest_payments ip INNER JOIN interest i ON ip. fk_interest_id_interest_payment=i.interest_id INNER JOIN loans l ON i.fk_loans_id_interest=l.loans_id INNER JOIN lc_manager lc ON lc.fk_loans_id_lc_manager=l.loans_id WHERE lc.lc_manager_id=lcId ORDER BY ip.interest_payments_id DESC LIMIT 1;
-
-
-IF expirelyTime<=timeStatmp THEN
-
-SET interestCPMPU=ROUND(((loanAmountR*interestRateAccrual)/100));
-SELECT interestCPMPU;
-
-SET NewExistInterestAmountRemain=existInterestAmountRemain+interestCPMPU;
-
-SET NewExistingInterest=existingInterest+interestCPMPU;
-
-SELECT NewExistingInterest;
-
-SET newnoPAccruals=noPAccruals+1;
-SELECT newnoPAccruals;
-SET newexpirelyTime=expirelyTime + INTERVAL 24 HOUR;
-SELECT newexpirelyTime;
-
-UPDATE interest SET interest_amount=NewExistingInterest,interest_remaining=NewExistInterestAmountRemain WHERE interest_id=interestId;
-
-
-INSERT INTO interest_payments VALUES(NULL,interestCPMPU,0,NewExistInterestAmountRemain,CURRENT_TIMESTAMP,interestId);
-
-
-UPDATE lc_manager SET lc_manager_expirely_time=newexpirelyTime,lc_manager_no_accruals=newnoPAccruals WHERE lc_manager_id=lcId;
-
-IF newnoPAccruals>=maxNoPAccruals THEN
-
-UPDATE lc_manager SET lc_manager_status=2 WHERE lc_manager_id=lcId;
-
-END IF;
-
-
-END IF;
-
-
-SET l_done=0;
-
- END LOOP LedgerIds_loop;
-
-
-
-CLOSE selectTrnIds;
-
-END ##
-DELIMITER ;
-
-
-
-
-
+/* UPDATE allocations_total AS ft, (SELECT branch_id FROM branch  )AS b  SET ft.allocations_total_made=20000.0 WHERE ft.fk_branch_id_allocations_total= b.branch_id; */
 
 
 

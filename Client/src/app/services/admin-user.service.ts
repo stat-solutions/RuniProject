@@ -82,6 +82,23 @@ export class AdminUserService {
     }
 
 
+
+
+
+    makeAllocationTxn(postData: FormGroup) {
+      return this.http
+        .post<boolean>(
+          `${this.API_URL}/api/adminUser/makeAllocation`,
+          postData.value,
+          this.httpOptions
+        )
+
+        .pipe(mapTo(true), catchError(this.handleError));
+    }
+
+
+
+
     postTheTxn(postData: FormGroup) {
       return this.http
         .post<boolean>(

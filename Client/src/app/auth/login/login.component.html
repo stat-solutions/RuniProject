@@ -7,12 +7,12 @@
         class="mx-auto mb-0 pb-0"
         src="assets/img/rubai-1.svg"
         width="30"
-        height="30"
+        height="31"
       />
     </div>
     <div class="card-body mt-1 pt-2 mb-0 pb-1 shadow-lg">
       <h3 class="text-info d-flex justify-content-center mt-2 pt-1 mb-3">
-        Login
+        Login Now
       </h3>
       <form [formGroup]="userForm" (ngSubmit)="login()">
         <div class="form-group text-primary">
@@ -82,9 +82,8 @@
               </div>
             </div>
 
-            <input
-              type="text"
-              list="user_role11k"
+            <select
+              id="user_role11"
               formControlName="user_role11"
               class="form-control"
               [ngClass]="{
@@ -94,13 +93,11 @@
               }"
               autocomplete="off"
               placeholder="Select the User role"
-            />
-
-            <datalist id="user_role11k">
-              <option *ngFor="let item3k of userRoleInfo1$">{{
-                item3k.user_roles_name
+            >
+              <option *ngFor="let roles of userRoleInfo1$ | async">{{
+                roles.user_roles_name
               }}</option>
-            </datalist>
+            </select>
           </div>
           <div
             class="text-danger col"
@@ -121,8 +118,6 @@
           >
             Please select a valid user role!
           </div>
-
-          <!-- <ngx-alerts></ngx-alerts> -->
         </div>
 
         <div class="form-group text-primary">

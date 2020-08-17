@@ -11,6 +11,10 @@ import { VbbViewPortComponent } from './view-branch-bankings/vbb-view-port/vbb-v
 import { VbbViewPortBranchesComponent } from './view-branch-bankings/vbb-view-port-branches/vbb-view-port-branches.component';
 import { VbiViewPortComponent } from './view-branch-investments/vbi-view-port/vbi-view-port.component';
 import { VbiViewPortBranchesComponent } from './view-branch-investments/vbi-view-port-branches/vbi-view-port-branches.component';
+import { ViewBranchAllocationsComponent } from './view-branch-allocations/view-branch-allocations.component';
+import { VbaViewPortComponent } from './view-branch-allocations/vba-view-port/vba-view-port.component';
+import { VbaViewPortBranchesComponent } from './view-branch-allocations/vba-view-port-branches/vba-view-port-branches.component';
+import { MakeAllocationsPerBranchComponent } from './make-allocations-per-branch/make-allocations-per-branch.component';
 
 
 
@@ -21,7 +25,7 @@ const routes: Routes = [
       { path: 'landingpage', component: AdminDashboardLandingComponent },
       { path: 'postbankingperbranch', component: PostBankingPerBranchComponent },
       { path: 'postinvestmentperbranch', component: PostInvestmentPerBranchComponent },
-
+      { path: 'makeallocationsperbranch', component: MakeAllocationsPerBranchComponent },
       { path: 'viewbranchbankings', component: ViewBranchBankingsComponent , children: [
 
         { path: 'viewportbankings', component: VbbViewPortComponent },
@@ -35,6 +39,15 @@ const routes: Routes = [
         { path: 'viewportinvestemnentsbranches/:branch', component: VbiViewPortBranchesComponent },
 
       ]},
+
+
+      { path: 'viewbranchallocations', component: ViewBranchAllocationsComponent , children: [
+
+        { path: 'viewportallocations', component: VbaViewPortComponent },
+        { path: 'viewportallocationsbranches/:branch', component: VbaViewPortBranchesComponent },
+
+      ]},
+
 
       { path: 'viewandeditusers', component: ViewAndEditUsersComponent }
     ]

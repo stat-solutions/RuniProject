@@ -1,0 +1,28 @@
+.rub-head1{
+  position: relative;
+  margin-left: 95px;
+  margin-right: 95px;
+}
+.rub-head1 hr.top{
+  width: 30%;
+  min-width: 15px;
+  max-width: 30px;
+  position: relative;
+  margin-right: 15px;
+  background-color: #00162dc0;
+  height: 3px;
+}
+.rub-head1 hr.bottom{
+  width: 10%;
+  min-width: 15px;
+  max-width: 30px;
+  position: relative;
+  margin-right: 15px;
+  background-color: #00162dc0;
+  height: 3px;
+}
+
+
+.card-body {
+  border-radius: 8px;
+}

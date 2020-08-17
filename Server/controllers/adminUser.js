@@ -13,20 +13,26 @@ var SMS = require('../services/other_services/smsService');
 
 
 
-  // router.post('/postTheTxn', function(req, res,next) {
-  //   console.log("ddddddddddddddddddddddddddddddddddddddd");
-  //   serviceU.postTheTxnNow(req.body).then( function(results) {
-  //     res.status(200).json(results);
-  //   }
-  //   ).catch(next);
-  //   });
+  router.post('/postTheTxn', function(req, res,next) {
+    // console.log("ddddddddddddddddddddddddddddddddddddddd");
+    serviceU.postTheTxnNow(req.body).then( function(results) {
+      res.status(200).json(results);
+    }
+    ).catch(next);
+    });
 
-    // router.get('/bankLedgerStatement', function(req, res,next) {
-   
-    //   serviceU.getTheALLLedgerStatementBank().then( function(results) {
-    //     res.setHeader('Content-Type', 'application/json');
-    //     res.json(results);
-    //   } ).catch(next);});
+
+    
+
+    
+
+    router.post('/makeAllocation', function(req, res,next) {
+      // console.log("ddddddddddddddddddddddddddddddddddddddd");
+      serviceU.makeAllocationsNow(req.body).then( function(results) {
+        res.status(200).json(results);
+      }
+      ).catch(next);
+      });
 
 
     
