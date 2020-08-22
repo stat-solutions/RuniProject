@@ -17,7 +17,7 @@
                   <div class="card-header d-flex align-items-center">
                     <h5 class="rub-head4 text-info font-weight-bold my-0">
                       <hr class="top mt-1 mb-0" />
-                      ALLOCATIONS/BRANCH
+                      MOVEMENTS/{{theBranch}}
                       <hr class="bottom mt-0 mb-0" />
                     </h5>
                   </div>
@@ -30,15 +30,13 @@
                           <table class="table table-striped table-sm">
                             <thead class="text-info">
                               <tr>
-                                <th>Movements</th>
-                                <th>The Allocations</th>
+
                           <th>#</th>
-                           <th> Branch Name </th>
-                          <th>  Total Alloc Made </th>
-                           <th>  Total Alloc Transferred </th>
-                            <th> Balance </th>
-                              <th>  Date Last Updated </th>
-                                <th> Time Last updated </th>
+                           <th> Date </th>
+                          <th>  Time</th>
+                           <th>  Amount Removed </th>
+                            <th> Amount Added </th>
+                              <th>  Run Bal</th>
 
 
                               </tr>
@@ -46,20 +44,16 @@
                             <tbody>
                               <tr
                                 class="listing"
-                                *ngFor="let alloc of totalAllocationBranch$| async; let i = index"
+                                *ngFor="let allocLe of allocationLedgerN$| async; let i = index"
                                 class="text-success">
 
-                                <td> <button  class="btn btn-primary mr-5" [routerLink]="['/dashboardadmin/viewbranchallocations/viewportallocationsledger', alloc.branch_id,alloc.branch_name]"><i class="fa fa-tree" aria-hidden="true"></i> <i class="fa fa-car" aria-hidden="true"></i> </button></td>
 
-                                <td> <button  class="btn btn-primary mr-5" [routerLink]="['/dashboardadmin/viewbranchallocations/viewportallocationsmade', alloc.branch_id,alloc.branch_name]"><i class="fa fa-eye" aria-hidden="true"></i> <i class="fa fa-eye" aria-hidden="true"></i></button></td>
-
-                                <td>{{ alloc.id }}</td>
-                                <td>{{ alloc.branch_name  }}</td>
-                                <td>{{ alloc.total_allocations_made  | currency: "UGX" }}</td>
-                                <td>{{ alloc.total_allocations_deposited | currency: "UGX" }} </td>
-                                <td>{{ alloc.total_allocations_balance | currency: "UGX" }}</td>
-                                <td>{{ alloc.last_updated_date }}</td>
-                                <td>{{ alloc.last_updated_time }}</td>
+                                <td>{{ allocLe.id }}</td>
+                                <td>{{ allocLe.date_allocation  }}</td>
+                                <td>{{ allocLe.time_allocation  }}</td>
+                                <td>{{ allocLe.allocations_removed | number }} </td>
+                                <td>{{ allocLe.allocations_added | number }}</td>
+                                <td>{{ allocLe.allocations_balance | number }}</td>
 
                               </tr>
                             </tbody>

@@ -67,51 +67,55 @@ exports.makeAllocationsNow = function (data) {
 
 
 
-// exports.saveCustomerDetails = function (data) {
-
-//     return new Promise(function (resolve,next) {
-  
-//       var sql = "CALL saveCustomerDetails("+"'"+JSON.stringify(data)+"'"+")";
-//     console.log(sql);
-//     dbconnection.query(sql, null, function (error, results, fields) {
-//       if (error) {
-//         return next(error);
-//       } else {
-  
-//         // console.log(results[0]);
-  
-//        resolve(results[0]);
-//       }
-//     });
-//   }); }
-  
-
-  
-// exports.saveStageDetails = function (data) {
-
-//   return new Promise(function (resolve,next) {
-
-//     var sql = "CALL saveStageDetails("+"'"+JSON.stringify(data)+"'"+")";
-//   // console.log(sql);
-//   dbconnection.query(sql, null, function (error, results, fields) {
-//     if (error) {
-//       return next(error);
-//     } else {
-
-//       // console.log(results[0]);
-
-//      resolve(results[0]);
-//     }
-//   });
-// }); }
-  
-
 exports.getTheALLLedgerStatementBank = function () {
 
   return new Promise(function (resolve,next) {
 
     var sql = "CALL getTheALLLedgerStatementBank()";
   console.log(sql);
+  dbconnection.query(sql, null, function (error, results, fields) {
+    if (error) {
+      return next(error);
+    } else {
+        console.log(results[0]);
+     resolve(results[0]);
+    }
+  });
+});
+
+}
+
+
+
+
+
+  exports.getTheAllocationsLedgerState = function (branchName) {
+    // console.log(userId);
+      return new Promise(function (resolve,next) {
+        // console.log(userId);
+        var sql = "CALL allocationsLedgerStatement("+"'"+branchName+"'"+")";
+      console.log(sql);
+      dbconnection.query(sql, null, function (error, results, fields) {
+        if (error) {
+          return next(error);
+        } else {
+            // console.log(results[0]);
+         resolve(results[0]);
+        }
+      });
+    });
+    
+    }
+
+
+    
+
+exports.getTheTotalAllocationsState = function () {
+
+  return new Promise(function (resolve,next) {
+
+    var sql = "CALL allocationsTotalStatement()";
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
@@ -147,6 +151,44 @@ exports.getTheALLLedgerStatementInvestment = function () {
 
 
 
+
+exports.getallocationTotalStatementBranch = function (branchName) {
+  // console.log(userId);
+    return new Promise(function (resolve,next) {
+      // console.log(userId);
+      var sql = "CALL allocationsTotalStatementBranch("+"'"+branchName+"'"+")";
+    console.log(sql);
+    dbconnection.query(sql, null, function (error, results, fields) {
+      if (error) {
+        return next(error);
+      } else {
+          // console.log(results[0]);
+       resolve(results[0]);
+      }
+    });
+  });
+  
+  }
+
+
+
+  exports.getallocationMadeStatementBranch = function (branchName) {
+    // console.log(userId);
+      return new Promise(function (resolve,next) {
+        // console.log(userId);
+        var sql = "CALL allocationsIndivitualStatement("+"'"+branchName+"'"+")";
+      console.log(sql);
+      dbconnection.query(sql, null, function (error, results, fields) {
+        if (error) {
+          return next(error);
+        } else {
+            // console.log(results[0]);
+         resolve(results[0]);
+        }
+      });
+    });
+    
+    }
 
 
 exports.getThebranchLedgerStatementInvestment = function (branchName) {
@@ -190,20 +232,22 @@ exports.getThebranchLedgerStatementBank = function (branchName) {
 
 
 
-  // exports.numberPlateAlreadyExists = function (theNumberPlate) {
+  exports.checkInvestablility = function (branch) {
 
-  //   return new Promise(function (resolve,next) {
-  
-  //     var sql = "CALL numberPlateAlreadyExists("+"'"+theNumberPlate+"'"+")";
-  //   // console.log(sql);
-  //   dbconnection.query(sql, null, function (error, results, fields) {
-  //     if (error) {
-  //       return next(error);
-  //     } else {
-  //         // console.log(results[0]);
-  //         resolve(Boolean(results[0][0].number_plate_exists>0));
-  //     }
-  //   });
-  // });
-  
-  // }
+
+  return new Promise(function (resolve,next) {
+
+    var sql = "CALL isBranchInvestmentViable("+ "'" + JSON.stringify(data) + "'" +")";
+  console.log(sql);
+  dbconnection.query(sql, null, function (error, results, fields) {
+    if (error) {
+      return next(error);
+    } else {
+      // console.log(results[0]);
+
+      resolve(Boolean(results[0][0].viability>0));
+    }
+  });
+});
+
+  }

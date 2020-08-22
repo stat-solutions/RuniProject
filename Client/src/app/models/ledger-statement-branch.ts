@@ -1,6 +1,6 @@
 export interface LedgerStatementBranch {
   id: number;
-  date: Date;
+  dateX: string;
   narration: string;
    debit_amount: number;
    credit_amount: number;

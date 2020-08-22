@@ -44,7 +44,10 @@ export class VbaLayoutComponent implements OnInit {
       this.theBranches$ = this.authService.getTheBranches();
     }
 
+
+
     createFormGroup() {
+
       return new FormGroup({
         full_name: new FormControl('', Validators.compose([Validators.required])),
         branch_name: new FormControl(
@@ -101,8 +104,8 @@ export class VbaLayoutComponent implements OnInit {
             // 5. check whether the entered password has a special character
             // CustomValidatorInitialCompanySetup.
             //   patternValidator(/[!@#$%^&*_+-=;':"|,.<>/?/<mailto:!@#$%^&*_+-=;':"|,.<>/?]/, { hasSpecialCharacters: true }),
-
             // 6. Has a minimum length of 8 characters
+
             Validators.minLength(4),
             Validators.maxLength(4)
           ])
@@ -114,24 +117,33 @@ export class VbaLayoutComponent implements OnInit {
       this.userForm.reset();
     }
 
-    revertPetrol() {
-      this.userForm.controls.petrol_station.reset();
-    }
+
 
     get fval() {
       return this.userForm.controls;
     }
 
     setSelectedChanges(selectedChange: any) {
- if ( selectedChange.target.value === 'Select The Branch'){
+
+      // console.log('selected :' + selectedChange.target.value);
+
+      if ( selectedChange.target.value === 'Select The Branch'){
   this.fval.branch_name.setValidators([Validators.required]);
 
  }else{
-this.router.navigate([
-        '/dashboardadmin/viewbranchbankings/viewportbankingsbranches',
+
+  console.log('selected :' + selectedChange.target.value);
+  this.router.navigate([
+        '/dashboardadmin/viewbranchallocations/viewportallocationsbranches',
         selectedChange.target.value]);
       }
 
+    }
+
+    changeLocation(){
+
+      this.router.navigate([
+        '/dashboardadmin/viewbranchallocations/viewportallocations']);
     }
 
 

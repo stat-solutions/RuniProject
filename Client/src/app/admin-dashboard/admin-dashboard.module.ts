@@ -30,6 +30,8 @@ import { VbaViewPortBranchesComponent } from './view-branch-allocations/vba-view
 import { VbaViewPortComponent } from './view-branch-allocations/vba-view-port/vba-view-port.component';
 import { VbaLayoutComponent } from './view-branch-allocations/vba-layout/vba-layout.component';
 import { MakeAllocationsPerBranchComponent } from './make-allocations-per-branch/make-allocations-per-branch.component';
+import { VbaAllocationsLedgerStateComponent } from './view-branch-allocations/vba-allocations-ledger-state/vba-allocations-ledger-state.component';
+import { VbaAllocationsMadeStateComponent } from './view-branch-allocations/vba-allocations-made-state/vba-allocations-made-state.component';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
@@ -50,7 +52,10 @@ import { MakeAllocationsPerBranchComponent } from './make-allocations-per-branch
          VbaViewPortBranchesComponent,
          VbaViewPortComponent,
          VbaLayoutComponent,
-         MakeAllocationsPerBranchComponent
+         MakeAllocationsPerBranchComponent,
+         VbaAllocationsLedgerStateComponent,
+         VbaAllocationsMadeStateComponent,
+        
          ],
   imports: [
     CommonModule,

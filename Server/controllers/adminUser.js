@@ -33,12 +33,74 @@ var SMS = require('../services/other_services/smsService');
       }
       ).catch(next);
       });
+     
 
+      
+      router.post ('/investementViability', function(req, res,next) {
+        
+        serviceU.checkInvestablility(req.body).then( function(results) {
 
+            if(results){
+       
+          res.status(200).json(results);
+
+        }else{
+
+          res.status(401).json(results);
+        }
+
+        } ).catch(next);
+       
+       
+       });
+    
+       
     
 
+
+
+         router.get('/allocationLedgerStatement', function(req, res,next) {
+        
+           serviceU.getTheAllocationsLedgerState(req.query.id).then( function(results) {
+             res.setHeader('Content-Type', 'application/json');
+             res.json(results);
+           } ).catch(next);
+          
+          
+          });
+
+
+
+      router.get('/allocationTotalStatement', function(req, res,next) {
+        // console.log(req.query.id);
+         serviceU.getTheTotalAllocationsState().then( function(results) {
+           res.setHeader('Content-Type', 'application/json');
+           res.json(results);
+         } ).catch(next);});
+
+
+         
+      
+         
+
+
+         router.get('/allocationMadeStatement', function(req, res,next) {
+          console.log(req.query.id);
+           serviceU.getallocationMadeStatementBranch(req.query.id).then( function(results) {
+             res.setHeader('Content-Type', 'application/json');
+             res.json(results);
+           } ).catch(next);});
+   
+         router.get('/allocationTotalStatementBranch', function(req, res,next) {
+          console.log(req.query.id);
+           serviceU.getallocationTotalStatementBranch(req.query.id).then( function(results) {
+             res.setHeader('Content-Type', 'application/json');
+             res.json(results);
+           } ).catch(next);});
+
+
     router.get('/bankLedgerStatement', function(req, res,next) {
-      console.log(req.query.id);
+      // console.log(req.query.id);
        serviceU.getTheALLLedgerStatementBank().then( function(results) {
          res.setHeader('Content-Type', 'application/json');
          res.json(results);

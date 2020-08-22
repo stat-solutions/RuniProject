@@ -17,6 +17,7 @@ export class MakeAllocationsPerBranchComponent implements OnInit {
 
     userForm: FormGroup;
     errored: boolean;
+    confirmed: boolean;
     serviceErrors: string;
     theBranch: string;
     theCompany: string;
@@ -70,7 +71,9 @@ export class MakeAllocationsPerBranchComponent implements OnInit {
       this.userForm.controls.txn_amount.setValue(this.values);
     }
 
-
+    confirmFigure(){
+      this.confirmed=true;
+    }
 
     postTxn() {
 
@@ -98,12 +101,12 @@ export class MakeAllocationsPerBranchComponent implements OnInit {
               if (success) {
 
                 this.spinner.hide();
-                this.alertService.warning({ html: '<b>' + 'Txn was successfully posted!!' + '</b>' + '<br/>' });
-                this.router.navigate(['dashboardadmin/viewbranchallocations/viewportallocations']);
+                this.alertService.success({ html: '<b>' + 'Allocations was successfully done!!' + '</b>' + '<br/>' });
+
 
                 setTimeout(() => {
-                  location.reload();
-                }, 3000);
+                  this.router.navigate(['dashboardadmin/viewbranchallocations/viewportallocations']);
+                }, 1000);
               } else {
 
                 this.spinner.hide();

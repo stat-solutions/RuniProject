@@ -17,6 +17,7 @@ export class PostInvestmentPerBranchComponent implements OnInit {
 
     userForm: FormGroup;
     errored: boolean;
+    ValidatedNow: boolean;
     serviceErrors: string;
     theBranch: string;
     theCompany: string;
@@ -74,6 +75,36 @@ export class PostInvestmentPerBranchComponent implements OnInit {
       this.userForm.controls.txn_amount.setValue(this.values);
     }
 
+
+    checTheValidityOfAmount(){
+
+
+if ( this.userForm.controls.txn_type.value === 'Deposit'){
+
+      this.adminUserService
+      .investementViability(this.userForm)
+      .subscribe(
+       () => {
+
+          this.ValidatedNow = true;
+        },
+
+        (error: string) => {
+          this.errored = true;
+          this.serviceErrors = error;
+          this.alertService.danger({
+            html: '<b>' + this.serviceErrors + '</b>' + '<br/>'
+          });
+        }
+      );
+    }else{
+
+      this.ValidatedNow = true;
+    }
+    }
+
+
+
     postTxn() {
 
       this.userForm.patchValue({
@@ -101,7 +132,7 @@ export class PostInvestmentPerBranchComponent implements OnInit {
 
                 this.spinner.hide();
                 this.alertService.warning({ html: '<b>' + 'Txn was successfully posted!!' + '</b>' + '<br/>' });
-                this.router.navigate(['dashboardpump/shiftmanagement']);
+                this.router.navigate(['dashboardadmin/viewbranchinvestemnts/viewportinvestments']);
 
                 setTimeout(() => {
                   location.reload();

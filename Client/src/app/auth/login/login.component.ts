@@ -92,7 +92,13 @@ export class LoginComponent implements OnInit {
     this.fieldType = !this.fieldType;
   }
 
+  setSelectedChanges(selectedChange: any) {
+    if ( selectedChange.target.value === 'Select The User Role'){
+     this.fval.user_role11.setValidators([Validators.required]);
 
+    }
+
+       }
 
   login() {
     this.submitted = true;

@@ -15,6 +15,8 @@ import { ViewBranchAllocationsComponent } from './view-branch-allocations/view-b
 import { VbaViewPortComponent } from './view-branch-allocations/vba-view-port/vba-view-port.component';
 import { VbaViewPortBranchesComponent } from './view-branch-allocations/vba-view-port-branches/vba-view-port-branches.component';
 import { MakeAllocationsPerBranchComponent } from './make-allocations-per-branch/make-allocations-per-branch.component';
+import { VbaAllocationsLedgerStateComponent } from './view-branch-allocations/vba-allocations-ledger-state/vba-allocations-ledger-state.component';
+import { VbaAllocationsMadeStateComponent } from './view-branch-allocations/vba-allocations-made-state/vba-allocations-made-state.component';
 
 
 
@@ -44,10 +46,14 @@ const routes: Routes = [
       { path: 'viewbranchallocations', component: ViewBranchAllocationsComponent , children: [
 
         { path: 'viewportallocations', component: VbaViewPortComponent },
+
         { path: 'viewportallocationsbranches/:branch', component: VbaViewPortBranchesComponent },
 
-      ]},
+        { path: 'viewportallocationsledger/:branch', component: VbaAllocationsLedgerStateComponent },
 
+        { path: 'viewportallocationsmade/:branchId/:branchName', component:  VbaAllocationsMadeStateComponent},
+
+      ]},
 
       { path: 'viewandeditusers', component: ViewAndEditUsersComponent }
     ]

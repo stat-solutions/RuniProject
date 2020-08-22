@@ -26,3 +26,18 @@
 .card-body {
   border-radius: 8px;
 }
+
+//media queries
+@media (min-width: 360px){
+  .card-body{
+    width: 100%;
+    max-width: 350px;
+min-width: 700px;  }
+}
+
+@media (min-width: 812px){
+  .card-body{
+    width: 100%;
+    max-width: 780px;
+min-width: 700px;  }
+}

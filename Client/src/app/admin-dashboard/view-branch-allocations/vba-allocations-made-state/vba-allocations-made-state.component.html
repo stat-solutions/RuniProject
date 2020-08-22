@@ -17,7 +17,7 @@
                   <div class="card-header d-flex align-items-center">
                     <h5 class="rub-head4 text-info font-weight-bold my-0">
                       <hr class="top mt-1 mb-0" />
-                      ALLOCATIONS/BRANCH
+                      ALLOCATIONS/{{theBranch}}
                       <hr class="bottom mt-0 mb-0" />
                     </h5>
                   </div>
@@ -30,37 +30,41 @@
                           <table class="table table-striped table-sm">
                             <thead class="text-info">
                               <tr>
-                                <th>Movements</th>
-                                <th>The Allocations</th>
-                          <th>#</th>
-                           <th> Branch Name </th>
-                          <th>  Total Alloc Made </th>
-                           <th>  Total Alloc Transferred </th>
-                            <th> Balance </th>
-                              <th>  Date Last Updated </th>
-                                <th> Time Last updated </th>
 
+                          <th>#</th>
+                           <th> Date </th>
+                          <th>  Time</th>
+                           <th>  Allocation </th>
+                            <th> Percentage </th>
+                              <th>  Amount Got</th>
+                                <th> Run Bal</th>
+                                <th> Officer</th>
 
                               </tr>
                             </thead>
                             <tbody>
                               <tr
                                 class="listing"
-                                *ngFor="let alloc of totalAllocationBranch$| async; let i = index"
+                                *ngFor="let alloc of allocationMadeN$| async; let i = index"
                                 class="text-success">
 
-                                <td> <button  class="btn btn-primary mr-5" [routerLink]="['/dashboardadmin/viewbranchallocations/viewportallocationsledger', alloc.branch_id,alloc.branch_name]"><i class="fa fa-tree" aria-hidden="true"></i> <i class="fa fa-car" aria-hidden="true"></i> </button></td>
 
-                                <td> <button  class="btn btn-primary mr-5" [routerLink]="['/dashboardadmin/viewbranchallocations/viewportallocationsmade', alloc.branch_id,alloc.branch_name]"><i class="fa fa-eye" aria-hidden="true"></i> <i class="fa fa-eye" aria-hidden="true"></i></button></td>
-
+                                <!-- id: number;
+                                date_allocation_made: string;
+                                time_allocation_made: string;
+                                allocatin_made: number;
+                                percentage_used: number;
+                                allocation_got: number;
+                                allocation_total_got: number;
+                                allocation_by_id: number; -->
                                 <td>{{ alloc.id }}</td>
-                                <td>{{ alloc.branch_name  }}</td>
-                                <td>{{ alloc.total_allocations_made  | currency: "UGX" }}</td>
-                                <td>{{ alloc.total_allocations_deposited | currency: "UGX" }} </td>
-                                <td>{{ alloc.total_allocations_balance | currency: "UGX" }}</td>
-                                <td>{{ alloc.last_updated_date }}</td>
-                                <td>{{ alloc.last_updated_time }}</td>
-
+                                <td>{{ alloc.date_allocation_made  }}</td>
+                                <td>{{ alloc.time_allocation_made  }}</td>
+                                <td>{{ alloc.allocatin_made | number }} </td>
+                                <td>{{ alloc.percentage_used | number }}</td>
+                                <td>{{ alloc.allocation_got | number }}</td>
+                                <td>{{ alloc.allocation_total_got | number }}</td>
+                                <td>{{ alloc.allocation_by_id }}</td>
                               </tr>
                             </tbody>
                           </table>

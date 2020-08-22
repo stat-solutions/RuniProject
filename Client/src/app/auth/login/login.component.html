@@ -82,22 +82,15 @@
               </div>
             </div>
 
-            <select
-              id="user_role11"
-              formControlName="user_role11"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid':
-                  (fval.user_role11.touched || fval.user_role11.dirty) &&
-                  fval.user_role11.errors
-              }"
-              autocomplete="off"
-              placeholder="Select the User role"
-            >
-              <option *ngFor="let roles of userRoleInfo1$ | async">{{
-                roles.user_roles_name
-              }}</option>
+            <select class="form-control" formControlName="user_role11"
+            (change)="setSelectedChanges($event)">
+            <option selected>Select The User Role</option>
+            <option *ngFor="let roles of userRoleInfo1$ | async">{{
+              roles.user_roles_name
+           }}</option>
+
             </select>
+
           </div>
           <div
             class="text-danger col"

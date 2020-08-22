@@ -176,6 +176,58 @@ DEFAULT CHARACTER SET = utf8;
   CREATE INDEX `fk_allocations_total_id_allocations_details_idx` ON `allocations_details`(`fk_allocations_total_id_allocations_details` ASC) VISIBLE;
 
 
+  
+
+-- -----------------------------------------------------
+-- Table `allocations_ledger`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `allocations_ledger` (
+  `allocations_ledger_id` INT(11) NOT NULL AUTO_INCREMENT,
+      `allocations_ledger_added` DOUBLE NULL,
+        `allocations_ledger_removed` DOUBLE NULL,
+  `fk_branch_id_allocations_ledger` INT(11) NULL ,-- Branch being allocated the funds
+        `fk_users_id_allocations_ledger` INT(11) NULL ,  --  The id of the user making the allocation
+          `fk_allocations_total_id_allocations_ledger` INT(11) NULL , 
+   `created_at` TIMESTAMP,   
+  `update_at` TIMESTAMP,
+  PRIMARY KEY (`allocations_ledger_id`),
+
+  CONSTRAINT `fk_branch_id_allocations_ledger` 
+  FOREIGN KEY (`fk_branch_id_allocations_ledger`) 
+  REFERENCES `branch`(`branch_id`)
+   ON DELETE CASCADE 
+   ON UPDATE NO ACTION,
+   
+
+     CONSTRAINT `fk_users_id_allocations_ledger` 
+  FOREIGN KEY (`fk_users_id_allocations_ledger`) 
+  REFERENCES `users`(`users_id`)
+   ON DELETE CASCADE 
+   ON UPDATE NO ACTION,
+
+   
+     CONSTRAINT `fk_allocations_total_id_allocations_ledger` 
+  FOREIGN KEY (`fk_allocations_total_id_allocations_ledger`) 
+  REFERENCES `allocations_total`(`allocations_total_id`)
+   ON DELETE CASCADE 
+   ON UPDATE NO ACTION
+   
+   )
+ENGINE = InnoDB
+AUTO_INCREMENT = 89000
+DEFAULT CHARACTER SET = utf8;
+
+ CREATE INDEX `fk_branch_id_allocations_ledger_idx` ON `allocations_ledger`(`fk_branch_id_allocations_ledger` ASC) VISIBLE;
+
+
+  CREATE INDEX `fk_users_id_allocations_ledger_idx` ON `allocations_ledger`(`fk_users_id_allocations_ledger` ASC) VISIBLE;
+
+
+  CREATE INDEX `fk_allocations_total_id_allocations_ledger_idx` ON `allocations_ledger`(`fk_allocations_total_id_allocations_ledger` ASC) VISIBLE;
+
+
+
+  
 
 -- -----------------------------------------------------
 -- Table `amount_available`
@@ -205,8 +257,31 @@ DEFAULT CHARACTER SET = utf8;
  
 
  
+-- -----------------------------------------------------
+-- Table `amount_alloc_table`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `amount_alloc_table` (
+  `amount_alloc_table_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `amount_amount_alloc` DOUBLE NULL,
+  PRIMARY KEY (`amount_alloc_table_id`)
 
+   )
+ENGINE = InnoDB
+AUTO_INCREMENT = 8800
+DEFAULT CHARACTER SET = utf8;
 
+-- -----------------------------------------------------
+-- Table `amount_alloc_table`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `amount_alloc_table_bal` (
+  `amount_alloc_table_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `amount_amount_alloc` DOUBLE NULL,
+  PRIMARY KEY (`amount_alloc_table_id`)
+
+   )
+ENGINE = InnoDB
+AUTO_INCREMENT = 8800
+DEFAULT CHARACTER SET = utf8;
 
 
 /*==============PART TWO:USER DETAILS SETUPS=============*/

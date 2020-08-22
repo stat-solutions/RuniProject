@@ -6,6 +6,9 @@ import { catchError, mapTo } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { LedgerStatementBranch } from '../models/ledger-statement-branch';
 import { LedgerStatement } from '../models/ledger-statement';
+import { AllocationTotalStatement } from '../models/allocation-total-statement';
+import { AllocationsMadeStatement } from '../models/allocations-made-statement';
+import { AllocationLedgerStatement } from '../models/allocation-ledger-statement';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +62,90 @@ export class AdminUserService {
     }
 
 
+    allocationsMadehNow(id: string): Observable<AllocationsMadeStatement[]> {
+      const options1 = { params: new HttpParams().set('id', id) };
+
+      return this.http
+        .get<AllocationsMadeStatement[]>(
+          `${this.API_URL}/api/adminUser/allocationMadeStatement`,
+          options1
+        )
+
+        .pipe(
+          // tap(response => console.log(`${response}`)),
+
+          catchError(this.handleError)
+        );
+    }
+
+
+
+
+    // investementViability(id: string): Observable<AllocationLedgerStatement[]> {
+    //   const options1 = { params: new HttpParams().set('id', id) };
+
+    //   return this.http
+    //     .get<AllocationLedgerStatement[]>(
+    //       `${this.API_URL}/api/adminUser/investementViability`,
+    //       options1
+    //     )
+
+    //     .pipe(
+    //       // tap(response => console.log(`${response}`)),
+
+    //       catchError(this.handleError)
+    //     );
+    // }
+    investementViability(postData: FormGroup) {
+      return this.http
+        .post<boolean>(
+          `${this.API_URL}/api/adminUser/investementViability`,
+          postData.value,
+          this.httpOptions
+        )
+
+        .pipe(mapTo(true), catchError(this.handleError));
+    }
+
+
+
+    allocationsLedgerhNow(id: string): Observable<AllocationLedgerStatement[]> {
+      const options1 = { params: new HttpParams().set('id', id) };
+
+      return this.http
+        .get<AllocationLedgerStatement[]>(
+          `${this.API_URL}/api/adminUser/allocationLedgerStatement`,
+          options1
+        )
+
+        .pipe(
+          // tap(response => console.log(`${response}`)),
+
+          catchError(this.handleError)
+        );
+    }
+
+
+
+
+
+    allocationsTotalStateBranchNow(id: string): Observable<AllocationTotalStatement[]> {
+      const options1 = { params: new HttpParams().set('id', id) };
+
+      return this.http
+        .get<AllocationTotalStatement[]>(
+          `${this.API_URL}/api/adminUser/allocationTotalStatementBranch`,
+          options1
+        )
+
+        .pipe(
+          // tap(response => console.log(`${response}`)),
+
+          catchError(this.handleError)
+        );
+    }
+
+
 
     bankStatementAllBank(): Observable<LedgerStatement[]> {
 
@@ -69,6 +156,38 @@ export class AdminUserService {
           catchError(this.handleError)
         );
     }
+
+    allocationsTotalState(): Observable<AllocationTotalStatement[]> {
+
+      return this.http.get<AllocationTotalStatement[]>( `${this.API_URL}/api/adminUser/allocationTotalStatement`, this.httpOptions)
+
+        .pipe(
+
+          catchError(this.handleError)
+        );
+    }
+
+
+
+
+    // allocationsTotalStateBranch(id: string): Observable<AllocationTotalStatement[]> {
+    //   const options1 = { params: new HttpParams().set('id', id) };
+
+    //   return this.http
+    //     .get<AllocationTotalStatement[]>(
+    //       `${this.API_URL}/api/adminUser/allocationTotalStatementBranch`,
+    //       options1
+    //     )
+
+    //     .pipe(
+    //       // tap(response => console.log(`${response}`)),
+
+    //       catchError(this.handleError)
+    //     );
+    // }
+
+
+
 
 
     investmentStatementAll(): Observable<LedgerStatement[]> {
