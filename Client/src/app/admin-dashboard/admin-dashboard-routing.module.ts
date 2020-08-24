@@ -15,28 +15,28 @@ import { VbiViewPortBranchesComponent } from './view-branch-investments/vbi-view
 
 
 const routes: Routes = [
-  { path: 'dashboardadmin', redirectTo: '/dashboardadmin/landingpage', pathMatch: 'full' },
+  { path: 'dashboardadmin', redirectTo: '/dashboardadmin/landing', pathMatch: 'full' },
   {
     path: 'dashboardadmin', component: AdminDashboardComponent, children: [
-      { path: 'landingpage', component: AdminDashboardLandingComponent },
-      { path: 'postbankingperbranch', component: PostBankingPerBranchComponent },
-      { path: 'postinvestmentperbranch', component: PostInvestmentPerBranchComponent },
+      { path: 'landing', component: AdminDashboardLandingComponent },
+      { path: 'postbanking', component: PostBankingPerBranchComponent },
+      { path: 'postinvestment', component: PostInvestmentPerBranchComponent },
 
-      { path: 'viewbranchbankings', component: ViewBranchBankingsComponent , children: [
+      { path: 'viewbankings', component: ViewBranchBankingsComponent , children: [
 
         { path: 'viewportbankings', component: VbbViewPortComponent },
-        { path: 'viewportbankingsbranches/:branch', component: VbbViewPortBranchesComponent },
+        { path: 'viewportbankings/:branch', component: VbbViewPortBranchesComponent },
 
       ]},
 
-      { path: 'viewbranchinvestemnts', component: ViewBranchInvestmentsComponent , children: [
+      { path: 'viewinvestments', component: ViewBranchInvestmentsComponent , children: [
 
         { path: 'viewportinvestments', component: VbiViewPortComponent },
-        { path: 'viewportinvestemnentsbranches/:branch', component: VbiViewPortBranchesComponent },
+        { path: 'viewportinvestments/:branch', component: VbiViewPortBranchesComponent },
 
       ]},
 
-      { path: 'viewandeditusers', component: ViewAndEditUsersComponent }
+      { path: 'viewEditusers', component: ViewAndEditUsersComponent }
     ]
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   userForm: FormGroup;
   loginStatus: string;
   value: string;
+  fieldType: boolean;
   stationBalanceExits: boolean;
   mySubscription: any;
   userRoleInfo1$: Observable< UserRole[]>;
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
-    private layoutService: LayoutManageService
+    private layoutService: LayoutManageService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
 
 
   createFormGroup() {
-    return new FormGroup({
+    return this.fb.group({
       email: new FormControl(
         '',
         Validators.compose([
@@ -85,6 +87,11 @@ export class LoginComponent implements OnInit {
     return this.userForm.controls;
   }
 
+
+    //toggle visibility of password field
+    toggleFieldType() {
+      this.fieldType = !this.fieldType;
+    }
 
 
   login() {

@@ -1,29 +1,88 @@
-.navbar {
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
-   padding: 0rem 0rem !important;
-   border-bottom-color: #00162dc0 !important;
-box-shadow: none;
-}
-.navbar-brand {
-  margin-top: 0rem !important;
-  margin-bottom: 0px !important;
-  padding-top: 0rem !important;
-  padding-bottom: 0rem;
-  padding-right: .35rem;
-  margin-right: .35rem;
-  font-size: 2.25rem;
-  height: 4.25rem;
-  border-bottom-color: #00162dc0 !important;
-  box-shadow: none;
-  }
 .logo {
-width: 40px !important;
-height: 40px !important;
-margin-top: 5px !important;
-margin-bottom: 15px !important;
-padding-top: 0px !important;
-margin-right: 1rem !important;
-padding-right: 0rem !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin-top: 5px !important;
+  margin-bottom: 15px !important;
+  padding-top: 0px !important;
+  margin-right: 1rem !important;
+  padding-right: 0rem !important;
 }
 
+//media queries
+@media (min-width: 375px) {
+  .logo {
+    margin-bottom: 17px !important;
+  }
+}
+
+@media (min-width: 400px) {
+  .logo {
+    margin-bottom: 1.21rem !important;
+  }
+}
+
+@media (min-width: 440px) {
+  .logo {
+    margin-bottom: 23px !important;
+  }
+}
+
+@media (min-width: 620px) {
+  .logo {
+    margin-bottom: 0rem !important;
+    margin-top: 0rem !important;
+    // margin-bottom: 25px !important;
+  }
+}
+
+@media (min-width: 730px) {
+  .logo {
+    margin-bottom: 0rem !important;
+    margin-top: 0rem !important;
+    // margin-bottom: 1.891rem !important;
+    // margin-top: 15px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .logo {
+    margin-top: 0rem !important;
+    margin-bottom: 0.507rem !important;
+  }
+}
+
+@media (min-width: 811px) {
+  .logo {
+    margin-top: 0rem !important;
+    // margin-bottom: 1.97rem !important;
+  }
+  }
+
+@media (min-width: 821px) {
+  // .logo {
+  //   margin-bottom: 0rem !important;
+  //   margin-top: 0px !important;
+    // margin-bottom: 2.401rem !important;
+  // }
+}
+
+@media (min-width: 1020px) {
+  // .logo {
+  //   margin-bottom: 0rem !important;
+  //   margin-top: 0rem !important;
+    // margin-bottom: 2.41rem !important;
+// }
+}
+
+@media (min-width: 1320px) {
+  // .logo {
+    // margin-bottom: 0rem !important;
+    // margin-bottom: 2.613rem !important;
+  // }
+}
+
+@media (min-width: 1420px) {
+  // .logo {
+  //   margin-bottom: 0rem !important;
+  // }
+}

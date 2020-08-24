@@ -31,7 +31,7 @@ export class AdminDashboardLandingComponent implements OnInit {
       userRoleInfo$: Observable< UserRole[]>;
       theBranches$: Observable<TheBranches[]>;
 
-  // @ViewChild('staticTabs', { static: false }) staticTabs: TabsetComponent;
+  @ViewChild('staticTabs', { static: false }) staticTabs: TabsetComponent;
 
   bankTable = [
     {
