@@ -25,7 +25,8 @@ export class PostInvestmentsComponent implements OnInit {
       values: any;
       numberValue: number;
       theBranches$: Observable<TheBranches[]>;
-      // ShiftDetails[]
+       txntypeNow = [ { txnType: 'WITHDRAWAL' } ];
+      // ShiftDetails[]  {txnType: 'DEPOSIT' },
       constructor(
         private authService: AuthServiceService,
         private adminUserService: AdminUserService,
@@ -48,7 +49,7 @@ export class PostInvestmentsComponent implements OnInit {
           user_id: new FormControl(''),
           txn_family: new FormControl(''),
           narration: new FormControl('', Validators.compose([Validators.required])),
-          branch_name: new FormControl('', Validators.compose([Validators.required])),
+          branch_name: new FormControl(''),
 
           txn_type: new FormControl('', Validators.compose([Validators.required])),
           txn_amount: new FormControl('', Validators.compose([Validators.required
@@ -76,6 +77,19 @@ export class PostInvestmentsComponent implements OnInit {
         this.userForm.controls.txn_amount.setValue(this.values);
       }
 
+
+    setSelectedChanges(selectedChange: any) {
+      if ( selectedChange.target.value === 'Select TXN Type'){
+       this.fval.txn_type.setValidators([Validators.required]);
+  }
+
+      if (selectedChange.target.value === 'Select The Branch'){
+    this.fval.branch_name.setValidators([Validators.required]);
+}
+
+         }
+
+
       postTxn() {
 
         this.userForm.patchValue({
@@ -91,9 +105,11 @@ export class PostInvestmentsComponent implements OnInit {
           this.userForm.patchValue({
             user_station: jwt_decode(this.authService.getJwtToken()).user_station,
             txn_family: 'INVESTMENT',
-            user_id: jwt_decode(this.authService.getJwtToken()).user_id
+            user_id: jwt_decode(this.authService.getJwtToken()).user_id,
+            branch_name: jwt_decode(this.authService.getJwtToken()).user_branch_name
           });
 
+          // "user_branch_id": results.fk_branch_id_users,
 
           this.adminUserService.postTheTxn(this.userForm)
             .subscribe(
@@ -103,7 +119,7 @@ export class PostInvestmentsComponent implements OnInit {
 
                   this.spinner.hide();
                   this.alertService.warning({ html: '<b>' + 'Txn was successfully posted!!' + '</b>' + '<br/>' });
-                  this.router.navigate(['dashboardpump/shiftmanagement']);
+                  this.router.navigate(['branchuser/viewbankings']);
 
                   setTimeout(() => {
                     location.reload();

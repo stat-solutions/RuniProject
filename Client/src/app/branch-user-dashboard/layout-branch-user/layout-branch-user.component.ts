@@ -34,6 +34,8 @@ export class LayoutBranchUserComponent implements OnInit {
         errored: boolean;
         serviceErrors: string;
         alertService: any;
+        branchName: string;
+        userName: string;
 
         constructor(
           private authService: AuthServiceService,
@@ -47,7 +49,9 @@ export class LayoutBranchUserComponent implements OnInit {
 
           this.toggleArial();
 
-          // this.updateLayout();
+          this.branchName =  jwt_decode(this.authService.getJwtToken()).user_branch_name;
+          this.userName =  jwt_decode(this.authService.getJwtToken()).user_name;
+
         }
 
 

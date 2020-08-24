@@ -151,7 +151,7 @@ export class LoginComponent implements OnInit {
 
                     // this.layoutService.emitChangePumpUser(true);
                     // this.layoutService.emitLoginLogout(true);
-                    this.router.navigate(['dashboardbranch/landingpage']);
+                    this.router.navigate(['branchuser/landing']);
                     // location.reload();
                   }, 1000);
 

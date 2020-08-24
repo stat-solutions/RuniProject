@@ -7,12 +7,21 @@
             <div class="row">
               <div class="col mx-0 px-0">
                 <div class="text-uppercase text-info font-weight-bold mb-1">
-                  <span class="rub-title-1 ml-0">ALLOCATED</span>
+                  <span class="rub-title-1 ml-0">ALLOCATIONS</span>
                 </div>
                 <div class="text-secondary font-weight-bold mb-0 pb-0">
+<ul>
                   <span class="pl-0 pb-0">
-                    {{ lastBanking() | currency: "UGX" }}
+                   AMOUNT ALLOCATIED: {{ lastBanking() | currency: "UGX" }}
                   </span>
+                  <span class="pl-0 pb-0">
+                  AMOUNT TRANSFERRED:  {{ lastBanking() | currency: "UGX" }}
+                  </span>
+                  <span class="pl-0 pb-0">
+                  BALANCE RECEIVABLE:   {{ lastBanking() | currency: "UGX" }}
+                  </span>
+
+                </ul>
                 </div>
               </div>
               <div class="col-auto align-self-center mx-0 px-0">
@@ -29,12 +38,21 @@
             <div class="row">
               <div class="col mx-0 px-0">
                 <div class="text-uppercase text-info font-weight-bold mb-1">
-                  <span class="rub-title-2 ml-0">DEPOSITS</span>
+                  <span class="rub-title-2 ml-0">INVESTMENTS</span>
                 </div>
                 <div class="text-secondary font-weight-bold mb-0 pb-0">
-                  <span class="pl-0 pb-0">
-                    {{ lastInvestment() | currency: "UGX" }}
-                  </span>
+                  <ul>
+                    <span class="pl-0 pb-0">
+                     AMOUNT DEPOSITED: {{ lastBanking() | currency: "UGX" }}
+                    </span>
+                    <span class="pl-0 pb-0">
+                    AMOUNT WITHDRAWN:  {{ lastBanking() | currency: "UGX" }}
+                    </span>
+                    <span class="pl-0 pb-0">
+                    BALANCE RUNNING:   {{ lastBanking() | currency: "UGX" }}
+                    </span>
+  
+                  </ul>
                 </div>
               </div>
               <div class="col-auto align-self-center mx-0 px-0">
@@ -50,12 +68,21 @@
             <div class="row">
               <div class="col mx-0 px-0">
                 <div class="text-uppercase text-info font-weight-bold mb-1">
-                  <span class="rub-title-1 ml-0">WITHDRAWALS</span>
+                  <span class="rub-title-1 ml-0">BANKINGS</span>
                 </div>
                 <div class="text-secondary font-weight-bold mb-0 pb-0">
-                  <span class="pl-0 pb-0">
-                    {{ lastBanking() | currency: "UGX" }}
-                  </span>
+                  <ul>
+                    <span class="pl-0 pb-0">
+                     AMOUNT DEPOSITED: {{ lastBanking() | currency: "UGX" }}
+                    </span>
+                    <span class="pl-0 pb-0">
+                    AMOUNT WITHDRAWN:  {{ lastBanking() | currency: "UGX" }}
+                    </span>
+                    <span class="pl-0 pb-0">
+                    BALANCE RUNNING:   {{ lastBanking() | currency: "UGX" }}
+                    </span>
+  
+                  </ul>
                 </div>
               </div>
               <div class="col-auto align-self-center mx-0 px-0">
@@ -66,7 +93,7 @@
         </div>
       </div>
 
-      <div class="rub-col-2 col-6 col-md-3 col-xl-3 mb-3">
+      <!-- <div class="rub-col-2 col-6 col-md-3 col-xl-3 mb-3">
         <div class="rub-card-2 card shadow py-0">
           <div class="card-body">
             <div class="row">
@@ -86,7 +113,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="components row mt-2 pt-0">
       <div class="col-lg-12 col-md-12 col-xs-12">

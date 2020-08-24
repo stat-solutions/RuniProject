@@ -23,9 +23,11 @@ export class PostBankingComponent implements OnInit {
       serviceErrors: string;
       theBranch: string;
       theCompany: string;
+      userName: string;
       values: any;
       numberValue: number;
       theBranches$: Observable<TheBranches[]>;
+      txntypeNow = [{txnType: 'DEPOSIT' }, { txnType: 'WITHDRAWAL' } ];
       // ShiftDetails[]
       constructor(
         private authService: AuthServiceService,
@@ -38,6 +40,7 @@ export class PostBankingComponent implements OnInit {
       ngOnInit() {
         this.theBranch = jwt_decode(this.authService.getJwtToken()).user_branch_name;
         this.theCompany = jwt_decode(this.authService.getJwtToken()).user_station_company;
+        this.userName =  jwt_decode(this.authService.getJwtToken()).user_name;
         this.userForm = this.createFormGroup();
         this.theBranches$ = this.authService.getTheBranches();
       }
@@ -49,7 +52,7 @@ export class PostBankingComponent implements OnInit {
           user_id: new FormControl(''),
           txn_family: new FormControl(''),
           narration: new FormControl('', Validators.compose([Validators.required])),
-          branch_name: new FormControl('', Validators.compose([Validators.required])),
+          branch_name: new FormControl(''),
 
           txn_type: new FormControl('', Validators.compose([Validators.required])),
           txn_amount: new FormControl('', Validators.compose([Validators.required
@@ -77,6 +80,19 @@ export class PostBankingComponent implements OnInit {
         this.userForm.controls.txn_amount.setValue(this.values);
       }
 
+
+
+      setSelectedChanges(selectedChange: any) {
+        if ( selectedChange.target.value === 'Select TXN Type'){
+         this.fval.txn_type.setValidators([Validators.required]);
+    }
+
+        if (selectedChange.target.value === 'Select The Branch'){
+      this.fval.branch_name.setValidators([Validators.required]);
+  }
+
+           }
+
       postTxn() {
 
         this.userForm.patchValue({
@@ -92,7 +108,8 @@ export class PostBankingComponent implements OnInit {
           this.userForm.patchValue({
             user_station: jwt_decode(this.authService.getJwtToken()).user_station,
             txn_family: 'BANK',
-            user_id: jwt_decode(this.authService.getJwtToken()).user_id
+            user_id: jwt_decode(this.authService.getJwtToken()).user_id,
+            branch_name: jwt_decode(this.authService.getJwtToken()).user_branch_name
           });
 
 
@@ -104,7 +121,7 @@ export class PostBankingComponent implements OnInit {
 
                   this.spinner.hide();
                   this.alertService.warning({ html: '<b>' + 'Txn was successfully posted!!' + '</b>' + '<br/>' });
-                  this.router.navigate(['dashboardpump/shiftmanagement']);
+                  this.router.navigate(['branchuser/viewbankings']);
 
                   setTimeout(() => {
                     location.reload();

@@ -9,25 +9,25 @@
     </h5>
   <div class="card-body mt-1 pt-4 mb-0 pb-3 shadow-lg">
       <form [formGroup]="userForm" (ngSubmit)="postTxn()">
-          <div class="form-group text-primary">
-            <label
-              for="txn_type"
-              >Transaction type</label
-            >
-            <div class="input-group mb-0">
-              <select    formControlName="txn_type" class="form-control"  [ngClass]=" { 'is-invalid': (fval.txn_type.touched||fval.txn_type.dirty) && fval.txn_type.errors }" autocomplete="off" placeholder="Txn Type"><i  *ngIf="fval.txn_type.valid" class="material-icons">check_circle</i>
-                <option selected>Select TXN Type</option>
-                <option>Deposit</option>
-                <option>Withdrawal</option>
-                    </select>
-            </div>
-            <div class="text-danger col" *ngIf="(fval.txn_type.touched||fval.txn_type.dirty)  && fval.txn_type.errors?.required">The Txn Type is required</div>
+        <div class="form-group text-primary">
+          <label
+            for="txn_type"
+            >Transaction type</label
+          >
+          <div class="input-group mb-0">
+            <select   formControlName="txn_type" class="form-control"   (change)="setSelectedChanges($event)" ><i  *ngIf="fval.txn_type.valid" class="material-icons">check_circle</i>
+              <option selected>Select TXN Type</option>
+              <option  *ngFor="let txnt of txntypeNow">{{txnt.txnType}}</option>
 
-            <div class="text-danger col" *ngIf="(fval.txn_type.touched||fval.txn_type.dirty)  && fval.txn_type.errors?.belongTotxn_types">Please select a valid Txn Type</div>
+                  </select>
+          </div>
+          <div class="text-danger col" *ngIf="(fval.txn_type.touched||fval.txn_type.dirty)  && fval.txn_type.errors?.required">The Txn Type is required</div>
+
+          <div class="text-danger col" *ngIf="(fval.txn_type.touched||fval.txn_type.dirty)  && fval.txn_type.errors?.belongTotxn_types">Please select a valid Txn Type</div>
 
 
 
-        </div>
+      </div>
         <div class="form-group text-primary">
           <label for="narration" [ngClass]="fval.narration.valid ? 'text-info' : ''">Narration<i  *ngIf="fval.narration.valid" class="material-icons">check_circle</i></label>
                   <div class="input-group mb-1">
@@ -36,7 +36,7 @@
                   <div class="text-danger col" *ngIf="(fval.narration.touched||fval.narration.dirty)  && fval.narration.errors?.required">The narration is required</div>
                 </div>
 
-        <div class="form-group text-primary">
+        <!-- <div class="form-group text-primary">
           <label
             for="branch_name"
             [ngClass]="fval.branch_name.valid ? 'text-info' : ''"
@@ -78,9 +78,9 @@
             "
           >
             Please select a valid branch name!
-          </div>
+          </div> -->
           <!-- <ngx-alerts></ngx-alerts> -->
-        </div>
+        <!-- </div> -->
 
 
         <div class="form-group text-primary">
@@ -134,10 +134,10 @@
     <!--footer -->
     <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-3 mx-auto">
       <div class="small text-center text-info">
-        The Company:<span class="text-primo font-weight-bold"
-          ><strong> {{ theCompany }}</strong>
+        User :<span class="text-primo font-weight-bold"
+          ><strong> {{ userName }}</strong>
         </span>
-        The Branch:<span class="text-primo font-weight-bold"><strong></strong> </span>
+        The Branch:<span class="text-primo font-weight-bold"><strong>{{theBranch}}</strong> </span>
       </div>
     </div>
         <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-3 mx-auto">
