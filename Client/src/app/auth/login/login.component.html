@@ -16,8 +16,7 @@
       </h3>
       <form [formGroup]="userForm" (ngSubmit)="login()">
         <div class="form-group text-primary">
-          <label for="email" [ngClass]="fval.email.valid ? 'text-info' : ''"
-            >Email Address<i *ngIf="fval.email.valid" class="material-icons"
+          <label for="email" [ngClass]="fval.email.valid ? 'text-info' : ''">Email Address<i *ngIf="fval.email.valid" class="material-icons"
               >check_circle</i
             ></label
           >

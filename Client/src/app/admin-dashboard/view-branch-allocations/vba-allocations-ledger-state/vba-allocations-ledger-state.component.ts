@@ -46,6 +46,8 @@ export class VbaAllocationsLedgerStateComponent implements OnInit {
 
      this.branchId = params.get('branchId');
      this.theBranch = params.get('branchName');
+
+     console.log( this.branchId);
             });
 
         this.allocationLedgerN$ = this.adminUserService.allocationsLedgerhNow(this.branchId);

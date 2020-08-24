@@ -16,20 +16,13 @@
           ></label
         >
         <div class="input-group mb-0">
-          <select
-            formControlName="branch_name"
-            class="form-control"
-            [ngClass]="{
-              'is-invalid':
-                (fval.branch_name.touched || fval.branch_name.dirty) &&
-                fval.branch_name.errors
-            }"
-            autocomplete="off"
-            placeholder="Select the branch name"
-          >
-            <option *ngFor="let branch of theBranches$ | async">{{
-              branch.branch_name
-            }}</option>
+          <select class="form-control" formControlName="branch_name"
+          (change)="setSelectedChanges($event)" >
+          <option selected>Select The Branch</option>
+          <option *ngFor="let branch of theBranches$ | async">{{
+           branch.branch_name
+         }}</option>
+
           </select>
         </div>
         <div

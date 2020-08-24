@@ -40,13 +40,15 @@ var SMS = require('../services/other_services/smsService');
         
         serviceU.checkInvestablility(req.body).then( function(results) {
 
+          console.log(results);
+
             if(results){
        
           res.status(200).json(results);
 
         }else{
 
-          res.status(401).json(results);
+          res.status(700).json(results);
         }
 
         } ).catch(next);
@@ -54,9 +56,56 @@ var SMS = require('../services/other_services/smsService');
        
        });
     
-       
     
 
+
+router.get('/summuryTotalInvestmentsNow', function(req, res,next) {
+        
+  serviceU.getTheSummuryTotalInvestemnts().then( function(results) {
+    res.setHeader('Content-Type', 'application/json');
+    res.json(results);
+  } ).catch(next);
+ });
+
+ router.get('/summuryTotalBankingNow', function(req, res,next) {
+        
+  serviceU.getTheSummuryTotalBankings().then( function(results) {
+    res.setHeader('Content-Type', 'application/json');
+    res.json(results);
+  } ).catch(next);
+ });
+
+       
+       
+       router.get('/summuryTotalAllocations', function(req, res,next) {
+        
+        serviceU.getTheSummuryTotalAllocations().then( function(results) {
+          res.setHeader('Content-Type', 'application/json');
+          res.json(results);
+        } ).catch(next);
+       });
+
+
+       router.get('/bankingSummuryLedger', function(req, res,next) {
+        
+        serviceU.getTheSummuryBank().then( function(results) {
+          res.setHeader('Content-Type', 'application/json');
+          res.json(results);
+        } ).catch(next);
+       
+       
+       });
+
+
+       router.get('/investSummuryLedger', function(req, res,next) {
+        
+        serviceU.getTheSummuryInvest().then( function(results) {
+          res.setHeader('Content-Type', 'application/json');
+          res.json(results);
+        } ).catch(next);
+       
+       
+       });
 
 
          router.get('/allocationLedgerStatement', function(req, res,next) {

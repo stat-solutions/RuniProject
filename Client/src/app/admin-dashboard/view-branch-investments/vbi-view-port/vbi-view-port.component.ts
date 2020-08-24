@@ -27,37 +27,23 @@ export class VbiViewPortComponent implements OnInit {
 
         ngOnInit(): void {
 
-          this. columnDefs = [
-            {headerName: '#', field: 'id', sortable: true, filter: true, resizable: true},
-            {headerName: 'Txn Date', field: 'dateX', sortable: true, filter: true, resizable: true},
-            {headerName: 'Narration', field: 'narration', sortable: true, filter: true,
-             checkboxSelection: true, resizable: true},
-            {headerName: 'Branch', field: 'branch', sortable: true, filter: true, resizable: true},
-            {headerName: 'AmntRemoved', field: 'debit_amount', sortable: true, filter: true, resizable: true},
-            {headerName: 'AmntAdded', field: 'credit_amount', sortable: true, filter: true, resizable: true},
-            {headerName: 'Balance', field: 'balance',
-              sortable: true, filter: true, resizable: true},
-            {headerName: 'PostedBy', field: 'user_name', sortable: true, filter: true, resizable: true},
-
-        ];
-
           this.investmentStatementBranchFull$ = this.adminUserService.investmentStatementAll();
         }
 
 
-        onGridReady(params) {
+      //   onGridReady(params) {
 
-          // this.rfqR.getAllProductDetails().subscribe(data => this.dataset = data);
-          this.gridApi = params.api;
-          this.gridApi.sizeColumnsToFit();
+      //     this.rfqR.getAllProductDetails().subscribe(data => this.dataset = data);
+      //     this.gridApi = params.api;
+      //     this.gridApi.sizeColumnsToFit();
 
-          }
+      //     }
 
-      exportExcel(params) {
-        console.log(params);
-        this.gridApi = params.api;
-        this.gridApi.exportDataAsCsv(params);
-      }
+      // exportExcel(params) {
+      //   console.log(params);
+      //   this.gridApi = params.api;
+      //   this.gridApi.exportDataAsCsv(params);
+      // }
 
       createFormGroup() {
         return new FormGroup({

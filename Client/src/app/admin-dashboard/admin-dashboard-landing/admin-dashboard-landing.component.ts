@@ -10,6 +10,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LayoutManageService } from 'src/app/services/layout-manage.service';
 import { TheBranches } from 'src/app/models/the-branches';
 import { CustomValidator } from 'src/app/validators/custom-validator';
+import { AdminUserService } from 'src/app/services/admin-user.service';
+import { AllocationTotalStatement } from 'src/app/models/allocation-total-statement';
+import { LedgerStatement } from 'src/app/models/ledger-statement';
+import { SummuryLedger } from 'src/app/models/summury-ledger';
+import { SummuryAllocations } from 'src/app/models/summury-allocations';
 
 @Component({
   selector: 'app-admin-dashboard-landing',
@@ -18,7 +23,7 @@ import { CustomValidator } from 'src/app/validators/custom-validator';
 })
 export class AdminDashboardLandingComponent implements OnInit {
   count: number;
-  items=[];
+  items = [];
       registered = false;
       submitted = false;
       errored = false;
@@ -30,223 +35,55 @@ export class AdminDashboardLandingComponent implements OnInit {
       myDateValue: Date;
       userRoleInfo$: Observable< UserRole[]>;
       theBranches$: Observable<TheBranches[]>;
+      allocationsToal$: Observable<AllocationTotalStatement[]>;
+      investmentStatementBranchFull$: Observable<LedgerStatement[]>;
+      summuryInvestment$: Observable<SummuryLedger[]>;
+      summuryBanking$: Observable<SummuryLedger[]>;
+      summuryTotalAllocations$: Observable<SummuryAllocations[]>;
+      summuryInvestmentTotal$: Observable<SummuryAllocations[]>;
+      summuryBankingTotal$: Observable<SummuryAllocations[]>;
 
+      
   // @ViewChild('staticTabs', { static: false }) staticTabs: TabsetComponent;
 
-  bankTable = [
-    {
-      txnDate: '23/10/20',
-      deposit: 1300000,
-      withdraw: 500000,
-      balance: 15550000
-    },
-    {
-      txnDate: '24/10/20',
-      deposit: 1200000,
-      withdraw: 0,
-      balance: 4530000
-    },
-    {
-      txnDate: '26/10/20',
-      deposit: 2000000,
-      withdraw: 0,
-      balance: 8530000
-    },
-    {
-      txnDate: '27/10/20',
-      deposit: 1300000,
-      withdraw: 1500000,
-      balance: 6300000
-    },
-    {
-      txnDate: '29/10/20',
-      deposit: 300000,
-      withdraw: 0,
-      balance: 4500000
-    }
-  ]
 
-  investTable = [
-    {
-      TxnDate: '23/10/20',
-      Withdrawal: 500000,
-      Balance: 4500000
-    },
-    {
-      TxnDate: '24/10/20',
-      Withdrawal: 0,
-      Balance: 4500000
-    },
-    {
-      TxnDate: '26/10/20',
-      Withdrawal: 1000000,
-      Balance: 3500000
-    },
-    {
-      TxnDate: '27/10/20',
-      Withdrawal: 500000,
-      Balance: 5000000
-    },
-    {
-      TxnDate: '29/10/20',
-      Withdrawal: 0,
-      Balance: 5000000
-    }
-  ]
-
-  investTrackingTable = [
-      {
-        txnDate: '23/10/20',
-        allocation: 1300000,
-        deposit: 1300000,
-        withdraw: 500000,
-        balance: 5000000,
-      },
-      {
-        txnDate: '24/10/20',
-        allocation: 1300000,
-        deposit: 1300000,
-        withdraw: 500000,
-        balance: 5000000,
-      },
-      {
-        txnDate: '26/10/20',
-        allocation: 1300000,
-        deposit: 1300000,
-        withdraw: 500000,
-        balance: 5000000,
-      },
-      {
-        txnDate: '27/10/20',
-        allocation: 1300000,
-        deposit: 1300000,
-        withdraw: 500000,
-        balance: 5000000,
-      },
-      {
-        txnDate: '28/10/20',
-        allocation: 1300000,
-        deposit: 1300000,
-        withdraw: 500000,
-        balance: 5000000,
-      },
-      {
-        txnDate: '29/10/20',
-        allocation: 1300000,
-        deposit: 1300000,
-        withdraw: 500000,
-        balance: 5000000,
-      },
-      {
-        txnDate: '30/10/20',
-        allocation: 1300000,
-        deposit: 1300000,
-        withdraw: 500000,
-        balance: 5000000,
-      },
-      {
-        txnDate: '31/10/20',
-        allocation: 1300000,
-        deposit: 1300000,
-        withdraw: 500000,
-        balance: 5000000,
-      },
-      {
-        txnDate: '3/11/20',
-        allocation: 1300000,
-        deposit: 1300000,
-        withdraw: 500000,
-        balance: 5000000,
-      },
-    ];
-    investmentsTable = [
-      {
-        TxnDate: '23/10/20',
-        Narration: 'Runicorp supermarket bankings',
-        AmountRemoved: 1300000,
-        AmountAdded: 500000,
-        Balance: 5000000,
-        PostedBy: 'Suzan',
-      },
-      {
-        TxnDate: '24/10/20',
-        Narration: 'Runicorp supermarket bankings',
-        AmountRemoved: 1300000,
-        AmountAdded: 500000,
-        Balance: 5000000,
-        PostedBy: 'Suzan',
-      },
-      {
-        TxnDate: '26/10/20',
-        Narration: 'Runicorp supermarket bankings',
-        AmountRemoved: 1300000,
-        AmountAdded: 500000,
-        Balance: 5000000,
-        PostedBy: 'Suzan',
-      },
-      {
-        TxnDate: '27/10/20',
-        Narration: 'Runicorp supermarket bankings',
-        AmountRemoved: 1300000,
-        AmountAdded: 500000,
-        Balance: 5000000,
-        PostedBy: 'Suzan',
-      },
-      {
-        TxnDate: '28/10/20',
-        Narration: 'Runicorp supermarket bankings',
-        AmountRemoved: 1300000,
-        AmountAdded: 500000,
-        Balance: 5000000,
-        PostedBy: 'Suzan',
-      },
-      {
-        TxnDate: '29/10/20',
-        Narration: 'Runicorp supermarket bankings',
-        AmountRemoved: 1300000,
-        AmountAdded: 500000,
-        Balance: 5000000,
-        PostedBy: 'Suzan',
-      },
-      {
-        TxnDate: '30/10/20',
-        Narration: 'Runicorp supermarket bankings',
-        AmountRemoved: 1300000,
-        AmountAdded: 500000,
-        Balance: 5000000,
-        PostedBy: 'Suzan',
-      },
-      {
-        TxnDate: '31/10/20',
-        Narration: 'Runicorp supermarket bankings',
-        AmountRemoved: 1300000,
-        AmountAdded: 500000,
-        Balance: 5000000,
-        PostedBy: 'Suzan',
-      },
-      {
-        TxnDate: '3/11/20',
-        Narration: 'Runicorp supermarket bankings',
-        AmountRemoved: 1300000,
-        AmountAdded: 500000,
-        Balance: 5000000,
-        PostedBy: 'Suzan',
-      },
-    ];
 
     constructor(
         private authService: AuthServiceService,
         private spinner: NgxSpinnerService,
         private router: Router,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private adminUserService: AdminUserService
       ) {}
 
       ngOnInit() {
         this.myDateValue = new Date();
+
         this.userForm = this.createFormGroup();
+
         this.userRoleInfo$ = this.authService.getUserRoles();
 
         this.theBranches$ = this.authService.getTheBranches();
+
+        this. allocationsToal$ = this.adminUserService.allocationsTotalState();
+
+        this.investmentStatementBranchFull$ = this.adminUserService.investmentStatementAll();
+
+
+        this. summuryInvestment$ = this.adminUserService.theSummuryInvestNow();
+
+        this.summuryBanking$ = this.adminUserService.theSummuryBankingNow();
+
+
+        this.summuryTotalAllocations$= this.adminUserService.theSummuryTotalAllocations();
+
+          
+        this. summuryInvestmentTotal$ = this.adminUserService.summuryTotalInvestments();
+
+        this.summuryBankingTotal$ = this.adminUserService.summuryTotalBanking();
+        
+
+        
       }
 
       createFormGroup() {
@@ -304,20 +141,20 @@ export class AdminDashboardLandingComponent implements OnInit {
       }
 
     //method for filtering out last banked posting
-    lastBanking()  {
-      let removed = this.investTrackingTable.pop();
-      let item=Object.entries(removed);
-      let banked=Object.values(item[3]);
-      return banked[1];
-  }
+  //   lastBanking()  {
+  //     let removed = this.investTrackingTable.pop();
+  //     let item=Object.entries(removed);
+  //     let banked=Object.values(item[3]);
+  //     return banked[1];
+  // }
 
     //method for filtering out last investment posting
-    lastInvestment() {
-      let removed = this.investmentsTable.pop();
-      let item=Object.entries(removed);
-      let invested=Object.values(item[2]);
-      return invested[1];
-      }
+    // lastInvestment() {
+    //   let removed = this.investmentsTable.pop();
+    //   let item=Object.entries(removed);
+    //   let invested=Object.values(item[2]);
+    //   return invested[1];
+    //   }
 
 
       get fval() {

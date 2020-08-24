@@ -24,6 +24,7 @@ export class PostInvestmentPerBranchComponent implements OnInit {
     values: any;
     numberValue: number;
     theBranches$: Observable<TheBranches[]>;
+    txntypeNow = [ {txnType: 'DEPOSIT' }, { txnType: 'WITHDRAWAL' } ];
     // ShiftDetails[]
     constructor(
       private authService: AuthServiceService,
@@ -79,22 +80,38 @@ export class PostInvestmentPerBranchComponent implements OnInit {
     checTheValidityOfAmount(){
 
 
-if ( this.userForm.controls.txn_type.value === 'Deposit'){
+if ( this.userForm.controls.txn_type.value === 'DEPOSIT'){
 
-      this.adminUserService
-      .investementViability(this.userForm)
+  this.userForm.patchValue({
+    txn_amount: parseInt( this.userForm.controls.txn_amount.value.replace(/[\D\s\._\-]+/g, ''), 10 )
+  });
+
+
+  // console.table(this.userForm.controls.txn_amount.value);
+
+  this.adminUserService
+      .investementViabilityNow(this.userForm)
       .subscribe(
        () => {
 
           this.ValidatedNow = true;
+          this.alertService.success({
+            html: '<b>' + 'Ohikire nokurenga warenga' + '</b>' + '<br/>'
+
+          });
         },
 
         (error: string) => {
           this.errored = true;
           this.serviceErrors = error;
-          this.alertService.danger({
+          this.alertService.warning({
             html: '<b>' + this.serviceErrors + '</b>' + '<br/>'
+
           });
+
+          setTimeout(() => {
+            location.reload();
+          }, 3000);
         }
       );
     }else{
@@ -103,16 +120,28 @@ if ( this.userForm.controls.txn_type.value === 'Deposit'){
     }
     }
 
+    setSelectedChanges(selectedChange: any) {
+      if ( selectedChange.target.value === 'Select TXN Type'){
+       this.fval.txn_type.setValidators([Validators.required]);
+  }
 
+      if (selectedChange.target.value === 'Select The Branch'){
+    this.fval.branch_name.setValidators([Validators.required]);
+}
+
+         }
 
     postTxn() {
 
-      this.userForm.patchValue({
-        txn_amount: parseInt( this.userForm.controls.txn_amount.value.replace(/[\D\s\._\-]+/g, ''), 10 )
-      });
 
       this.spinner.show();
 
+      if ( this.userForm.controls.txn_type.value === 'WITHDRAWAL'){
+
+        this.userForm.patchValue({
+          txn_amount: parseInt( this.userForm.controls.txn_amount.value.replace(/[\D\s\._\-]+/g, ''), 10 )
+        });
+      }
       if (this.userForm.invalid === true) {
         return;
       } else {
@@ -131,11 +160,11 @@ if ( this.userForm.controls.txn_type.value === 'Deposit'){
               if (infoe) {
 
                 this.spinner.hide();
-                this.alertService.warning({ html: '<b>' + 'Txn was successfully posted!!' + '</b>' + '<br/>' });
-                this.router.navigate(['dashboardadmin/viewbranchinvestemnts/viewportinvestments']);
+                this.alertService.warning({ html: '<b>' + 'Investment was successfully made!!' + '</b>' + '<br/>' });
+
 
                 setTimeout(() => {
-                  location.reload();
+                  this.router.navigate(['dashboardadmin/viewbranchinvestemnts/viewportinvestments']);
                 }, 3000);
               } else {
 

@@ -55,7 +55,7 @@ import { VbaAllocationsMadeStateComponent } from './view-branch-allocations/vba-
          MakeAllocationsPerBranchComponent,
          VbaAllocationsLedgerStateComponent,
          VbaAllocationsMadeStateComponent,
-        
+
          ],
   imports: [
     CommonModule,
@@ -70,7 +70,7 @@ import { VbaAllocationsMadeStateComponent } from './view-branch-allocations/vba-
     DatepickerModule,
     TabsModule.forRoot(),
     NgxSpinnerModule,
-    AlertModule.forRoot({maxMessages: 5, timeout: 7000, position: 'left'}),
+    AlertModule.forRoot({maxMessages: 5, timeout: 10000, position: 'right'}),
     AgGridModule.withComponents([]),
   ]
 })

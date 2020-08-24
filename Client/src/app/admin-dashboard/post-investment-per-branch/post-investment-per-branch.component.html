@@ -15,10 +15,10 @@
               >Transaction type</label
             >
             <div class="input-group mb-0">
-              <select    formControlName="txn_type" class="form-control"  [ngClass]=" { 'is-invalid': (fval.txn_type.touched||fval.txn_type.dirty) && fval.txn_type.errors }" autocomplete="off" placeholder="Txn Type"><i  *ngIf="fval.txn_type.valid" class="material-icons">check_circle</i>
+              <select   formControlName="txn_type" class="form-control"   (change)="setSelectedChanges($event)" ><i  *ngIf="fval.txn_type.valid" class="material-icons">check_circle</i>
                 <option selected>Select TXN Type</option>
-                <option>Deposit</option>
-                <option>Withdrawal</option>
+                <option  *ngFor="let txnt of txntypeNow">{{txnt.txnType}}</option>
+
                     </select>
             </div>
             <div class="text-danger col" *ngIf="(fval.txn_type.touched||fval.txn_type.dirty)  && fval.txn_type.errors?.required">The Txn Type is required</div>
@@ -48,14 +48,9 @@
             <select
               formControlName="branch_name"
               class="form-control"
-              [ngClass]="{
-                'is-invalid':
-                  (fval.branch_name.touched || fval.branch_name.dirty) &&
-                  fval.branch_name.errors
-              }"
-              autocomplete="off"
-              placeholder="Select the branch name"
+
             >
+            <option selected>Select The Branch</option>
               <option *ngFor="let branch of theBranches$ | async">{{
                 branch.branch_name
               }}</option>

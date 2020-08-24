@@ -73,7 +73,9 @@ createFormGroup() {
   });
 }
 
-
+relocateNow(){
+  location.reload();
+}
 
 
 

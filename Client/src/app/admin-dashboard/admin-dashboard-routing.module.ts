@@ -49,7 +49,7 @@ const routes: Routes = [
 
         { path: 'viewportallocationsbranches/:branch', component: VbaViewPortBranchesComponent },
 
-        { path: 'viewportallocationsledger/:branch', component: VbaAllocationsLedgerStateComponent },
+        { path: 'viewportallocationsledger/:branchId/:branchName', component: VbaAllocationsLedgerStateComponent },
 
         { path: 'viewportallocationsmade/:branchId/:branchName', component:  VbaAllocationsMadeStateComponent},
 

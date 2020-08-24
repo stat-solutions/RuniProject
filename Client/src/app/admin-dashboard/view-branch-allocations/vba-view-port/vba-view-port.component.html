@@ -50,16 +50,17 @@
                                 *ngFor="let alloc of  allocationsToal$ | async; let i = index"
                                 class="text-success">
 
-                                <td> <button  class="btn btn-primary mr-5" [routerLink]="['/dashboardadmin/viewbranchallocations/viewportallocationsledger', alloc.branch_id,alloc.branch_name]"><i class="fa fa-tree" aria-hidden="true"></i> <i class="fa fa-car" aria-hidden="true"></i> </button></td>
+
 
                                 <td> <button  class="btn btn-primary mr-5" [routerLink]="['/dashboardadmin/viewbranchallocations/viewportallocationsmade', alloc.branch_id,alloc.branch_name]"><i class="fa fa-eye" aria-hidden="true"></i> <i class="fa fa-eye" aria-hidden="true"></i></button></td>
 
+                                <td> <button  class="btn btn-primary mr-5" [routerLink]="['/dashboardadmin/viewbranchallocations/viewportallocationsledger', alloc.branch_id,alloc.branch_name]"><i class="fa fa-tree" aria-hidden="true"></i> <i class="fa fa-car" aria-hidden="true"></i> </button></td>
 
                                 <!-- <td>{{ alloc.id }}</td> -->
                                 <td>{{ alloc.branch_name  }}</td>
-                                <td>{{ alloc.total_allocations_made  | currency: "UGX" }}</td>
-                                <td>{{ alloc.total_allocations_deposited | currency: "UGX" }} </td>
-                                <td>{{ alloc.total_allocations_balance | currency: "UGX" }}</td>
+                                <td>{{ alloc.total_allocations_made  | number}}</td>
+                                <td>{{ alloc.total_allocations_deposited | number}} </td>
+                                <td>{{ alloc.total_allocations_balance | number}}</td>
                                 <td>{{ alloc.last_updated_date }}</td>
                                 <td>{{ alloc.last_updated_time }}</td>
 

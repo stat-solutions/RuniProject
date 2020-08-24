@@ -24,9 +24,9 @@ export class VbaAllocationsMadeStateComponent implements OnInit {
 
     theBranch: string;
 
-    private gridApi: any;
+  //   private gridApi: any;
 
-   columnDefs: any[] = [];
+  //  columnDefs: any[] = [];
 
 
     constructor(
@@ -45,25 +45,26 @@ export class VbaAllocationsMadeStateComponent implements OnInit {
    this.branchId = params.get('branchId');
    this.theBranch = params.get('branchName');
           });
-
+      // console.log(this.branchId);
+      // console.log(this.theBranch)
       this.allocationMadeN$ = this.adminUserService.allocationsMadehNow(this.branchId);
 
     }
 
 
-    onGridReady(params) {
+  //   onGridReady(params) {
 
-      // this.rfqR.getAllProductDetails().subscribe(data => this.dataset = data);
-      this.gridApi = params.api;
-      this.gridApi.sizeColumnsToFit();
+  //     this.rfqR.getAllProductDetails().subscribe(data => this.dataset = data);
+  //     this.gridApi = params.api;
+  //     this.gridApi.sizeColumnsToFit();
 
-      }
+  //     }
 
-  exportExcel(params) {
-    console.log(params);
-    this.gridApi = params.api;
-    this.gridApi.exportDataAsCsv(params);
-  }
+  // exportExcel(params) {
+  //   console.log(params);
+  //   this.gridApi = params.api;
+  //   this.gridApi.exportDataAsCsv(params);
+  // }
 
   createFormGroup() {
     return new FormGroup({

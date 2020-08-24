@@ -15,7 +15,7 @@ export class VbaViewPortComponent  implements OnInit{
       branchName: string;
       bankStatementBranchFull$: Observable<LedgerStatement[]>;
       allocationsToal$: Observable<AllocationTotalStatement[]>;
-      private gridApi: any;
+      // private gridApi: any;
 
      columnDefs: any[] = [];
 
@@ -45,19 +45,19 @@ export class VbaViewPortComponent  implements OnInit{
       }
 
 
-      onGridReady(params) {
+    //   onGridReady(params) {
 
-        // this.rfqR.getAllProductDetails().subscribe(data => this.dataset = data);
-        this.gridApi = params.api;
-        this.gridApi.sizeColumnsToFit();
+    //     this.rfqR.getAllProductDetails().subscribe(data => this.dataset = data);
+    //     this.gridApi = params.api;
+    //     this.gridApi.sizeColumnsToFit();
 
-        }
+    //     }
 
-    exportExcel(params) {
-      console.log(params);
-      this.gridApi = params.api;
-      this.gridApi.exportDataAsCsv(params);
-    }
+    // exportExcel(params) {
+    //   console.log(params);
+    //   this.gridApi = params.api;
+    //   this.gridApi.exportDataAsCsv(params);
+    // }
 
     createFormGroup() {
       return new FormGroup({

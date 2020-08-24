@@ -190,10 +190,12 @@ BEGIN
 
 DECLARE posted_successfully INT;
 
+SELECT JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_type')) ;
+
 IF  JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_type')) = 'DEPOSIT' THEN
 
   
-    
+  
   
     
 CALL postDepositTxn(
@@ -251,9 +253,20 @@ DECLARE typeId,branchId,balExits,totalBalExists,dailybalExits,dailytotalBalExist
 
 DECLARE closingBalBranch,newClosingBalBranch,closingBalTotal,newClosingBalTotal,closingBalBranchDaily,closingBalTotalDaily DOUBLE;
 
+--  SELECT narration,txnFamily,txnType,amount,branchNameNow;
+
 SELECT  account_types_id  INTO typeId FROM  account_types WHERE account_type_name=txnFamily;
 
 SELECT branch_id INTO branchId FROM branch WHERE branch_name=branchNameNow;
+
+
+
+
+IF txnFamily='INVESTMENT' THEN
+
+CALL adjustAllocations(amount,branchId,userId);
+
+END IF;
 
 SELECT COUNT(bb.the_balance) INTO  balExits FROM balance_per_day  bb INNER JOIN branch b ON bb.fk_branch_id_balance_per_day=b.branch_id INNER JOIN account_types act ON bb.fk_account_types_id_balance_per_day=act.account_types_id WHERE b.branch_name=branchNameNow AND act.account_type_name=txnFamily AND bb.trn_date<=DATE(NOW());
 
@@ -313,7 +326,7 @@ WHERE act.account_type_name=txnFamily AND  bt.trn_date=DATE(NOW()) ORDER BY bt.b
 SET  newClosingBalBranch=closingBalBranch+amount;
 
 SET newClosingBalTotal=closingBalTotal+amount;
-
+-- SELECT DATE(NOW()),narration,0.0,amount,branchId,typeId,userId;
 INSERT INTO trn_general_ledger VALUES(NULL,DATE(NOW()),narration,0.0,amount,branchId,typeId,userId);
 
 UPDATE balance_per_day SET the_balance=newClosingBalBranch WHERE balance_per_day_id=balDId;
@@ -436,6 +449,21 @@ BEGIN
 DROP TABLE IF EXISTS investmentbranchledger;
 
 CREATE TEMPORARY TABLE investmentbranchledger(
+  id1 INT NOT NULL AUTO_INCREMENT ,
+  dateX1 VARCHAR(20),
+  narration1 VARCHAR(200),
+  debit_amount1 VARCHAR(200),
+  credit_amount1 VARCHAR(200),
+  balance1  VARCHAR(200),
+  user_name1   VARCHAR(100),
+  PRIMARY KEY(id1)
+) ENGINE=innoDB
+AUTO_INCREMENT=1
+DEFAULT CHARACTER SET=utf8;
+
+DROP TABLE IF EXISTS investmentbranchledger1;
+
+CREATE TEMPORARY TABLE investmentbranchledger1(
   id INT NOT NULL AUTO_INCREMENT ,
   dateX VARCHAR(20),
   narration VARCHAR(200),
@@ -448,14 +476,22 @@ CREATE TEMPORARY TABLE investmentbranchledger(
 AUTO_INCREMENT=1
 DEFAULT CHARACTER SET=utf8;
 
-
-
 DELETE FROM runningBalHoleder;
 
 INSERT INTO runningBalHoleder VALUES(NULL,0.0);
 
 
 INSERT INTO investmentbranchledger(
+  id1,
+  dateX1,
+  narration1,
+  debit_amount1,
+  credit_amount1,
+  balance1,
+  user_name1
+  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN account_types ats ON l.fk_account_types_id_trn_general_ledger= ats.account_types_id WHERE b.branch_name=branchName AND ats.account_type_name='INVESTMENT' LIMIT 30;
+
+  INSERT INTO investmentbranchledger1(
   id,
   dateX,
   narration,
@@ -463,9 +499,20 @@ INSERT INTO investmentbranchledger(
   credit_amount,
   balance,
   user_name
-  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN account_types ats ON l.fk_account_types_id_trn_general_ledger= ats.account_types_id WHERE b.branch_name=branchName AND ats.account_type_name='INVESTMENT' LIMIT 30;
+  ) SELECT * FROM investmentbranchledger ;
 
-SELECT * FROM investmentbranchledger;
+
+    INSERT INTO investmentbranchledger1(
+  id,
+  dateX,
+  narration,
+  debit_amount,
+  credit_amount,
+  balance,
+  user_name
+  ) SELECT NULL,NULL,'TOTAL',SUM(debit_amount1),SUM(credit_amount1),NULL,NULL FROM investmentbranchledger ;
+
+SELECT * FROM investmentbranchledger1;
 
 END ##
 DELIMITER ;
@@ -485,6 +532,22 @@ BEGIN
 DROP TABLE IF EXISTS bankbranchledger;
 
 CREATE TEMPORARY TABLE bankbranchledger(
+  id1 INT NOT NULL AUTO_INCREMENT ,
+  dateX1 VARCHAR(20),
+  narration1 VARCHAR(200),
+  debit_amount1 VARCHAR(200),
+  credit_amount1 VARCHAR(200),
+  balance1  VARCHAR(200),
+  user_name1   VARCHAR(100),
+  PRIMARY KEY(id1)
+) ENGINE=innoDB
+AUTO_INCREMENT=1
+DEFAULT CHARACTER SET=utf8;
+
+
+DROP TABLE IF EXISTS bankbranchledger1;
+
+CREATE TEMPORARY TABLE bankbranchledger1(
   id INT NOT NULL AUTO_INCREMENT ,
   dateX VARCHAR(20),
   narration VARCHAR(200),
@@ -498,13 +561,23 @@ AUTO_INCREMENT=1
 DEFAULT CHARACTER SET=utf8;
 
 
-
 DELETE FROM runningBalHoleder;
 
 INSERT INTO runningBalHoleder VALUES(NULL,0.0);
 
 
 INSERT INTO bankbranchledger(
+  id1,
+  dateX1,
+  narration1,
+  debit_amount1,
+  credit_amount1,
+  balance1,
+  user_name1
+  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN account_types ats ON l.fk_account_types_id_trn_general_ledger= ats.account_types_id WHERE b.branch_name=branchName AND ats.account_type_name='BANK' LIMIT 30;
+
+
+  INSERT INTO bankbranchledger1(
   id,
   dateX,
   narration,
@@ -512,9 +585,22 @@ INSERT INTO bankbranchledger(
   credit_amount,
   balance,
   user_name
-  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN account_types ats ON l.fk_account_types_id_trn_general_ledger= ats.account_types_id WHERE b.branch_name=branchName AND ats.account_type_name='BANK' LIMIT 30;
 
-SELECT * FROM bankbranchledger;
+  ) SELECT * FROM bankbranchledger;
+
+
+  INSERT INTO bankbranchledger1(
+  id,
+  dateX,
+  narration,
+  debit_amount,
+  credit_amount,
+  balance,
+  user_name
+  
+  ) SELECT NULL, NULL, 'TOTAL',SUM(debit_amount1),SUM(credit_amount1),NULL,NULL FROM bankbranchledger;
+
+SELECT * FROM bankbranchledger1;
 
 END ##
 DELIMITER ;
@@ -568,6 +654,23 @@ DECLARE OPENINGBAL DOUBLE;
 DROP TABLE IF EXISTS bankbranchledger;
 
 CREATE TEMPORARY TABLE bankbranchledger(
+  id1 INT NOT NULL AUTO_INCREMENT ,
+  dateX1 VARCHAR(20),
+  narration1 VARCHAR(200),
+  branch1   VARCHAR(100),
+  debit_amount1 VARCHAR(200),
+  credit_amount1 VARCHAR(200),
+  balance1  VARCHAR(200),
+  user_name1   VARCHAR(100),
+  PRIMARY KEY(id1)
+) ENGINE=innoDB
+AUTO_INCREMENT=1
+DEFAULT CHARACTER SET=utf8;
+
+
+DROP TABLE IF EXISTS bankbranchledger1;
+
+CREATE TEMPORARY TABLE bankbranchledger1(
   id INT NOT NULL AUTO_INCREMENT ,
   dateX VARCHAR(20),
   narration VARCHAR(200),
@@ -585,11 +688,21 @@ DEFAULT CHARACTER SET=utf8;
 DELETE FROM runningBalHoleder;
 
 INSERT INTO runningBalHoleder VALUES(NULL,0.0);
-/* SELECT NULL, the_balance  FROM  balance_per_day_total WHERE fk_account_types_id_balance_per_day_total=1 ORDER BY balance_per_day_total_id DESC LIMIT 1; */
-
-
 
 INSERT INTO bankbranchledger(
+  id1,
+  dateX1,
+  narration1,
+  branch1,
+  debit_amount1,
+  credit_amount1,
+  balance1,
+  user_name1
+  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,b.branch_name AS branch,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN  account_types ats ON l.fk_account_types_id_trn_general_ledger=ats.account_types_id WHERE  ats.account_type_name='BANK' LIMIT 30;
+
+
+
+INSERT INTO bankbranchledger1(
   id,
   dateX,
   narration,
@@ -598,9 +711,22 @@ INSERT INTO bankbranchledger(
   credit_amount,
   balance,
   user_name
-  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,b.branch_name AS branch,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN  account_types ats ON l.fk_account_types_id_trn_general_ledger=ats.account_types_id WHERE  ats.account_type_name='BANK' LIMIT 30;
+  ) SELECT * FROM bankbranchledger;
 
-SELECT * FROM bankbranchledger;
+
+INSERT INTO bankbranchledger1(
+  id,
+  dateX,
+  narration,
+  branch,
+  debit_amount,
+  credit_amount,
+  balance,
+  user_name
+  ) SELECT NULL,NULL,NULL,NULL,SUM(debit_amount1) ,SUM(credit_amount1) ,NULL,NULL FROM bankbranchledger;
+
+
+SELECT * FROM bankbranchledger1;
 
 
 END ##
@@ -627,6 +753,24 @@ DECLARE OPENINGBAL DOUBLE;
 DROP TABLE IF EXISTS investmentBranchledger;
 
 CREATE TEMPORARY TABLE investmentBranchledger(
+  id1 INT NOT NULL AUTO_INCREMENT ,
+  dateX1 VARCHAR(20),
+  narration1 VARCHAR(200),
+  branch1   VARCHAR(100),
+  debit_amount1 VARCHAR(200),
+  credit_amount1 VARCHAR(200),
+  balance1  VARCHAR(200),
+  user_name1   VARCHAR(100),
+  PRIMARY KEY(id1)
+) ENGINE=innoDB
+AUTO_INCREMENT=1
+DEFAULT CHARACTER SET=utf8;
+
+
+
+DROP TABLE IF EXISTS investmentBranchledger1;
+
+CREATE TEMPORARY TABLE investmentBranchledger1(
   id INT NOT NULL AUTO_INCREMENT ,
   dateX VARCHAR(20),
   narration VARCHAR(200),
@@ -644,11 +788,20 @@ DEFAULT CHARACTER SET=utf8;
 DELETE FROM runningBalHoleder;
 
 INSERT INTO runningBalHoleder VALUES(NULL,0.0);
-/* SELECT NULL, the_balance  FROM  balance_per_day_total WHERE fk_account_types_id_balance_per_day_total=1 ORDER BY balance_per_day_total_id DESC LIMIT 1; */
-
 
 
 INSERT INTO investmentBranchledger(
+  id1,
+  dateX1,
+  narration1,
+  branch1,
+  debit_amount1,
+  credit_amount1,
+  balance1,
+  user_name1
+  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,b.branch_name AS branch,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN  account_types ats ON l.fk_account_types_id_trn_general_ledger=ats.account_types_id WHERE  ats.account_type_name='INVESTMENT' LIMIT 30;
+
+INSERT INTO investmentBranchledger1(
   id,
   dateX,
   narration,
@@ -657,32 +810,31 @@ INSERT INTO investmentBranchledger(
   credit_amount,
   balance,
   user_name
-  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,b.branch_name AS branch,FORMAT(l.trn_debit,0) AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN  account_types ats ON l.fk_account_types_id_trn_general_ledger=ats.account_types_id WHERE  ats.account_type_name='INVESTMENT' LIMIT 30;
+  ) SELECT * FROM investmentBranchledger;
 
-SELECT * FROM investmentBranchledger;
+  INSERT INTO investmentBranchledger1(
+  id,
+  dateX,
+  narration,
+  branch,
+  debit_amount,
+  credit_amount,
+  balance,
+  user_name
+  )SELECT NULL,NULL,'TOTAL',NULL,SUM(debit_amount1),SUM(credit_amount1),NULL,NULL FROM investmentBranchledger;
+
+
+  SELECT * FROM investmentBranchledger1;
 
 
 END ##
 DELIMITER ;
 
 
--- show columns from allocations_details;
--- +---------------------------------------------+-----------+------+-----+---------+----------------+
--- | Field                                       | Type      | Null | Key | Default | Extra          |
--- +---------------------------------------------+-----------+------+-----+---------+----------------+
--- | allocations_details_id                      | int(11)   | NO   | PRI | NULL    | auto_increment |
--- | allocations_details_percentage              | double    | YES  |     | NULL    |                |
--- | allocations_details_made                    | double    | YES  |     | NULL    |                |
--- | fk_branch_id_allocations_details            | int(11)   | YES  | MUL | NULL    |                |
--- | fk_amount_allocated_id_allocations_details  | int(11)   | YES  | MUL | NULL    |                |
--- | fk_users_id_allocations_details             | int(11)   | YES  | MUL | NULL    |                |
--- | fk_allocations_total_id_allocations_details | int(11)   | YES  | MUL | NULL    |                |
--- | created_at                                  | timestamp | YES  |     | NULL    |                |
--- | update_at                                   | timestamp | YES  |     | NULL    |                |
--- +---------------------------------------------+-----------+------+-----+---------+----------------+
--- 9 rows in set (0.00 sec)
-/* GET SHIFT DETAILS */
-/* amount,branch_id,userId,'ALLOCTOTALMADE',lastAmountAllocatedId,allocations_total_id */
+
+
+
+
 /* ALLOCATIONS COMPUTATIONS */
 DROP FUNCTION IF EXISTS alloTotalComp;
 DELIMITER ##
@@ -705,20 +857,6 @@ SET newRunningBal=runningBal+allocMade;
 /* SELECT totalAllocId; */
 INSERT INTO allocations_details VALUES(NULL,branchPercent,allocMade,percBranchId,amountAllocId,userId,totalAllocId,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
-/* show columns from allocations_ledger;
-+--------------------------------------------+-----------+------+-----+---------+----------------+
-| Field                                      | Type      | Null | Key | Default | Extra          |
-+--------------------------------------------+-----------+------+-----+---------+----------------+
-| allocations_ledger_id                      | int(11)   | NO   | PRI | NULL    | auto_increment |
-| allocations_ledger_added                   | double    | YES  |     | NULL    |                |
-| allocations_ledger_removed                 | double    | YES  |     | NULL    |                |
-| fk_branch_id_allocations_ledger            | int(11)   | YES  | MUL | NULL    |                |
-| fk_users_id_allocations_ledger             | int(11)   | YES  | MUL | NULL    |                |
-| fk_allocations_total_id_allocations_ledger | int(11)   | YES  | MUL | NULL    |                |
-| created_at                                 | timestamp | YES  |     | NULL    |                |
-| update_at                                  | timestamp | YES  |     | NULL    |                |
-+--------------------------------------------+-----------+------+-----+---------+----------------+
-8 rows in set (0.00 sec) */
 
 INSERT INTO allocations_ledger VALUES(NULL,allocMade,0.0,percBranchId,userId,totalAllocId,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
@@ -777,7 +915,6 @@ INSERT INTO allocations_total (allocations_total_id ,
  fk_branch_id_allocations_total ,
  created_at  ,
  update_at ) SELECT NULL,0.0,0.0,0.0,b.branch_id,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP FROM branch b;
-
 
 END IF;
 
@@ -1002,7 +1139,7 @@ END IF;
 
 SET BAL=OLD_BAL-amount_removed+amount_added;
 
-UPDATE amount_alloc_table SET amount_amount_alloc=BAL;
+UPDATE amount_alloc_table_bal SET amount_amount_alloc=BAL;
 RETURN BAL;
 END ##
 DELIMITER ;
@@ -1039,7 +1176,7 @@ CREATE TEMPORARY TABLE ledgerAllocations1(
     date_allocation VARCHAR(20),
    time_allocation VARCHAR(20),
 
-   allocations_removed DOUBLE,
+    allocations_removed DOUBLE,
      allocations_added DOUBLE,
  allocations_balance DOUBLE,
   PRIMARY KEY(id)
@@ -1047,27 +1184,27 @@ CREATE TEMPORARY TABLE ledgerAllocations1(
 AUTO_INCREMENT=1
 DEFAULT CHARACTER SET=utf8;
 
-
+DELETE FROM  amount_alloc_table_bal;
 INSERT INTO ledgerAllocations( id1,
     date_allocation1,
    time_allocation1,
-      allocatin_removed1,
-  allocatin_added1,
- allocation_running_bal1) SELECT NULL,DATE_FORMAT(DATE(al.created_at),"%d/%m/%Y"),TIME(al.created_at),al.allocations_ledger_removed,al.allocations_ledger_added,allocLedgerBal (al.allocations_ledger_removed,al.allocations_ledger_added) FROM allocations_ledger al WHERE  al.fk_branch_id_allocations_ledger=branchId;
+      allocations_removed1,
+  allocations_added1,
+ allocations_balance1) SELECT NULL,DATE_FORMAT(DATE(al.created_at),"%d/%m/%Y"),TIME(al.created_at),al.allocations_ledger_removed,al.allocations_ledger_added,allocLedgerBal (al.allocations_ledger_removed,al.allocations_ledger_added) FROM allocations_ledger al WHERE  al.fk_branch_id_allocations_ledger=branchId;
 
 INSERT INTO ledgerAllocations1( id,
     date_allocation,
    time_allocation,
-      allocatin_removed,
-  allocatin_added,
- allocation_running_bal) SELECT * FROM ledgerAllocations;
+      allocations_removed,
+  allocations_added,
+ allocations_balance) SELECT * FROM ledgerAllocations;
 
 INSERT INTO ledgerAllocations1(  id,
     date_allocation,
    time_allocation,
-     allocatin_removed,
-  allocatin_added,
- allocation_running_bal) SELECT NULL,'TOTAL',NULL,SUM(allocatin_removed),SUM(allocatin_added),NULL FROM  FROM ledgerAllocations;
+      allocations_removed,
+  allocations_added,
+ allocations_balance) SELECT NULL,'TOTAL',NULL,SUM(allocations_removed1),SUM(allocations_added1),NULL FROM  ledgerAllocations;
 
 SELECT * FROM ledgerAllocations1;
  
@@ -1093,6 +1230,9 @@ DECLARE viability INT;
 
 SELECT allocations_total_balance INTO investAmount FROM allocations_total WHERE fk_branch_id_allocations_total=getBranchId( JSON_UNQUOTE(JSON_EXTRACT(data, '$.branch_name')));
 
+
+/* SELECT investAmount; */
+
 IF ISNULL(investAmount) THEN
 
 SET investAmount=0;
@@ -1117,4 +1257,260 @@ SELECT viability;
 END ##
 
 DELIMITER ;
+
+
+
+
+
+
+
+
+DROP PROCEDURE IF EXISTS adjustAllocations;
+
+DELIMITER ##
+
+CREATE PROCEDURE   adjustAllocations(IN amount DOUBLE,IN branchIdN INT,IN userId INT) 
+
+BEGIN
+
+DECLARE newAllocDep,oldAllDep,newAllocBal,oldAllocBal DOUBLE ;
+DECLARE allocTotalId INT;
+
+
+SELECT allocations_total_deposited,allocations_total_balance,allocations_total_id INTO oldAllDep,oldAllocBal,allocTotalId FROM allocations_total WHERE fk_branch_id_allocations_total=branchIdN;
+
+IF ISNULL(oldAllDep) THEN  SET oldAllDep=0; END IF;
+
+IF ISNULL(oldAllocBal) THEN SET oldAllocBal=0; END IF;
+
+SET newAllocDep=oldAllDep+amount;
+
+SET newAllocBal=oldAllocBal-amount;
+
+
+UPDATE allocations_total SET allocations_total_deposited=newAllocDep,allocations_total_balance=newAllocBal,update_at=CURRENT_TIMESTAMP WHERE fk_branch_id_allocations_total=branchIdN;
+
+INSERT INTO allocations_ledger VALUES(NULL,0.0,amount,branchIdN,userId,allocTotalId,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+END ##
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+/* ALLOCATIONS COMPUTATIONS */
+DROP FUNCTION IF EXISTS sumOfDebitsAndCreditsBranch;
+DELIMITER ##
+CREATE FUNCTION sumOfDebitsAndCreditsBranch(percBranchId INT, typeC VARCHAR (45), familyC VARCHAR(45)) 
+RETURNS DOUBLE 
+DETERMINISTIC
+BEGIN
+
+DECLARE theOfTotals DOUBLE ;
+
+
+IF familyC='INVESTMENT' THEN
+
+
+IF typeC='DEBITSMADE' THEN
+
+SELECT SUM(trn_debit) INTO theOfTotals FROM trn_general_ledger WHERE fk_branch_id_trn_general_ledger=percBranchId AND fk_account_types_id_trn_general_ledger=2;
+
+ELSEIF typeC='CREDITSMADE' THEN
+
+SELECT SUM(trn_credit) INTO theOfTotals FROM trn_general_ledger WHERE fk_branch_id_trn_general_ledger=percBranchId AND fk_account_types_id_trn_general_ledger=2;
+
+
+END IF;
+
+END IF;
+
+
+ IF familyC='BANK' THEN
+
+
+IF typeC='DEBITSMADE' THEN
+
+SELECT SUM(trn_debit) INTO theOfTotals FROM trn_general_ledger WHERE fk_branch_id_trn_general_ledger=percBranchId AND fk_account_types_id_trn_general_ledger=1;
+
+ELSEIF typeC='CREDITSMADE' THEN
+
+SELECT SUM(trn_credit) INTO theOfTotals FROM trn_general_ledger WHERE fk_branch_id_trn_general_ledger=percBranchId AND fk_account_types_id_trn_general_ledger=1;
+
+
+END IF;
+
+
+
+END IF;
+
+
+
+IF ISNULL(theOfTotals) THEN
+SET theOfTotals=0;
+END IF;
+
+RETURN theOfTotals;
+END ##
+DELIMITER ;
+
+
+
+
+
+
+DROP PROCEDURE IF EXISTS summuryInvestmentPerBranch;
+
+DELIMITER ##
+
+CREATE PROCEDURE   summuryInvestmentPerBranch() 
+
+BEGIN
+
+DROP TABLE IF EXISTS investmentSummuryNow;
+
+CREATE TEMPORARY TABLE investmentSummuryNow(
+  id1 INT NOT NULL AUTO_INCREMENT ,
+    brancName1 VARCHAR(60),
+   withdraws1 DOUBLE,
+     deposits1 DOUBLE,
+ balance1 DOUBLE,
+  PRIMARY KEY(id1)
+) ENGINE=innoDB
+AUTO_INCREMENT=1
+DEFAULT CHARACTER SET=utf8;
+
+
+
+
+DROP TABLE IF EXISTS investmentSummuryNow1;
+
+CREATE TEMPORARY TABLE investmentSummuryNow1(
+  id INT NOT NULL AUTO_INCREMENT ,
+    brancName VARCHAR(60),
+   withdraws DOUBLE,
+     deposits DOUBLE,
+ balance DOUBLE,
+  PRIMARY KEY(id)
+) ENGINE=innoDB
+AUTO_INCREMENT=1
+DEFAULT CHARACTER SET=utf8;
+
+ 
+ INSERT INTO investmentSummuryNow(id1,brancName1,withdraws1,deposits1,balance1) SELECT NULL,branchName(b.branch_id),sumOfDebitsAndCreditsBranch(b.branch_id,'DEBITSMADE','INVESTMENT'),sumOfDebitsAndCreditsBranch(b.branch_id,'CREDITSMADE','INVESTMENT'),(sumOfDebitsAndCreditsBranch(b.branch_id,'CREDITSMADE','INVESTMENT')-sumOfDebitsAndCreditsBranch(b.branch_id,'DEBITSMADE','INVESTMENT')) FROM branch b;
+
+
+INSERT INTO investmentSummuryNow1(id,brancName,withdraws,deposits,balance) SELECT * FROM investmentSummuryNow;
+
+
+INSERT INTO investmentSummuryNow1(id,brancName,withdraws,deposits,balance) SELECT NULL,'TOTAL',SUM(withdraws1),SUM(deposits1), (SUM(deposits1)-SUM(withdraws1)) FROM investmentSummuryNow;
+
+
+ SELECT * FROM investmentSummuryNow1;
+END ##
+DELIMITER ;
+
+
+
+DROP PROCEDURE IF EXISTS summuryBanksPerBranch;
+
+DELIMITER ##
+
+CREATE PROCEDURE   summuryBanksPerBranch() 
+
+BEGIN
+
+DROP TABLE IF EXISTS investmentSummuryNow;
+
+CREATE TEMPORARY TABLE investmentSummuryNow(
+  id1 INT NOT NULL AUTO_INCREMENT ,
+    brancName1 VARCHAR(60),
+   withdraws1 DOUBLE,
+     deposits1 DOUBLE,
+ balance1 DOUBLE,
+  PRIMARY KEY(id1)
+) ENGINE=innoDB
+AUTO_INCREMENT=1
+DEFAULT CHARACTER SET=utf8;
+
+
+
+
+DROP TABLE IF EXISTS investmentSummuryNow1;
+
+CREATE TEMPORARY TABLE investmentSummuryNow1(
+  id INT NOT NULL AUTO_INCREMENT ,
+    brancName VARCHAR(60),
+   withdraws DOUBLE,
+     deposits DOUBLE,
+ balance DOUBLE,
+  PRIMARY KEY(id)
+) ENGINE=innoDB
+AUTO_INCREMENT=1
+DEFAULT CHARACTER SET=utf8;
+
+ 
+ INSERT INTO investmentSummuryNow(id1,brancName1,withdraws1,deposits1,balance1) SELECT NULL,branchName(b.branch_id),sumOfDebitsAndCreditsBranch(b.branch_id,'DEBITSMADE','BANK'),sumOfDebitsAndCreditsBranch(b.branch_id,'CREDITSMADE','BANK'),(sumOfDebitsAndCreditsBranch(b.branch_id,'CREDITSMADE','BANK')-sumOfDebitsAndCreditsBranch(b.branch_id,'DEBITSMADE','BANK')) FROM branch b;
+
+
+INSERT INTO investmentSummuryNow1(id,brancName,withdraws,deposits,balance) SELECT * FROM investmentSummuryNow;
+
+
+INSERT INTO investmentSummuryNow1(id,brancName,withdraws,deposits,balance) SELECT NULL,'TOTAL',SUM(withdraws1),SUM(deposits1), (SUM(deposits1)-SUM(withdraws1)) FROM investmentSummuryNow;
+
+
+ SELECT * FROM investmentSummuryNow1;
+END ##
+DELIMITER ;
+
+
+
+
+
+DROP PROCEDURE IF EXISTS theSummuryTotalAllocations;
+
+DELIMITER ##
+
+CREATE PROCEDURE   theSummuryTotalAllocations() 
+
+BEGIN
+
+ SELECT SUM(allocations_total_made) AS totalAllocations,SUM(allocations_total_deposited) AS totalTransfered,SUM(allocations_total_balance) AS totalBalance FROM allocations_total;
+END ##
+DELIMITER ;
+
+
+
+DROP PROCEDURE IF EXISTS theSummuryTotalInvestments;
+
+DELIMITER ##
+
+CREATE PROCEDURE   theSummuryTotalInvestments() 
+
+BEGIN
+
+ SELECT SUM(trn_debit) AS totalAllocations,SUM(trn_credit) AS totalTransfered,(SUM(trn_credit)-SUM(trn_debit) ) AS totalBalance FROM trn_general_ledger WHERE fk_account_types_id_trn_general_ledger=2;
+END ##
+DELIMITER ;
+
+
+
+DROP PROCEDURE IF EXISTS theSummuryTotalBankings;
+
+DELIMITER ##
+
+CREATE PROCEDURE   theSummuryTotalBankings() 
+
+BEGIN
+
+ SELECT SUM(trn_debit) AS totalAllocations,SUM(trn_credit) AS totalTransfered,(SUM(trn_credit)-SUM(trn_debit) ) AS totalBalance FROM trn_general_ledger WHERE fk_account_types_id_trn_general_ledger=1;
+END ##
+DELIMITER ;
+
 

@@ -9,6 +9,8 @@ import { LedgerStatement } from '../models/ledger-statement';
 import { AllocationTotalStatement } from '../models/allocation-total-statement';
 import { AllocationsMadeStatement } from '../models/allocations-made-statement';
 import { AllocationLedgerStatement } from '../models/allocation-ledger-statement';
+import { SummuryLedger } from '../models/summury-ledger';
+import { SummuryAllocations } from '../models/summury-allocations';
 
 @Injectable({
   providedIn: 'root'
@@ -96,7 +98,7 @@ export class AdminUserService {
     //       catchError(this.handleError)
     //     );
     // }
-    investementViability(postData: FormGroup) {
+    investementViabilityNow(postData: FormGroup) {
       return this.http
         .post<boolean>(
           `${this.API_URL}/api/adminUser/investementViability`,
@@ -104,7 +106,7 @@ export class AdminUserService {
           this.httpOptions
         )
 
-        .pipe(mapTo(true), catchError(this.handleError));
+        .pipe(mapTo(true), catchError(this.handleAmountValidError));
     }
 
 
@@ -144,6 +146,65 @@ export class AdminUserService {
           catchError(this.handleError)
         );
     }
+
+
+
+
+    theSummuryInvestNow(): Observable<SummuryLedger[]> {
+
+      return this.http.get<SummuryLedger[]>( `${this.API_URL}/api/adminUser/investSummuryLedger`, this.httpOptions)
+
+        .pipe(
+
+          catchError(this.handleError)
+        );
+    }
+
+
+    theSummuryBankingNow(): Observable<SummuryLedger[]> {
+
+      return this.http.get<SummuryLedger[]>( `${this.API_URL}/api/adminUser/bankingSummuryLedger`, this.httpOptions)
+
+        .pipe(
+
+          catchError(this.handleError)
+        );
+    }
+
+
+    theSummuryTotalAllocations(): Observable<SummuryAllocations[]> {
+
+      return this.http.get<SummuryAllocations[]>( `${this.API_URL}/api/adminUser/summuryTotalAllocations`, this.httpOptions)
+
+        .pipe(
+
+          catchError(this.handleError)
+        );
+    }
+
+
+    summuryTotalBanking(): Observable<SummuryAllocations[]> {
+
+      return this.http.get<SummuryAllocations[]>( `${this.API_URL}/api/adminUser/summuryTotalBankingNow`, this.httpOptions)
+
+        .pipe(
+
+          catchError(this.handleError)
+        );
+    }
+
+    summuryTotalInvestments(): Observable<SummuryAllocations[]> {
+
+      return this.http.get<SummuryAllocations[]>( `${this.API_URL}/api/adminUser/summuryTotalInvestmentsNow`, this.httpOptions)
+
+        .pipe(
+
+          catchError(this.handleError)
+        );
+    }
+
+
+
 
 
 
@@ -255,5 +316,30 @@ export class AdminUserService {
      !!`);
     }
 
+
+
+    private handleAmountValidError(errorResponse: HttpErrorResponse) {
+      if (errorResponse.error instanceof ErrorEvent) {
+        // A client-side or network error occurred. Handle it accordingly.
+        console.error('An error occurred:', errorResponse.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.error(
+          `Backend returned code ${errorResponse.status}, ` +
+            `body was: ${errorResponse.error}`
+        );
+      }
+      // return an observable with a user-facing error message
+      return throwError(`Runimba Please...Beramu!!
+         ${
+           errorResponse.status === 700 ||
+           errorResponse.status === 0 ||
+           errorResponse.status === 200
+             ? 'The Amount being transferred is more than the amount allocated for that branch!!'
+             : errorResponse.error
+         }
+     !!`);
+    }
 
 }

@@ -85,8 +85,101 @@ exports.getTheALLLedgerStatementBank = function () {
 
 }
 
+exports.getTheSummuryBank = function () {
+
+  return new Promise(function (resolve,next) {
+
+    var sql = "CALL summuryBanksPerBranch()";
+  console.log(sql);
+  dbconnection.query(sql, null, function (error, results, fields) {
+    if (error) {
+      return next(error);
+    } else {
+        console.log(results[0]);
+     resolve(results[0]);
+    }
+  });
+});
+
+}
 
 
+exports.getTheSummuryTotalInvestemnts = function () {
+
+  return new Promise(function (resolve,next) {
+
+    var sql = "CALL theSummuryTotalInvestments()";
+  console.log(sql);
+  dbconnection.query(sql, null, function (error, results, fields) {
+    if (error) {
+      return next(error);
+    } else {
+        console.log(results[0]);
+     resolve(results[0]);
+    }
+  });
+});
+
+}
+
+
+exports.getTheSummuryTotalBankings = function () {
+
+  return new Promise(function (resolve,next) {
+
+    var sql = "CALL theSummuryTotalBankings()";
+  console.log(sql);
+  dbconnection.query(sql, null, function (error, results, fields) {
+    if (error) {
+      return next(error);
+    } else {
+        console.log(results[0]);
+     resolve(results[0]);
+    }
+  });
+});
+
+}
+
+
+
+
+exports.getTheSummuryTotalAllocations = function () {
+
+  return new Promise(function (resolve,next) {
+
+    var sql = "CALL theSummuryTotalAllocations()";
+  console.log(sql);
+  dbconnection.query(sql, null, function (error, results, fields) {
+    if (error) {
+      return next(error);
+    } else {
+        console.log(results[0]);
+     resolve(results[0]);
+    }
+  });
+});
+
+}
+
+
+exports.getTheSummuryInvest = function () {
+
+  return new Promise(function (resolve,next) {
+
+    var sql = "CALL summuryInvestmentPerBranch()";
+  console.log(sql);
+  dbconnection.query(sql, null, function (error, results, fields) {
+    if (error) {
+      return next(error);
+    } else {
+        console.log(results[0]);
+     resolve(results[0]);
+    }
+  });
+});
+
+}
 
 
   exports.getTheAllocationsLedgerState = function (branchName) {
@@ -232,7 +325,7 @@ exports.getThebranchLedgerStatementBank = function (branchName) {
 
 
 
-  exports.checkInvestablility = function (branch) {
+  exports.checkInvestablility = function (data) {
 
 
   return new Promise(function (resolve,next) {
@@ -243,7 +336,7 @@ exports.getThebranchLedgerStatementBank = function (branchName) {
     if (error) {
       return next(error);
     } else {
-      // console.log(results[0]);
+      console.log(results[0][0]);
 
       resolve(Boolean(results[0][0].viability>0));
     }

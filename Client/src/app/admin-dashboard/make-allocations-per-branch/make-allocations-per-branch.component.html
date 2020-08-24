@@ -39,9 +39,9 @@
           <button
           type="button"
           class="btn btn-info col-5 mx-auto"
-          [disabled]="!userForm.valid"
+
           (click)='confirmFigure()'
-          [disabled]="confirmed"
+          [disabled]="(!userForm.valid) && !confirmed"
         >
          Confirm Amount Allocated
         </button>
