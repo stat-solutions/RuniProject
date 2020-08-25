@@ -1,5 +1,5 @@
 <div
-  class="container-fluid d-flex flex-row justify-content-center mb-0 mt-md-1 mt-1 pt-md-0 pt-0 pb-3 shadow-lg col-xs-12 col-lg-8"
+  class="container-fluid d-flex flex-row justify-content-center mb-0 mt-md-1 mt-1 pt-md-0 pt-0 pb-1 shadow-lg col-xs-12 col-lg-8"
 >
   <div class="jumbotron-fluid">
     <h5 class="rub-head1 text-info font-weight-bold mt-4 mb-4">
@@ -7,7 +7,7 @@
       Make Allocations
       <hr class="bottom mt-0 mb-0" />
     </h5>
-  <div class="card-body mt-1 pt-4 mb-0 pb-3 shadow-lg">
+  <div class="card-body mt-1 pt-4 mb-2 pb-3 shadow-lg">
 
       <form [formGroup]="userForm" (ngSubmit)="postTxn()">
 
@@ -17,14 +17,14 @@
           <label
             for="txn_amount"
             [ngClass]="fval.txn_amount.valid ? 'text-info' : ''"
-            >Amount Available<i
+            >Amount<i
               *ngIf="fval.txn_amount.valid"
               class="material-icons"
               >check_circle</i
             ></label
           >
           <div class="input-group mb-0">
-            <input id="txn_amount" formControlName="txn_amount" type="text" class="form-control"  [ngClass]=" { 'is-invalid': (fval.txn_amount.touched||fval.txn_amount.dirty) && fval.txn_amount.errors }" placeholder="Txn Amount" autocomplete="off" (keyup)="onKey($event)" placeholder="Enter the amount"
+            <input id="txn_amount" formControlName="txn_amount" type="text" class="form-control"  [ngClass]=" { 'is-invalid': (fval.txn_amount.touched||fval.txn_amount.dirty) && fval.txn_amount.errors }" placeholder="Txn Amount" autocomplete="off" (keyup)="onKey($event)" placeholder="Enter the amount available"
             autocomplete="off"
 /><i  *ngIf="confirmed" class="material-icons">check_circle</i>
           </div>
@@ -34,21 +34,21 @@
 
 
 
-        <div class="d-flex my-2 py-2 mx-auto">
+        <div class="d-flex my-2 py-2 px-0 mx-1">
 
           <button
           type="button"
-          class="btn btn-info col-5 mx-auto"
+          class="btn btn-info col-4 mx-1"
 
           (click)='confirmFigure()'
           [disabled]="(!userForm.valid) && !confirmed"
         >
-         Confirm Amount Allocated
+         Confirm
         </button>
 
           <button
             type="submit"
-            class="btn btn-info col-5 mx-auto"
+            class="btn btn-info col-3 mx-1"
             [disabled]="!confirmed"
           >
             Save
@@ -62,7 +62,7 @@
 
            <button
             type="button"
-            class="btn btn-danger col-5 mx-auto"
+            class="btn btn-danger col-4 mx-1"
             (click)="revert()"
           >
             Cancel
@@ -75,20 +75,20 @@
       <!-- </div>  -->
       <!-- </div>   -->
     </div>
-    <!--footer -->
-    <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-3 mx-auto">
+    <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-5 mx-auto">
       <div class="small text-center text-info">
         The Company:<span class="text-primo font-weight-bold"
-          ><strong> {{ theCompany }}</strong>
-        </span>
-        The Branch:<span class="text-primo font-weight-bold"><strong></strong> </span>
-      </div>
+        ><strong> {{ theCompany }}</strong>
+      </span>
+      The Branch:<span class="text-primo font-weight-bold"><strong></strong> </span>
     </div>
-        <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-3 mx-auto">
+  </div>
+  <!--footer -->
+        <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-5 mx-auto">
       <div class="small text-center text-info">
         Copyright &copy; 2020 - Runicorp Holdings Ltd
       </div>
     </div>
     <!--/ footer -->
-  </div>
+</div>
 </div>

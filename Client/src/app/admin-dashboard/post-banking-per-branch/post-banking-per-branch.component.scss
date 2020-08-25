@@ -49,18 +49,6 @@ button.btn {
   border-radius: 15px;
 }
 
-.text-danger {
-  color: #d3112bf3 !important;
-}
-
-.text-warning {
-  color: #eee206ef !important;
-}
-
-.bg-danger {
-  background-color: #d3112bf3 !important;
-}
-
 .pointerCursor {
   cursor: pointer;
 }
@@ -71,7 +59,7 @@ h3 {
 
 
 //media queries
-@media (min-width: 280px) {}
+@media (min-width: 320px) {}
 
 
 @media (min-width: 360px) {

@@ -58,7 +58,7 @@ contain: auto;}
 .rub-head2 hr.top{
   width: 30%;
   min-width: 15px;
-  max-width: 30px;
+  max-width: 34px;
   position: relative;
   margin-right: 0px;
   background-color: #00162dc0;
@@ -104,7 +104,7 @@ contain: auto;}
 .rub-head4 hr.top{
   width: 30%;
   min-width: 15px;
-  max-width: 30px;
+  max-width: 34px;
   position: relative;
   margin-right: 0px;
   background-color: #00162dc0;
@@ -203,6 +203,7 @@ padding-right: 0px;
 }
 
 .card1{
+  width: 100%;
   height: 100%;
   max-height: 300px;
   min-height: 240px;
@@ -270,14 +271,29 @@ padding-top: 0px !important;
   .fa-balance-scale-right{
     font-size: 20px !important;
   }
-
-   .rub-card-3{
+  .rub-card-3{
     margin-top: 6px !important;
   padding-left: 0px !important;
   padding-right: 3px !important;
   }
      .components{
     margin-top: 10px !important;
+  }
+  .rub-head1{
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+  }
+  .rub-head2{
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+  }
+  .rub-head3{
+    margin-left: 38px !important;
+    margin-right: 38px !important;
+  }
+  .rub-head4{
+    margin-left: 30px !important;
+    margin-right: 30px !important;
   }
     }
 
@@ -287,17 +303,19 @@ padding-top: 0px !important;
     margin-left: 40px !important;
     margin-right: 40px !important;
   }
-
   .rub-head2{
     margin-left: 40px !important;
     margin-right: 40px !important;
   }
-
   .rub-head3{
     margin-left: 60px !important;
     margin-right: 60px !important;
   }
-      }
+  .rub-head4{
+    margin-left: 52px !important;
+    margin-right: 52px !important;
+  }
+    }
 
 
   @media (min-width:375px){
@@ -305,37 +323,57 @@ padding-top: 0px !important;
       margin-left: 45px !important;
       margin-right: 45px !important;
     }
-
     .rub-head2{
       margin-left: 45px !important;
       margin-right: 45px !important;
     }
-
     .rub-head3{
       margin-left: 65px !important;
       margin-right: 65px !important;
+    }
+    .rub-head4{
+      margin-left: 58px !important;
+      margin-right: 58px !important;
     }
     }
 
 
   @media (min-width:410px){
+    .rub-head1{
+      margin-left: 65px !important;
+      margin-right: 65px !important;
+    }
+    .rub-head2{
+      margin-left: 65px !important;
+      margin-right: 65px !important;
+    }
+    .rub-head3{
+      margin-left: 83px !important;
+      margin-right: 83px !important;
+    }
+    .rub-head4{
+      margin-left: 75px !important;
+      margin-right: 75px !important;
+    }
   }
 
 
   @media (min-width: 440px){
     .rub-head1{
-      margin-left: 85px !important;
-      margin-right: 85px !important;
+      margin-left: 80px !important;
+      margin-right: 80px !important;
     }
-
     .rub-head2{
       margin-left: 80px !important;
       margin-right: 80px !important;
     }
-
     .rub-head3{
-      margin-left: 110px !important;
-      margin-right: 110px !important;
+      margin-left: 100px !important;
+      margin-right: 100px !important;
+    }
+    .rub-head4{
+      margin-left: 95px !important;
+      margin-right: 95px !important;
     }
     }
 
@@ -345,15 +383,17 @@ padding-top: 0px !important;
         margin-left: 140px !important;
         margin-right: 140px !important;
       }
-
       .rub-head2{
         margin-left: 140px !important;
         margin-right: 140px !important;
       }
-
       .rub-head3{
         margin-left: 160px !important;
         margin-right: 160px !important;
+      }
+      .rub-head4{
+        margin-left: 148px !important;
+        margin-right: 148px !important;
       }
       }
 
@@ -363,15 +403,17 @@ padding-top: 0px !important;
           margin-left: 130px !important;
           margin-right: 130px !important;
         }
-
         .rub-head2{
           margin-left: 130px !important;
           margin-right: 130px !important;
         }
-
         .rub-head3{
           margin-left: 150px !important;
           margin-right: 150px !important;
+        }
+        .rub-head4{
+          margin-left: 138px !important;
+          margin-right: 138px !important;
         }
         }
 
@@ -385,21 +427,24 @@ padding-top: 0px !important;
     margin-left: 215px !important;
     margin-right: 215px !important;
   }
-
   .rub-head2{
     margin-left: 215px !important;
     margin-right: 215px !important;
   }
-
   .rub-head3{
     margin-left: 235px !important;
     margin-right: 235px !important;
+  }
+  .rub-head4{
+    margin-left: 222px !important;
+    margin-right: 222px !important;
   }
 }
 
 
   @media(min-width: 812px){
   }
+
   @media (min-width: 1024px){
   .container {
     margin-left: auto !important;
@@ -432,6 +477,7 @@ padding-left: 0px !important;
   padding-right: 3px !important;
   }
    .rub-card-2{
+  min-width: 160px !important;
     margin-top: 6px !important;
     margin-left: auto !important;
     margin-right: auto !important;
@@ -460,6 +506,7 @@ padding-top: 0px !important;
   }
 
    .rub-card-3{
+    min-width: 160px !important;
     margin-top: 6px !important;
     margin-left: auto !important;
     margin-right: auto !important;
@@ -478,154 +525,94 @@ padding-top: 0px !important;
   margin-left: 345px !important;
   margin-right: 345px !important;
 }
-
 .rub-head2{
   margin-left: 345px !important;
   margin-right: 345px !important;
 }
-
 .rub-head3{
   margin-left: 365px !important;
   margin-right: 365px !important;
+}
+.rub-head4{
+  margin-left: 352px !important;
+  margin-right: 352px !important;
 }
   }
 
 
   @media (min-width:1100px){
-  .rub-col-1{
-    margin-bottom: 15px !important;
-  }
-  .rub-col-2{
-    margin-bottom: 15px !important;
-  }
-  h5 {
-    font-size: 20px !important;
-    margin-left: 200px !important;
-    padding-left: 80px !important;
-  }
-
   }
 
   @media (min-width:1280px){
   h5 {
-    font-size: 20px !important;
-    margin-left: 210px !important;
-    padding-left: 80px !important;
+    font-size: 22px !important;
   }
-  .rub-col-1{
-    margin-bottom: 0px !important;
+  .container {
+    width: 100%;
+    max-width: 1260px;
+    min-width: 1232px;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
-  .rub-col-2{
-    margin-bottom: 0px !important;
-  }
-  .rub-col-3{
-    margin-bottom: 0px !important;
-  }
-   .fa-clipboard-list{
-     font-size: 28px !important;
-   }
-   .rub-card-1{
-  padding-bottom: 0px !important;
-   }
-   .rub-title-1{
-    font-size: 16px !important;
+  .rub-card-1{
+  min-width: 230px !important;
   }
    .rub-card-2{
-  padding-left: 8px !important;
-  padding-right: 8px !important;
+  min-width: 230px !important;
+  }
+  .rub-title-1{
+    font-size: 18px !important;
   }
   .rub-title-2{
-    font-size: 16px !important;
-  margin-left: 0px !important;
-  padding-left: 2px !important;
-  padding-right: 3px !important;
-  }
-   .fa-coins{
-     font-size: 28px !important;
-   }
-  .rub-card-3{
-  padding-left: 8px !important;
-  padding-right: 8px !important;
-  }
-  .rub-title-3{
-    font-size: 16px !important;
-  margin-left: 0px !important;
-  padding-left: 2px !important;
-  padding-right: 3px !important;
-  }
-  .fa-building{
-    font-size: 26px !important;
+    font-size: 18px !important;
   }
 
-  .components{
-    margin-top: 12px !important;
+   .rub-card-3{
+    min-width: 230px !important;
   }
-  .components h6{
-  font-size: 16px !important;
+  .card1 {
+    max-width: 1260px;
+    min-width: 1232px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+  .invest-card{
+    max-height: 280px;
   }
-  .card5{
-    height: 330px;
-    padding-bottom: 6px !important;
-  }
-  .card6{
-    height: 330px;
-    padding-bottom: 6px !important;
-  }
+        .rubai-table {
+          max-width: 1400px !important;
+          margin-top: 15px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+              }
+.rub-head1{
+  margin-left: 560px !important;
+  margin-right: 560px !important;
+}
+.rub-head2{
+  margin-left: 560px !important;
+  margin-right: 560px !important;
+}
+.rub-head3{
+  margin-left: 590px !important;
+  margin-right: 590px !important;
+}
+.rub-head4{
+  margin-left: 570px !important;
+  margin-right: 570px !important;
+}
   }
 
 
   @media (min-width:1320px){
-  .container {
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  h5 {
-    font-size: 20px !important;
-    margin-left: 210px !important;
-    padding-left: 80px !important;
-  }
-   .fa-clipboard-list{
-     font-size: 30px !important;
-   }
-   .rub-card-1{
-  padding-bottom: 0px !important;
-   }
-   .rub-title-1{
-    font-size: 18px !important;
-  }
-   .rub-card-2{
-  padding-left: 10px !important;
-  padding-right: 10px !important;
-  }
-  .rub-title-2{
-    font-size: 18px !important;
-  margin-left: 0px !important;
-  padding-left: 4px !important;
-  padding-right: 5px !important;
-  }
-   .fa-coins{
-     font-size: 30px !important;
-   }
-  .rub-card-3{
-  padding-left: 10px !important;
-  padding-right: 10px !important;
-  }
-  .rub-title-3{
-    font-size: 18px !important;
-  margin-left: 0px !important;
-  padding-left: 4px !important;
-  padding-right: 5px !important;
-  }
-  .fa-building{
-    font-size: 28px !important;
-  }
-
-  .components{
-    margin-top: 14px !important;
-  }
-  .components h6{
-  font-size: 18px !important;
-  }
+    .container {
+      max-width: 1440px !important;
+      min-width: 1252px !important;
+    }
+    .card1 {
+      max-width: 1440px;
+      min-width: 1252px;
+    }
   }
 
 
