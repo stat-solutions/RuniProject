@@ -5,22 +5,15 @@
   box-shadow: none !important;
   }
 
-.navbar-brand {
-  margin-top: 0rem !important;
-  padding-top: 0rem !important;
-  padding-bottom: 0rem;
-  padding-right: .35rem;
-  margin-right: .35rem;
-  font-size: 2.25rem;
-  height: 4.25rem;
-  border-top: none !important;
-  box-shadow: none !important;
-}
-
 .dropbtn {
   background-color: transparent;
-  padding: 10px;
-  font-size: 16px;
+  padding-top: 0px;
+  padding-bottom: 10px;
+  margin-left: 0rem;
+  margin-right: 0rem;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-size: 10px;
   border: none;
 }
 
@@ -35,8 +28,8 @@
   display: none;
   position: absolute;
   background-color: #d9dbddbb;
-  min-width: 180px;
-  max-width: 220px;
+  min-width: 140px;
+  max-width: 180px;
   margin-top: 8px;
   margin-bottom: 0px;
   margin-left: 0px;
@@ -52,7 +45,7 @@
   margin-left: 5px;
   margin-right: 3px;
   font-size: .8rem;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   display: block;
 }
@@ -78,10 +71,15 @@
 
 .rubai-nav{
   display: inline-block;
-  margin-left: 4rem !important;
+  margin-left: 2rem !important;
+  margin-right: 2rem !important;
+  padding-left: 0;
+  padding-right: 0;
   margin-bottom: .5rem;
 }
 .rubai-link{
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   display: inline-block;
 }
 .rubai-link:focus, .rubai-link:active{
@@ -90,151 +88,117 @@ color: #16aa8af2;
 
 
 //media queries
-@media (min-width: 360px) {
+@media (min-width: 320px) {
+  .rubai-nav{
+    margin-left: 4rem !important;
+    margin-right: 4rem !important;
   }
+    }
+@media (min-width: 360px) {
+  .rubai-nav{
+    margin-left: 5.25rem !important;
+    margin-right: 5.25rem !important;
+  }
+    }
 
 
 @media (min-width: 375px) {
-  .employee-card hr.top {
-    margin-left: 85px;
-  }
-  .employee-card hr.bottom {
-    margin-right: 85px;
+  .rubai-nav{
+    margin-left: 5.5rem !important;
+    margin-right: 5.5rem !important;
   }
 }
 
 
-@media (min-width: 400px) {
-  .employee-card hr.top {
-    margin-left: 101px;
+@media (min-width: 410px) {
+  .rubai-nav{
+    margin-left: 6.8rem !important;
+    margin-right: 6.8rem !important;
   }
-  .employee-card hr.bottom {
-    margin-right: 101px;
+}
+
+
+@media (min-width: 440px) {
+  .rubai-nav{
+    margin-left: 7.95rem !important;
+    margin-right: 7.95rem !important;
   }
 }
 
 
 @media (min-width: 568px) {
-  div.rubai-nav{
-    margin-left: 31rem !important;
+  .rubai-nav{
+    margin-left: 18.4rem !important;
+    margin-right: 1.0rem !important;
   }
 }
 
 
 @media (min-width: 640px) {
-  .employee-card hr.top {
-    margin-left: 158px;
+  .rubai-nav{
+    margin-left: 22.8rem !important;
   }
-  .employee-card hr.bottom {
-    margin-right: 158px;
+}
+
+
+@media (min-width: 730px) {
+  .rubai-nav{
+    margin-left: 27.7rem !important;
   }
 }
 
 
 @media (min-width: 768px) {
-  .breadcrumb {
-    font-size: 20px !important;
-    margin-top: 25px !important;
-  }
-  .employee-card hr.top {
-    margin-left: 155px;
-  }
-  .employee-card hr.bottom {
-    margin-right: 155px;
-  }
-  .employee-card {
-    margin-top: 15px !important;
-    margin-bottom: 170px !important;
-    margin-right: auto;
-    margin-left: auto;
-    padding-top: 20px !important;
-  }
-  .card .card-title {
-    font-size: 18px !important;
-  }
-  ::ng-deep .mat-step-header {
-    pointer-events: none !important;
-    color: #54a9c9 !important;
-    background-color: none;
-    margin-bottom: 20px !important;
+  .rubai-nav{
+    margin-left: 30.5rem !important;
   }
 }
 
 
-@media (min-width: 823px) {
-  .breadcrumb {
-    font-size: 20px !important;
-    margin-top: 25px !important;
-  }
-  .employee-card hr.top {
-    margin-left: 155px;
-  }
-  .employee-card hr.bottom {
-    margin-right: 155px;
-  }
-  .employee-card {
-    margin-top: 15px !important;
-    margin-bottom: 40px !important;
-    margin-right: auto;
-    margin-left: auto;
-    padding-top: 20px !important;
-  }
-  .card .card-title {
-    font-size: 18px !important;
-  }
-  ::ng-deep .mat-step-header {
-    pointer-events: none !important;
-    color: #54a9c9 !important;
-    background-color: none;
-    margin-bottom: 20px !important;
+@media (min-width: 812px) {
+  .rubai-nav{
+    margin-left: 32.5rem !important;
   }
 }
 
 
 @media (min-width: 1024px) {
-  .breadcrumb {
-    font-size: 24px !important;
-    margin-top: 30px !important;
-    font-weight: 800;
+  .rubai-nav{
+    margin-left: 42.6rem !important;
   }
-  .employee-card hr.top {
-    margin-left: 145px;
+  .dropbtn {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-bottom: 10px;
+    font-size: 13px;
   }
-  .employee-card hr.bottom {
-    margin-right: 145px;
+
+  .dropdown-menu {
+    min-width: 150px;
+    max-width: 200px;
   }
-  .employee-card {
-    margin-top: 15px !important;
-    margin-bottom: 450px !important;
+  .dropdown-menu a {
+    font-size: 1.0rem;
   }
-  .card .card-title {
-    font-size: 20px !important;
-  }
-}
+    }
 
 @media (min-width: 1100px) {
 }
 
 @media (min-width: 1280px) {
-  .breadcrumb {
-    font-size: 24px !important;
-    margin-top: 25px !important;
+  .rubai-nav{
+    margin-left: 86.6rem !important;
   }
-  .employee-card hr.top {
-    margin-left: 144px;
+  .dropdown-menu {
+    min-width: 200px;
+    max-width: 240px;
   }
-  .employee-card hr.bottom {
-    margin-right: 144px;
-  }
-  .employee-card {
-    margin-top: 5px !important;
-    margin-bottom: 70px !important;
+  .dropdown-menu a {
+    font-size: 1.2rem;
   }
 }
 
 @media (min-width: 1320px) {
-  .employee-card {
-    margin-bottom: 40px !important;
-    padding-top: 10px !important;
-  }
 }

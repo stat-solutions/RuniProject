@@ -6848,7 +6848,7 @@ button.bg-primary:hover {
 }
 
 .bg-secondary {
-  background-color: #6c757d !important
+  background-color: #001327d7 !important
 }
 
 a.bg-secondary:focus,
@@ -10566,7 +10566,7 @@ a.text-primary:hover {
 }
 
 .text-secondary {
-  color: #6c757d !important
+  color: #7d8388 !important
 }
 
 a.text-secondary:focus,
@@ -10583,6 +10583,9 @@ a.text-success:hover {
   color: #19692c !important
 }
 
+.text-primob {
+  color: #02162cc0 !important
+}
 .text-primo {
   color: #00162dc0 !important
 }
@@ -10617,6 +10620,10 @@ a.text-warning:hover {
 a.text-danger:focus,
 a.text-danger:hover {
   color: #a71d2a !important
+}
+
+.text-lightb {
+  color: #b6babebb !important
 }
 
 .text-light {
