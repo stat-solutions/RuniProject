@@ -20,7 +20,7 @@ export class PostInvestmentPerBranchComponent implements OnInit {
     ValidatedNow: boolean;
     serviceErrors: string;
     theBranch: string;
-    theCompany: string;
+    userName: string;
     values: any;
     numberValue: number;
     theBranches$: Observable<TheBranches[]>;
@@ -36,7 +36,7 @@ export class PostInvestmentPerBranchComponent implements OnInit {
 
     ngOnInit() {
       this.theBranch = jwt_decode(this.authService.getJwtToken()).user_branch_name;
-      this.theCompany = jwt_decode(this.authService.getJwtToken()).user_station_company;
+      this.userName = jwt_decode(this.authService.getJwtToken()).user_name;
       this.userForm = this.createFormGroup();
       this.theBranches$ = this.authService.getTheBranches();
     }

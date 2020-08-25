@@ -6,6 +6,7 @@ export interface ApprovalDetails {
  txn_amount: number;
 branch_name: string;
 user_id: number;
+rejectionReason: string;
 approval_status: number;
  created_at: string;
 update_at: string;

@@ -193,7 +193,7 @@ DECLARE posted_successfully INT;
 
 IF JSON_UNQUOTE(JSON_EXTRACT(data, '$.origination')) = 'BRANCH' THEN
 
-INSERT INTO requiring_txn_approvals VALUES(NULL,JSON_UNQUOTE(JSON_EXTRACT(data, '$.narration')),  JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_family')),  JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_type')),JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_amount')),  JSON_UNQUOTE(JSON_EXTRACT(data, '$.branch_name')), JSON_UNQUOTE(JSON_EXTRACT(data, '$.user_id')),1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+INSERT INTO requiring_txn_approvals VALUES(NULL,JSON_UNQUOTE(JSON_EXTRACT(data, '$.narration')),  JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_family')),  JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_type')),JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_amount')),  JSON_UNQUOTE(JSON_EXTRACT(data, '$.branch_name')), JSON_UNQUOTE(JSON_EXTRACT(data, '$.user_id')),'Wrong posting',1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 
 ELSE 
