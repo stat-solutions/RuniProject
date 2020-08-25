@@ -15,6 +15,7 @@ import { AllocationTotalStatement } from 'src/app/models/allocation-total-statem
 import { LedgerStatement } from 'src/app/models/ledger-statement';
 import { SummuryLedger } from 'src/app/models/summury-ledger';
 import { SummuryAllocations } from 'src/app/models/summury-allocations';
+import { ApprovalDetails } from 'src/app/models/approval-details';
 
 @Component({
   selector: 'app-admin-dashboard-landing',
@@ -42,8 +43,8 @@ export class AdminDashboardLandingComponent implements OnInit {
       summuryTotalAllocations$: Observable<SummuryAllocations[]>;
       summuryInvestmentTotal$: Observable<SummuryAllocations[]>;
       summuryBankingTotal$: Observable<SummuryAllocations[]>;
+      approvalDetailsNow$: Observable<ApprovalDetails[]>;
 
-      
   // @ViewChild('staticTabs', { static: false }) staticTabs: TabsetComponent;
 
 
@@ -75,16 +76,17 @@ export class AdminDashboardLandingComponent implements OnInit {
         this.summuryBanking$ = this.adminUserService.theSummuryBankingNow();
 
 
-        this.summuryTotalAllocations$= this.adminUserService.theSummuryTotalAllocations();
+        this.summuryTotalAllocations$ = this.adminUserService.theSummuryTotalAllocations();
 
-          
+
         this. summuryInvestmentTotal$ = this.adminUserService.summuryTotalInvestments();
 
         this.summuryBankingTotal$ = this.adminUserService.summuryTotalBanking();
-        
 
-        
+
+        this.approvalDetailsNow$ = this.adminUserService.getTheApprovalDetailsNow();
       }
+
 
       createFormGroup() {
         return new FormGroup({
@@ -140,21 +142,47 @@ export class AdminDashboardLandingComponent implements OnInit {
         this.userForm.reset();
       }
 
-    //method for filtering out last banked posting
-  //   lastBanking()  {
-  //     let removed = this.investTrackingTable.pop();
-  //     let item=Object.entries(removed);
-  //     let banked=Object.values(item[3]);
-  //     return banked[1];
-  // }
 
-    //method for filtering out last investment posting
-    // lastInvestment() {
-    //   let removed = this.investmentsTable.pop();
-    //   let item=Object.entries(removed);
-    //   let invested=Object.values(item[2]);
-    //   return invested[1];
-    //   }
+      approvePostedTxn(txnIdNow: string){
+        this.spinner.show();
+        this.adminUserService
+        .approveTheTxnNow(txnIdNow)
+        .subscribe(
+         () => {
+          this.spinner.hide();
+// console.log('Txn was successfully Approved');
+          this.alertService.success({
+              html: '<b>' + 'Txn was successfully Approved' + '</b>' + '<br/>'
+
+            });
+
+          setTimeout(() => {
+              location.reload();
+            }, 1000);
+          },
+
+          (error: string) => {
+            this.errored = true;
+            this.serviceErrors = error;
+            this.spinner.hide();
+            this.alertService.warning({
+              html: '<b>' + this.serviceErrors + '</b>' + '<br/>'
+
+            });
+
+            setTimeout(() => {
+              location.reload();
+            }, 3000);
+          }
+        );
+
+
+      }
+      rejectPostedTxn(txnIdNowR: number){
+
+
+
+      }
 
 
       get fval() {
