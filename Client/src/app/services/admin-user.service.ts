@@ -11,6 +11,7 @@ import { AllocationsMadeStatement } from '../models/allocations-made-statement';
 import { AllocationLedgerStatement } from '../models/allocation-ledger-statement';
 import { SummuryLedger } from '../models/summury-ledger';
 import { SummuryAllocations } from '../models/summury-allocations';
+import { ApprovalDetails } from '../models/approval-details';
 
 @Injectable({
   providedIn: 'root'
@@ -147,6 +148,34 @@ export class AdminUserService {
         );
     }
 
+    approveTheTxnNow(id: string) {
+      const options1 = { params: new HttpParams().set('id', id) };
+      console.log('Second wave is emi');
+      return this.http
+        .get<boolean[]>(
+          `${this.API_URL}/api/adminUser/approveThatTxnNow`,
+          options1
+        )
+
+        .pipe(
+          // tap(response => console.log(`${response}`)),
+
+          catchError(this.handleError)
+        );
+    }
+    
+
+
+
+    getTheApprovalDetailsNow(): Observable<ApprovalDetails[]> {
+
+      return this.http.get<ApprovalDetails[]>( `${this.API_URL}/api/adminUser/theApprovalDetails`, this.httpOptions)
+
+        .pipe(
+
+          catchError(this.handleError)
+        );
+    }
 
 
 

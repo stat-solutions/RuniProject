@@ -46,6 +46,7 @@ export class MakeAllocationsPerBranchComponent implements OnInit {
       return new FormGroup({
         user_id: new FormControl(''),
         txn_type: new FormControl(''),
+        origination: new FormControl(''),
         txn_amount: new FormControl('', Validators.compose([Validators.required
         // CustomValidator.patternValidator(/^\d+$/, { hasNumber: true }
           // )
@@ -90,7 +91,8 @@ export class MakeAllocationsPerBranchComponent implements OnInit {
         this.userForm.patchValue({
           user_station: jwt_decode(this.authService.getJwtToken()).user_station,
           txn_type: 'ALLOCATE',
-          user_id: jwt_decode(this.authService.getJwtToken()).user_id
+          user_id: jwt_decode(this.authService.getJwtToken()).user_id,
+          origination: 'HEADOFFICE',
         });
 
 
