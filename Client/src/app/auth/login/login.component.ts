@@ -163,7 +163,7 @@ export class LoginComponent implements OnInit {
                   setTimeout(() => {
                     // this.layoutService.emitChangeAdminUser(true);
                     // this.layoutService.emitLoginLogout(true);
-                    this.router.navigate(['dashboardadmin/landingpage']);
+                    this.router.navigate(['dashboardadmin/landing']);
                   }, 1000);
                 } else if (
                   jwt_decode(this.authService.getJwtToken()).user_role === 1002

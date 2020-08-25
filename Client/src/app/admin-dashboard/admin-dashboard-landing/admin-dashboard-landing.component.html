@@ -180,11 +180,11 @@
 
                         </button></td>
 
-                        <td> <button  class="btn btn-danger mr-5" (click)='rejectPostedTxn(record.requiring_txn_approvals_id)' ><i class="fa fa-tree" aria-hidden="true"></i> <i class="fa fa-car" aria-hidden="true"></i>
+                        <td> <button  class="btn btn-danger mr-5"  (click)="openModal(template)" (click)='updateIdNow(record.requiring_txn_approvals_id)' ><i class="fa fa-tree" aria-hidden="true"></i> <i class="fa fa-car" aria-hidden="true"></i>
                           <ngx-spinner class="bg-info" size="medium" type="ball-scale-multiple">
                             <p class="text-light">Please wait...</p>
                           </ngx-spinner>
-
+                          <!-- (click)='rejectPostedTxn(record.requiring_txn_approvals_id)' -->
                             <ngx-alerts></ngx-alerts>
 
                         </button></td>
@@ -197,6 +197,7 @@
             </div>
           </div>
         </div>
+        <router-outlet></router-outlet>
         <div class="card1 card shadow-lg mt-0 mb-3 pb-4">
           <div class="card-header d-flex align-items-center">
             <h5 class="rub-head1 text-info font-weight-bold my-0">
@@ -384,6 +385,73 @@
   <div
     class="d-flex justify-content-center col-xs-12 col-lg-12 mt-1 mb-0 mx-auto"
   >
+  <ng-template #template>
+    <div class="modal-header bg-info close pull-right modal-lg">
+      <h4 class="modal-title pull-left">Reject Transaction</h4>
+
+      <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+  <span aria-hidden="true">&times;</span>
+  </button> -->
+    </div>
+    <div class="modal-body">
+      <div
+      class="container-fluid d-flex flex-row justify-content-center mb-0 mt-md-1 mt-1 pt-md-0 pt-0 pb-3 shadow-lg col-xs-12 col-lg-8"
+    >
+      <div class="jumbotron-fluid">
+        <h5 class="rub-head1 text-info font-weight-bold mt-4 mb-4">
+          <hr class="top mt-1 mb-0" />
+          Rejection Reason
+          <hr class="bottom mt-0 mb-0" />
+        </h5>
+      <div class="card-body mt-1 pt-4 mb-0 pb-3 shadow-lg">
+
+          <form [formGroup]="userForm" (ngSubmit)="rejectWithReason()">
+
+
+            <div class="form-group text-primary">
+              <label for="rejection_reason" [ngClass]="fval.rejection_reason.valid ? 'text-info' : ''">Provide Reason<i  *ngIf="fval.rejection_reason.valid" class="material-icons">check_circle</i></label>
+                      <div class="input-group mb-0">
+                        <textarea formControlName="rejection_reason" class="form-control"  [ngClass]=" { 'is-invalid': (fval.rejection_reason.touched||fval.rejection_reason.dirty) && fval.rejection_reason.errors }"  rows="10" cols="5">Wrong posting</textarea>
+                      </div>
+                      <div class="text-danger col" *ngIf="(fval.rejection_reason.touched||fval.rejection_reason.dirty)  && fval.rejection_reason.errors?.required">The rejection_reason is required</div>
+                    </div>
+
+
+
+            <div class="d-flex my-2 py-2 mx-auto">
+
+              <button
+              type="button"
+              class="btn btn-info col-5 mx-auto"
+
+              (click)='rejectWithReason()'
+              [disabled]="userForm.controls.rejection_reason.invalid"
+            >
+             Submit
+            </button>
+
+
+
+
+
+            </div>
+          </form>
+
+        </div>
+
+            <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-3 mx-auto">
+          <div class="small text-center text-info">
+            Copyright &copy; 2020 - Runicorp Holdings Ltd
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    </div>
+  </ng-template>
+
     <div class="small text-center text-info">
       Copyright &copy; 2020 - Runicorp Holdings Ltd
     </div>
@@ -391,3 +459,4 @@
   <!--/ footer -->
   </div>
   </div>
+

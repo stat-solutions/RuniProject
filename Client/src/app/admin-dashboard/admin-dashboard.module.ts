@@ -1,7 +1,7 @@
 import { ViewBranchAllocationsComponent } from './view-branch-allocations/view-branch-allocations.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TabsModule } from "ngx-bootstrap/tabs";
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminDashboardRoutingModule } from './admin-dashboard-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
@@ -32,6 +32,8 @@ import { VbaLayoutComponent } from './view-branch-allocations/vba-layout/vba-lay
 import { MakeAllocationsPerBranchComponent } from './make-allocations-per-branch/make-allocations-per-branch.component';
 import { VbaAllocationsLedgerStateComponent } from './view-branch-allocations/vba-allocations-ledger-state/vba-allocations-ledger-state.component';
 import { VbaAllocationsMadeStateComponent } from './view-branch-allocations/vba-allocations-made-state/vba-allocations-made-state.component';
+import { RejectApprovalComponent } from './admin-dashboard-landing/reject-approval/reject-approval.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
@@ -55,6 +57,7 @@ import { VbaAllocationsMadeStateComponent } from './view-branch-allocations/vba-
          MakeAllocationsPerBranchComponent,
          VbaAllocationsLedgerStateComponent,
          VbaAllocationsMadeStateComponent,
+         RejectApprovalComponent,
 
          ],
   imports: [
@@ -65,7 +68,7 @@ import { VbaAllocationsMadeStateComponent } from './view-branch-allocations/vba-
     AdminDashboardRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-
+    ModalModule.forRoot(),
     BsDatepickerModule,
     DatepickerModule,
     TabsModule.forRoot(),

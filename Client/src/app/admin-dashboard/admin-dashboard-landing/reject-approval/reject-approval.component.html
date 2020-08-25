@@ -1,0 +1,53 @@
+<div
+  class="container-fluid d-flex flex-row justify-content-center mb-0 mt-md-1 mt-1 pt-md-0 pt-0 pb-3 shadow-lg col-xs-12 col-lg-8"
+>
+  <div class="jumbotron-fluid">
+    <h5 class="rub-head1 text-info font-weight-bold mt-4 mb-4">
+      <hr class="top mt-1 mb-0" />
+      Make Allocations
+      <hr class="bottom mt-0 mb-0" />
+    </h5>
+  <div class="card-body mt-1 pt-4 mb-0 pb-3 shadow-lg">
+
+      <form [formGroup]="userForm" (ngSubmit)="rejectWithReason()">
+
+
+        <div class="form-group text-primary">
+          <label for="rejection_reason" [ngClass]="fval.rejection_reason.valid ? 'text-info' : ''">Rejection Reason<i  *ngIf="fval.rejection_reason.valid" class="material-icons">check_circle</i></label>
+                  <div class="input-group mb-1">
+                    <textarea formControlName="rejection_reason" class="form-control"  [ngClass]=" { 'is-invalid': (fval.rejection_reason.touched||fval.rejection_reason.dirty) && fval.rejection_reason.errors }"  rows="2" cols="50">Bank Posting for Branch</textarea>
+                  </div>
+                  <div class="text-danger col" *ngIf="(fval.rejection_reason.touched||fval.rejection_reason.dirty)  && fval.rejection_reason.errors?.required">The rejection_reason is required</div>
+                </div>
+
+
+
+        <div class="d-flex my-2 py-2 mx-auto">
+
+          <button
+          type="button"
+          class="btn btn-info col-5 mx-auto"
+
+          (click)='rejectWithReason()'
+          [disabled]="!userForm.valid"
+        >
+         Confirm Rejection
+        </button>
+
+
+
+
+
+        </div>
+      </form>
+ 
+    </div>
+
+        <div class="d-flex justify-content-center col-xs-12 col-lg-12 mt-3 mx-auto">
+      <div class="small text-center text-info">
+        Copyright &copy; 2020 - Runicorp Holdings Ltd
+      </div>
+    </div>
+
+  </div>
+</div>

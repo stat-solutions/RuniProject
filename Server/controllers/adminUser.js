@@ -33,6 +33,29 @@ router.use(bodyParser.json());
      
 
       
+
+
+      router.post ('/rejectTxn', function(req, res,next) {
+        
+        serviceU.rejectThatTxn(req.body).then( function(results) {
+
+          console.log(results);
+
+            if(results){
+       
+          res.status(200).json(results);
+
+        }else{
+
+          res.status(700).json(results);
+        }
+
+        } ).catch(next);
+       
+       
+       });
+    
+
       router.post ('/investementViability', function(req, res,next) {
         
         serviceU.checkInvestablility(req.body).then( function(results) {

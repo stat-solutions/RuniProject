@@ -1635,3 +1635,25 @@ SET posted_successfully=1;
 SELECT posted_successfully;
 END ##
 DELIMITER ;
+
+
+
+
+
+
+DROP PROCEDURE IF EXISTS rejectTxnNowS;
+
+DELIMITER ##
+
+CREATE PROCEDURE   rejectTxnNowS(IN data JSON) BEGIN
+DECLARE posted_successfully INT;
+UPDATE requiring_txn_approvals SET approval_status=3,update_at=CURRENT_TIMESTAMP,rejectionReason=JSON_UNQUOTE(JSON_EXTRACT(data, '$.rejection_reason')) WHERE requiring_txn_approvals_id=JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
+
+SET posted_successfully=1;
+
+SELECT posted_successfully;
+END ##
+DELIMITER ;
+
+ 
+          

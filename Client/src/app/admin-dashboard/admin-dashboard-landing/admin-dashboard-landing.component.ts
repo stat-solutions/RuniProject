@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -17,18 +17,22 @@ import { SummuryLedger } from 'src/app/models/summury-ledger';
 import { SummuryAllocations } from 'src/app/models/summury-allocations';
 import { ApprovalDetails } from 'src/app/models/approval-details';
 
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
 @Component({
   selector: 'app-admin-dashboard-landing',
   templateUrl: './admin-dashboard-landing.component.html',
   styleUrls: ['./admin-dashboard-landing.component.scss']
 })
 export class AdminDashboardLandingComponent implements OnInit {
+  public modalRef: BsModalRef;
   count: number;
   items = [];
       registered = false;
       submitted = false;
       errored = false;
       posted = false;
+      txnId: string;
       userForm: FormGroup;
       serviceErrors: any = {};
       value: string;
@@ -50,11 +54,12 @@ export class AdminDashboardLandingComponent implements OnInit {
 
 
     constructor(
-        private authService: AuthServiceService,
-        private spinner: NgxSpinnerService,
-        private router: Router,
-        private alertService: AlertService,
-        private adminUserService: AdminUserService
+      private modalService: BsModalService,
+      private authService: AuthServiceService,
+      private spinner: NgxSpinnerService,
+      private router: Router,
+      private alertService: AlertService,
+      private adminUserService: AdminUserService
       ) {}
 
       ngOnInit() {
@@ -90,51 +95,51 @@ export class AdminDashboardLandingComponent implements OnInit {
 
       createFormGroup() {
         return new FormGroup({
-          full_name: new FormControl('', Validators.compose([Validators.required])),
-          branch_name: new FormControl(
+          // full_name: new FormControl('', Validators.compose([Validators.required])),
+          // branch_name: new FormControl(
+          //   '',
+          //   Validators.compose([Validators.required])
+          // ),
+          rejection_reason: new FormControl(
             '',
             Validators.compose([Validators.required])
           ),
 
-          email: new FormControl('',
-          Validators.compose([
-            Validators.required,
-            Validators.email
-          ])),
-           user_role: new FormControl(
-            '',
-            Validators.compose([
-              Validators.required
+          userId: new FormControl(''),
+          //  user_role: new FormControl(
+          //   '',
+          //   Validators.compose([
+          //     Validators.required
 
-            ])
-          ),
-
-          main_contact_number: new FormControl(
-            '',
-            Validators.compose([
-              Validators.required,
-              CustomValidator.patternValidator(
-                /^(([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9]))$/,
-                { hasNumber: true }
-              )
-            ])
-          ),
-          password: new FormControl(
-            '',
-            Validators.compose([
+          //   ])
+          // ),
+         
+          // main_contact_number: new FormControl(
+          //   '',
+          //   Validators.compose([
+          //     Validators.required,
+          //     CustomValidator.patternValidator(
+          //       /^(([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9]))$/,
+          //       { hasNumber: true }
+          //     )
+          //   ])
+          // ),
+          // password: new FormControl(
+          //   '',
+          //   Validators.compose([
               // 1. Password Field is Required
 
-              Validators.required,
+              // Validators.required,
 
               // 2. check whether the entered password has a number
-              CustomValidator.patternValidator(/^(([1-9])([1-9])([1-9])([0-9]))$/, {
-                hasNumber: true
-              }),
+              // CustomValidator.patternValidator(/^(([1-9])([1-9])([1-9])([0-9]))$/, {
+              //   hasNumber: true
+              // }),
               // 6. Has a minimum length of 8 characters
-              Validators.minLength(4),
-              Validators.maxLength(4)
-            ])
-          )
+          //     Validators.minLength(4),
+          //     Validators.maxLength(4)
+          //   ])
+          // )
         });
       }
 
@@ -178,12 +183,33 @@ export class AdminDashboardLandingComponent implements OnInit {
 
 
       }
+
       rejectPostedTxn(txnIdNowR: number){
+        this.alertService.success({
+          html: '<b>' + 'Please input the Reason for Rejection' + '</b>' + '<br/>'
 
+        });
+        this.alertService.success({
+          html: '<b>' + txnIdNowR + '</b>' + '<br/>'
 
+        });
+        this.router.navigate([
+          '/dashboardadmin/landing/rejectapproval',
+          txnIdNowR]);
 
       }
 
+      public openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'white modal-lg' }));
+
+      }
+
+
+      updateIdNow(theId: string){
+
+this.txnId = theId;
+
+      }
 
       get fval() {
         return this.userForm.controls;
@@ -201,8 +227,50 @@ export class AdminDashboardLandingComponent implements OnInit {
 
       }
 
-      onSubmit() {
+      rejectWithReason(){
+
+this.userForm.patchValue({
+  userId: this.txnId
+});
+
+
+
+this.spinner.show();
+
+this.adminUserService
+        .rejectTheTxnNow(this.userForm)
+        .subscribe(
+         () => {
+          this.spinner.hide();
+// console.log('Txn was successfully Approved');
+          this.alertService.success({
+              html: '<b>' + 'Txn was successfully Rejected' + '</b>' + '<br/>'
+
+            });
+
+          setTimeout(() => {
+              location.reload();
+            }, 1000);
+          },
+
+          (error: string) => {
+            this.errored = true;
+            this.serviceErrors = error;
+            this.spinner.hide();
+            this.alertService.warning({
+              html: '<b>' + this.serviceErrors + '</b>' + '<br/>'
+
+            });
+
+            setTimeout(() => {
+              location.reload();
+            }, 3000);
+          }
+        );
+
+
       }
+
     }
 
 

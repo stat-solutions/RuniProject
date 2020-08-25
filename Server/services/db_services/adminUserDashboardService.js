@@ -1,6 +1,8 @@
 var request = require('request');
 var dbconnection = require('../../connectors/dbConnector');
 
+
+
 exports.updateClient = function (data) {
 
   return new Promise(function (resolve,next) {
@@ -20,6 +22,25 @@ exports.updateClient = function (data) {
 }); }
 
 
+
+
+exports.rejectThatTxn = function (data) {
+
+  return new Promise(function (resolve,next) {
+
+    var sql = "CALL rejectTxnNowS("+"'"+JSON.stringify(data)+"'"+")";
+  console.log(sql);
+  dbconnection.query(sql, null, function (error, results, fields) {
+    if (error) {
+      return next(error);
+    } else {
+
+      // console.log(results[0]);
+
+      resolve(Boolean(results[0][0].posted_successfully>0));
+    }
+  });
+}); }
 
 
 

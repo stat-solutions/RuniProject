@@ -17,6 +17,7 @@ import { VbaViewPortBranchesComponent } from './view-branch-allocations/vba-view
 import { MakeAllocationsPerBranchComponent } from './make-allocations-per-branch/make-allocations-per-branch.component';
 import { VbaAllocationsLedgerStateComponent } from './view-branch-allocations/vba-allocations-ledger-state/vba-allocations-ledger-state.component';
 import { VbaAllocationsMadeStateComponent } from './view-branch-allocations/vba-allocations-made-state/vba-allocations-made-state.component';
+import { RejectApprovalComponent } from './admin-dashboard-landing/reject-approval/reject-approval.component';
 
 
 
@@ -24,7 +25,9 @@ const routes: Routes = [
   { path: 'dashboardadmin', redirectTo: '/dashboardadmin/landing', pathMatch: 'full' },
   {
     path: 'dashboardadmin', component: AdminDashboardComponent, children: [
-      { path: 'landing', component: AdminDashboardLandingComponent },
+      { path: 'landing', component: AdminDashboardLandingComponent, children: [
+        { path: 'rejectapproval/:approvalId', component: RejectApprovalComponent }
+      ] },
       { path: 'postbankingperbranch', component: PostBankingPerBranchComponent },
       { path: 'postinvestmentperbranch', component: PostInvestmentPerBranchComponent },
       { path: 'allocateperbranch', component: MakeAllocationsPerBranchComponent },

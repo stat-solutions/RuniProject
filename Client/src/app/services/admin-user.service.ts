@@ -99,6 +99,22 @@ export class AdminUserService {
     //       catchError(this.handleError)
     //     );
     // }
+
+
+
+    rejectTheTxnNow(postData: FormGroup) {
+      return this.http
+        .post<boolean>(
+          `${this.API_URL}/api/adminUser/rejectTxn`,
+          postData.value,
+          this.httpOptions
+        )
+
+        .pipe(mapTo(true), catchError(this.handleError));
+    }
+
+
+
     investementViabilityNow(postData: FormGroup) {
       return this.http
         .post<boolean>(
@@ -163,7 +179,7 @@ export class AdminUserService {
           catchError(this.handleError)
         );
     }
-    
+
 
 
 
