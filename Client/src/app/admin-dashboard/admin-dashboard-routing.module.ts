@@ -21,13 +21,13 @@ import { VbaAllocationsMadeStateComponent } from './view-branch-allocations/vba-
 
 
 const routes: Routes = [
-  { path: 'dashboardadmin', redirectTo: '/dashboardadmin/landingpage', pathMatch: 'full' },
+  { path: 'dashboardadmin', redirectTo: '/dashboardadmin/landing', pathMatch: 'full' },
   {
     path: 'dashboardadmin', component: AdminDashboardComponent, children: [
-      { path: 'landingpage', component: AdminDashboardLandingComponent },
+      { path: 'landing', component: AdminDashboardLandingComponent },
       { path: 'postbankingperbranch', component: PostBankingPerBranchComponent },
       { path: 'postinvestmentperbranch', component: PostInvestmentPerBranchComponent },
-      { path: 'makeallocationsperbranch', component: MakeAllocationsPerBranchComponent },
+      { path: 'allocateperbranch', component: MakeAllocationsPerBranchComponent },
       { path: 'viewbranchbankings', component: ViewBranchBankingsComponent , children: [
 
         { path: 'viewportbankings', component: VbbViewPortComponent },
