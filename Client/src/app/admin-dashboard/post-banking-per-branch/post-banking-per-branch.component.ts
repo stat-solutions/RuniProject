@@ -47,7 +47,7 @@ export class PostBankingPerBranchComponent implements OnInit {
         txn_family: new FormControl(''),
         narration: new FormControl('', Validators.compose([Validators.required])),
         branch_name: new FormControl('', Validators.compose([Validators.required])),
-
+        origination: new FormControl(''),
         txn_type: new FormControl('', Validators.compose([Validators.required])),
         txn_amount: new FormControl('', Validators.compose([Validators.required
         // CustomValidator.patternValidator(/^\d+$/, { hasNumber: true }
@@ -89,7 +89,8 @@ export class PostBankingPerBranchComponent implements OnInit {
         this.userForm.patchValue({
           user_station: jwt_decode(this.authService.getJwtToken()).user_station,
           txn_family: 'BANK',
-          user_id: jwt_decode(this.authService.getJwtToken()).user_id
+          user_id: jwt_decode(this.authService.getJwtToken()).user_id,
+          origination: 'HEADOFFICE'
         });
 
 

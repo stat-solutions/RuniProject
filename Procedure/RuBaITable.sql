@@ -418,6 +418,36 @@ CREATE INDEX `fk_user_id_posted_by_trn_general_ledger_id_indx` ON `trn_general_l
 
 
 
+
+
+
+-- ---------------------------------------------------
+-- Table `requiring_txn_approvals`
+-- ---------------------------------------------------
+DROP TABLE IF EXISTS `requiring_txn_approvals`;
+
+CREATE TABLE IF NOT EXISTS `requiring_txn_approvals` (
+  `requiring_txn_approvals_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `narration` VARCHAR(500) NULL DEFAULT NULL,
+  `txn_family` VARCHAR(60) NULL DEFAULT NULL,
+  `txn_type`VARCHAR(60) NULL DEFAULT NULL,
+   `txn_amount`DOUBLE NULL DEFAULT NULL,
+    `branch_name` VARCHAR(60) NULL DEFAULT NULL,
+  `user_id` INT(11) NULL DEFAULT NULL,
+    `approval_status` INT(11) NULL DEFAULT NULL, -- 1=Created, 2=Approved 3=Rejected
+      `created_at` TIMESTAMP,
+  `update_at` TIMESTAMP,
+  PRIMARY KEY (`requiring_txn_approvals_id`) )
+
+ENGINE = InnoDB
+AUTO_INCREMENT = 700002
+DEFAULT CHARACTER SET = utf8;
+
+
+
+
+
+
 -- -----------------------------------------------------
 -- Table `balance_per_day`
 -- -----------------------------------------------------

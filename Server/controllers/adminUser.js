@@ -1,12 +1,9 @@
 var express = require('express');
-var request = require('request');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var serviceU = require('../services/db_services/adminUserDashboardService');
-var authDbService = require('../services/db_services/authService');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
-var SMS = require('../services/other_services/smsService');
 
 
 
@@ -58,6 +55,35 @@ var SMS = require('../services/other_services/smsService');
     
     
 
+       router.get('/theApprovalDetails', function(req, res,next) {
+
+        
+        
+        serviceU.getTheApprovalDetails(req.query.id).then( function(results) {
+          res.setHeader('Content-Type', 'application/json');
+          res.json(results);
+        } ).catch(next);
+      
+       });
+
+       router.get('/approveThatTxnNow', function(req, res,next) {
+        serviceU.getTheapproveThatTxnNow(req.query.id).then( function(results) {
+          // console.log("results");
+          // console.log(results);
+
+            if(results){
+              console.log(results);
+          res.status(200).json(results);
+
+        }else{
+
+          res.status(700).json(results);
+        }
+
+        } ).catch(next);
+           
+           
+           });
 
 router.get('/summuryTotalInvestmentsNow', function(req, res,next) {
         
@@ -66,6 +92,10 @@ router.get('/summuryTotalInvestmentsNow', function(req, res,next) {
     res.json(results);
   } ).catch(next);
  });
+
+ 
+
+
 
  router.get('/summuryTotalBankingNow', function(req, res,next) {
         
@@ -118,7 +148,9 @@ router.get('/summuryTotalInvestmentsNow', function(req, res,next) {
           
           });
 
-
+          
+       
+          
 
       router.get('/allocationTotalStatement', function(req, res,next) {
         // console.log(req.query.id);

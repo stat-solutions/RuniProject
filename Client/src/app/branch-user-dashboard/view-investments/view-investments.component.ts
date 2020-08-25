@@ -52,8 +52,12 @@ export class ViewInvestmentsComponent implements OnInit {
 
 //         });
 
-    this.bankStatementBranch$ = this.adminUserService.bankStatementByBranchBank(
+    this.bankStatementBranch$ = this.adminUserService.investmentStatementByBranch(
       jwt_decode(this.authService.getJwtToken()).user_branch_name);
+
+    this.branchName =
+
+      jwt_decode(this.authService.getJwtToken()).user_branch_name;
 
   }
 

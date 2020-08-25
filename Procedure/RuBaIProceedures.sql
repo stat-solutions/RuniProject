@@ -190,14 +190,17 @@ BEGIN
 
 DECLARE posted_successfully INT;
 
-SELECT JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_type')) ;
+
+IF JSON_UNQUOTE(JSON_EXTRACT(data, '$.origination')) = 'BRANCH' THEN
+
+INSERT INTO requiring_txn_approvals VALUES(NULL,JSON_UNQUOTE(JSON_EXTRACT(data, '$.narration')),  JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_family')),  JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_type')),JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_amount')),  JSON_UNQUOTE(JSON_EXTRACT(data, '$.branch_name')), JSON_UNQUOTE(JSON_EXTRACT(data, '$.user_id')),1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+
+
+ELSE 
+
 
 IF  JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_type')) = 'DEPOSIT' THEN
-
-  
-  
-  
-    
+ 
 CALL postDepositTxn(
     JSON_UNQUOTE(JSON_EXTRACT(data, '$.narration')),
   JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_family')),
@@ -228,6 +231,8 @@ CALL makeAllocationsNow(
   JSON_UNQUOTE(JSON_EXTRACT(data, '$.txn_amount')),
   JSON_UNQUOTE(JSON_EXTRACT(data, '$.user_id'))
     ) ;
+
+END IF;
 
 END IF;
 
@@ -489,7 +494,7 @@ INSERT INTO investmentbranchledger(
   credit_amount1,
   balance1,
   user_name1
-  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN account_types ats ON l.fk_account_types_id_trn_general_ledger= ats.account_types_id WHERE b.branch_name=branchName AND ats.account_type_name='INVESTMENT' LIMIT 30;
+  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN account_types ats ON l.fk_account_types_id_trn_general_ledger= ats.account_types_id WHERE b.branch_name=branchName AND ats.account_type_name='INVESTMENT' AND DATE(l.trn_date)>=(DATE(NOW())-INTERVAL 10 DAY);
 
   INSERT INTO investmentbranchledger1(
   id,
@@ -574,7 +579,7 @@ INSERT INTO bankbranchledger(
   credit_amount1,
   balance1,
   user_name1
-  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN account_types ats ON l.fk_account_types_id_trn_general_ledger= ats.account_types_id WHERE b.branch_name=branchName AND ats.account_type_name='BANK' LIMIT 30;
+  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN account_types ats ON l.fk_account_types_id_trn_general_ledger= ats.account_types_id WHERE b.branch_name=branchName AND ats.account_type_name='BANK' AND DATE(l.trn_date)>=(DATE(NOW())-INTERVAL 10 DAY);
 
 
   INSERT INTO bankbranchledger1(
@@ -698,7 +703,7 @@ INSERT INTO bankbranchledger(
   credit_amount1,
   balance1,
   user_name1
-  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,b.branch_name AS branch,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN  account_types ats ON l.fk_account_types_id_trn_general_ledger=ats.account_types_id WHERE  ats.account_type_name='BANK' LIMIT 30;
+  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,b.branch_name AS branch,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN  account_types ats ON l.fk_account_types_id_trn_general_ledger=ats.account_types_id WHERE  ats.account_type_name='BANK' AND DATE(l.trn_date)>=(DATE(NOW())-INTERVAL 10 DAY);
 
 
 
@@ -799,7 +804,7 @@ INSERT INTO investmentBranchledger(
   credit_amount1,
   balance1,
   user_name1
-  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,b.branch_name AS branch,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN  account_types ats ON l.fk_account_types_id_trn_general_ledger=ats.account_types_id WHERE  ats.account_type_name='INVESTMENT' LIMIT 30;
+  ) SELECT NULL,DATE_FORMAT(DATE(l.trn_date),"%d/%m/%Y") AS dateX,l.trn_narration AS narration,b.branch_name AS branch,l.trn_debit AS debit_amount,l.trn_credit AS credit_amount,runningBal(l.trn_debit,l.trn_credit),cbd.full_name FROM trn_general_ledger l  INNER JOIN  branch b ON l.fk_branch_id_trn_general_ledger=b.branch_id INNER JOIN users u ON l.fk_user_id_posted_by_trn_general_ledger_id=u. users_id INNER JOIN common_bio_data cbd ON u.users_id =cbd.fk_users_id_common_bio_data INNER JOIN  account_types ats ON l.fk_account_types_id_trn_general_ledger=ats.account_types_id WHERE  ats.account_type_name='INVESTMENT' AND DATE(l.trn_date)>=(DATE(NOW())-INTERVAL 10 DAY);
 
 INSERT INTO investmentBranchledger1(
   id,
@@ -1514,3 +1519,119 @@ END ##
 DELIMITER ;
 
 
+
+
+
+
+
+
+
+
+DROP PROCEDURE IF EXISTS theSummuryTotalAllocationsBranches;
+
+DELIMITER ##
+
+CREATE PROCEDURE   theSummuryTotalAllocationsBranches(IN branchName VARCHAR(60)) 
+
+BEGIN
+
+ SELECT SUM(allocations_total_made) AS totalAllocations,SUM(allocations_total_deposited) AS totalTransfered,SUM(allocations_total_balance) AS totalBalance FROM allocations_total WHERE  fk_branch_id_allocations_total= getBranchId(branchName);
+ 
+END ##
+DELIMITER ;
+
+
+
+
+DROP PROCEDURE IF EXISTS theSummuryTotalInvestmentsBranches;
+
+DELIMITER ##
+
+CREATE PROCEDURE   theSummuryTotalInvestmentsBranches(IN branchName VARCHAR(60)) 
+
+BEGIN
+
+ SELECT SUM(trn_debit) AS totalAllocations,SUM(trn_credit) AS totalTransfered,(SUM(trn_credit)-SUM(trn_debit) ) AS totalBalance FROM trn_general_ledger WHERE fk_account_types_id_trn_general_ledger=2 AND fk_branch_id_trn_general_ledger=getBranchId(branchName);
+END ##
+DELIMITER ;
+
+
+
+
+
+DROP PROCEDURE IF EXISTS theSummuryTotalBankingsBranches;
+
+DELIMITER ##
+
+CREATE PROCEDURE   theSummuryTotalBankingsBranches(IN branchName VARCHAR(60)) 
+
+BEGIN
+
+ SELECT SUM(trn_debit) AS totalAllocations,SUM(trn_credit) AS totalTransfered,(SUM(trn_credit)-SUM(trn_debit) ) AS totalBalance FROM trn_general_ledger WHERE fk_account_types_id_trn_general_ledger=1 AND fk_branch_id_trn_general_ledger=getBranchId(branchName);
+END ##
+DELIMITER ;
+
+
+
+
+
+DROP PROCEDURE IF EXISTS theApprovalDetailsNow;
+
+DELIMITER ##
+
+CREATE PROCEDURE   theApprovalDetailsNow() 
+
+BEGIN
+
+ SELECT * FROM requiring_txn_approvals WHERE approval_status=1;
+END ##
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS approveTheDetailsNow;
+
+DELIMITER ##
+
+CREATE PROCEDURE   approveTheDetailsNow(IN theBigId INT) 
+
+BEGIN
+
+DECLARE narrate,trnFam,trnTyp,bName VARCHAR (60);
+DECLARE amt DOUBLE;
+DECLARE posted_successfully, uId INT;
+
+
+ SELECT narration,txn_family,txn_type,txn_amount,branch_name,user_id INTO narrate,trnFam,trnTyp,amt,bName,uId FROM requiring_txn_approvals WHERE requiring_txn_approvals_id=theBigId;
+
+IF  trnTyp = 'DEPOSIT' THEN
+ 
+CALL postDepositTxn(
+    narrate,
+ trnFam,
+  trnTyp,
+ amt,
+  bName,
+ uId
+    ) ;
+
+ELSEIF trnTyp  = 'WITHDRAWAL' THEN
+
+CALL postWithdrawTxn(
+  narrate,
+ trnFam,
+  trnTyp,
+ amt,
+  bName,
+ uId
+    ) ;
+
+   
+END IF;
+
+UPDATE requiring_txn_approvals SET approval_status=2,update_at=CURRENT_TIMESTAMP WHERE requiring_txn_approvals_id=theBigId;
+
+SET posted_successfully=1;
+
+SELECT posted_successfully;
+END ##
+DELIMITER ;

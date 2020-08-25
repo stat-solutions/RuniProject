@@ -27,7 +27,8 @@ export class PostBankingComponent implements OnInit {
       values: any;
       numberValue: number;
       theBranches$: Observable<TheBranches[]>;
-      txntypeNow = [{txnType: 'DEPOSIT' }, { txnType: 'WITHDRAWAL' } ];
+      txntypeNow = [{txnType: 'DEPOSIT' } ];
+      // , { txnType: 'WITHDRAWAL' }
       // ShiftDetails[]
       constructor(
         private authService: AuthServiceService,
@@ -51,6 +52,7 @@ export class PostBankingComponent implements OnInit {
         return new FormGroup({
           user_id: new FormControl(''),
           txn_family: new FormControl(''),
+          origination: new FormControl(''),
           narration: new FormControl('', Validators.compose([Validators.required])),
           branch_name: new FormControl(''),
 
@@ -97,6 +99,7 @@ export class PostBankingComponent implements OnInit {
 
         this.userForm.patchValue({
           txn_amount: parseInt( this.userForm.controls.txn_amount.value.replace(/[\D\s\._\-]+/g, ''), 10 )
+
         });
 
         this.spinner.show();
@@ -109,7 +112,8 @@ export class PostBankingComponent implements OnInit {
             user_station: jwt_decode(this.authService.getJwtToken()).user_station,
             txn_family: 'BANK',
             user_id: jwt_decode(this.authService.getJwtToken()).user_id,
-            branch_name: jwt_decode(this.authService.getJwtToken()).user_branch_name
+            branch_name: jwt_decode(this.authService.getJwtToken()).user_branch_name,
+            origination: 'BRANCH'
           });
 
 

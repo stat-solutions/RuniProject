@@ -50,7 +50,7 @@ export class PostInvestmentsComponent implements OnInit {
           txn_family: new FormControl(''),
           narration: new FormControl('', Validators.compose([Validators.required])),
           branch_name: new FormControl(''),
-
+          origination: new FormControl(''),
           txn_type: new FormControl('', Validators.compose([Validators.required])),
           txn_amount: new FormControl('', Validators.compose([Validators.required
           // CustomValidator.patternValidator(/^\d+$/, { hasNumber: true }
@@ -106,7 +106,8 @@ export class PostInvestmentsComponent implements OnInit {
             user_station: jwt_decode(this.authService.getJwtToken()).user_station,
             txn_family: 'INVESTMENT',
             user_id: jwt_decode(this.authService.getJwtToken()).user_id,
-            branch_name: jwt_decode(this.authService.getJwtToken()).user_branch_name
+            branch_name: jwt_decode(this.authService.getJwtToken()).user_branch_name,
+            origination: 'BRANCH'
           });
 
           // "user_branch_id": results.fk_branch_id_users,

@@ -1,12 +1,25 @@
+import { Observable } from 'rxjs';
+import { SummuryAllocations } from 'src/app/models/summury-allocations';
 import { Component, OnInit } from '@angular/core';
-
+import { BranchUserService } from 'src/app/services/branch-user.service';
+import * as jwt_decode from 'jwt-decode';
+import { AuthServiceService } from 'src/app/services/auth-service.service';
 @Component({
   selector: 'app-branch-user-dashboard-landing',
   templateUrl: './branch-user-dashboard-landing.component.html',
   styleUrls: ['./branch-user-dashboard-landing.component.scss'],
 })
 export class BranchUserDashboardLandingComponent implements OnInit {
-count: number;
+
+
+  SummuryAllocationsBranch$: Observable<SummuryAllocations[]>;
+
+  SummuryInvestmentBranch$: Observable<SummuryAllocations[]>;
+
+
+  SummuryBankingtBranch$: Observable<SummuryAllocations[]>;
+
+  count: number;
 items=[];
 
 bankTable = [
@@ -214,24 +227,21 @@ bankingsTable = [
     },
   ];
 
-  constructor() {}
 
-  ngOnInit(): void {}
+  constructor(   private authService: AuthServiceService,
 
-  //method for filtering out last banked posting
-  lastBanking()  {
-    let removed = this.bankingsTable.pop();
-    let item=Object.entries(removed);
-    let banked=Object.values(item[3]);
-    return banked[1];
-}
+                 private branchUser: BranchUserService
 
-  //method for filtering out last investment posting
-  lastInvestment() {
-    let removed = this.investmentsTable.pop();
-    let item=Object.entries(removed);
-    let invested=Object.values(item[2]);
-    return invested[1];
-    }
+    ) {}
+
+  ngOnInit(): void {
+
+    this. SummuryAllocationsBranch$ = this.branchUser.allocationPerBranchNow(jwt_decode(this.authService.getJwtToken()).user_branch_name);
+
+    this. SummuryInvestmentBranch$ = this.branchUser.investmentPerBranchNow(jwt_decode(this.authService.getJwtToken()).user_branch_name);
+
+    this. SummuryBankingtBranch$ = this.branchUser.bankingPerBranchNow(jwt_decode(this.authService.getJwtToken()).user_branch_name);
+  }
+
 
     }

@@ -28,7 +28,7 @@ exports.postTheTxnNow = function (data) {
   return new Promise(function (resolve,next) {
 
     var sql = "CALL postTheTxnNow("+ "'" + JSON.stringify(data) + "'" +")";
-  console.log(sql);
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
@@ -51,7 +51,7 @@ exports.makeAllocationsNow = function (data) {
   return new Promise(function (resolve,next) {
 
     var sql = "CALL postTheTxnNow("+ "'" + JSON.stringify(data) + "'" +")";
-  console.log(sql);
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
@@ -72,12 +72,12 @@ exports.getTheALLLedgerStatementBank = function () {
   return new Promise(function (resolve,next) {
 
     var sql = "CALL getTheALLLedgerStatementBank()";
-  console.log(sql);
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
     } else {
-        console.log(results[0]);
+        // console.log(results[0]);
      resolve(results[0]);
     }
   });
@@ -90,12 +90,12 @@ exports.getTheSummuryBank = function () {
   return new Promise(function (resolve,next) {
 
     var sql = "CALL summuryBanksPerBranch()";
-  console.log(sql);
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
     } else {
-        console.log(results[0]);
+        // console.log(results[0]);
      resolve(results[0]);
     }
   });
@@ -109,12 +109,12 @@ exports.getTheSummuryTotalInvestemnts = function () {
   return new Promise(function (resolve,next) {
 
     var sql = "CALL theSummuryTotalInvestments()";
-  console.log(sql);
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
     } else {
-        console.log(results[0]);
+        // console.log(results[0]);
      resolve(results[0]);
     }
   });
@@ -128,12 +128,12 @@ exports.getTheSummuryTotalBankings = function () {
   return new Promise(function (resolve,next) {
 
     var sql = "CALL theSummuryTotalBankings()";
-  console.log(sql);
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
     } else {
-        console.log(results[0]);
+        // console.log(results[0]);
      resolve(results[0]);
     }
   });
@@ -142,6 +142,47 @@ exports.getTheSummuryTotalBankings = function () {
 }
 
 
+exports.getAllocationsSummuryNowBranch = function (branchName) {
+  // console.log(userId);
+    return new Promise(function (resolve,next) {
+      // console.log(userId);
+      var sql = "CALL allocationsTotalBranch("+"'"+branchName+"'"+")";
+    console.log(sql);
+    dbconnection.query(sql, null, function (error, results, fields) {
+      if (error) {
+        return next(error);
+      } else {
+          // console.log(results[0]);
+       resolve(results[0]);
+      }
+    });
+  });
+  
+  }
+
+
+  
+
+
+    
+  exports.getTheApprovalDetails = function () {
+
+    return new Promise(function (resolve,next) {
+  
+      var sql = "CALL theApprovalDetailsNow()";
+    // console.log(sql);
+    dbconnection.query(sql, null, function (error, results, fields) {
+      if (error) {
+        return next(error);
+      } else {
+          // console.log(results[0]);
+       resolve(results[0]);
+      }
+    });
+  });
+  
+  }
+
 
 
 exports.getTheSummuryTotalAllocations = function () {
@@ -149,12 +190,12 @@ exports.getTheSummuryTotalAllocations = function () {
   return new Promise(function (resolve,next) {
 
     var sql = "CALL theSummuryTotalAllocations()";
-  console.log(sql);
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
     } else {
-        console.log(results[0]);
+        // console.log(results[0]);
      resolve(results[0]);
     }
   });
@@ -168,12 +209,12 @@ exports.getTheSummuryInvest = function () {
   return new Promise(function (resolve,next) {
 
     var sql = "CALL summuryInvestmentPerBranch()";
-  console.log(sql);
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
     } else {
-        console.log(results[0]);
+        // console.log(results[0]);
      resolve(results[0]);
     }
   });
@@ -181,6 +222,25 @@ exports.getTheSummuryInvest = function () {
 
 }
 
+
+
+exports.getTheapproveThatTxnNow = function (txnId) {
+  // console.log(userId);
+    return new Promise(function (resolve,next) {
+      // console.log(userId);
+      var sql = "CALL approveTheDetailsNow("+"'"+txnId+"'"+")";
+    console.log(sql);
+    dbconnection.query(sql, null, function (error, results, fields) {
+      if (error) {
+        return next(error);
+      } else {
+          console.log(Boolean(results[0][0].posted_successfully>0));
+          resolve(Boolean(results[0][0].posted_successfully>0));
+      }
+    });
+  });
+  
+  }
 
   exports.getTheAllocationsLedgerState = function (branchName) {
     // console.log(userId);
@@ -331,12 +391,12 @@ exports.getThebranchLedgerStatementBank = function (branchName) {
   return new Promise(function (resolve,next) {
 
     var sql = "CALL isBranchInvestmentViable("+ "'" + JSON.stringify(data) + "'" +")";
-  console.log(sql);
+  // console.log(sql);
   dbconnection.query(sql, null, function (error, results, fields) {
     if (error) {
       return next(error);
     } else {
-      console.log(results[0][0]);
+      // console.log(results[0][0]);
 
       resolve(Boolean(results[0][0].viability>0));
     }
