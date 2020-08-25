@@ -23,6 +23,8 @@ export class PostBankingPerBranchComponent implements OnInit {
     values: any;
     numberValue: number;
     theBranches$: Observable<TheBranches[]>;
+
+    txntypeNow = [ {txnType: 'DEPOSIT' }, { txnType: 'WITHDRAWAL' } ];
     // ShiftDetails[]
     constructor(
       private authService: AuthServiceService,
@@ -73,7 +75,16 @@ export class PostBankingPerBranchComponent implements OnInit {
 
       this.userForm.controls.txn_amount.setValue(this.values);
     }
+    setSelectedChanges(selectedChange: any) {
+      if ( selectedChange.target.value === 'Select TXN Type'){
+       this.fval.txn_type.setValidators([Validators.required]);
+  }
 
+      if (selectedChange.target.value === 'Select The Branch'){
+    this.fval.branch_name.setValidators([Validators.required]);
+}
+
+         }
     postTxn() {
 
       this.userForm.patchValue({

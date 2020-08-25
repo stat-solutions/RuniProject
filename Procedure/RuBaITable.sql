@@ -430,10 +430,11 @@ CREATE TABLE IF NOT EXISTS `requiring_txn_approvals` (
   `requiring_txn_approvals_id` INT(11) NOT NULL AUTO_INCREMENT,
   `narration` VARCHAR(500) NULL DEFAULT NULL,
   `txn_family` VARCHAR(60) NULL DEFAULT NULL,
-  `txn_type`VARCHAR(60) NULL DEFAULT NULL,
+  `txn_type` VARCHAR(60) NULL DEFAULT NULL,
    `txn_amount`DOUBLE NULL DEFAULT NULL,
     `branch_name` VARCHAR(60) NULL DEFAULT NULL,
   `user_id` INT(11) NULL DEFAULT NULL,
+   `rejectionReason` VARCHAR(600) NULL DEFAULT NULL,
     `approval_status` INT(11) NULL DEFAULT NULL, -- 1=Created, 2=Approved 3=Rejected
       `created_at` TIMESTAMP,
   `update_at` TIMESTAMP,
