@@ -1,29 +1,33 @@
-.rub-head1{
+.jumbotron-fluid {
+  height: inherit;
+}
+.rub-head1 {
   position: relative;
   margin-left: 65px;
   margin-right: 65px;
 }
-.rub-head1 hr.top{
+.rub-head1 hr.top {
   width: 30%;
   min-width: 15px;
-  max-width: 36px;
+  max-width: 30px;
   position: relative;
-  margin-right: 2px;
+  margin-right: 0px;
+  margin-bottom: 0px;
   background-color: #00162dc0;
   height: 3px;
 }
-.rub-head1 hr.bottom{
+.rub-head1 hr.bottom {
   width: 10%;
   min-width: 15px;
   max-width: 30px;
   position: relative;
-  margin-right: 2px;
+  margin-right: 0px;
   background-color: #00162dc0;
   height: 3px;
 }
 
-
 .card-body {
+  width: 100%;
   border-radius: 8px;
 }
 
@@ -36,13 +40,13 @@
 .btn-info:hover {
   color: #d9dbdd;
   background-color: #53a817e1;
-  border-color: #468d13d2
+  border-color: #468d13d2;
 }
 
 .btn-info:focus {
   color: #d9dbdd;
   background-color: #53a817e1;
-  border-color: #468d13d2
+  border-color: #468d13d2;
 }
 
 button.btn {
@@ -53,60 +57,183 @@ button.btn {
   cursor: pointer;
 }
 
-h3 {
-  font-size: 13px !important;
+h5 {
+  font-size: 16px !important;
+  text-align: center;
 }
-
 
 //media queries
-@media (min-width: 320px) {}
-
+@media (min-width: 320px) {
+  .rub-head1 {
+    margin-left: 65px;
+    margin-right: 65px;
+  }
+  .card-body {
+    margin-bottom: 25px !important;
+    padding-bottom: 25px !important;
+  }
+  .jumbotron-fluid {
+    padding-bottom: 0px !important;
+  }
+}
 
 @media (min-width: 360px) {
-  h3 {
-    font-size: 15px !important;
+  h5 {
+    font-size: 18px !important;
+  }
+  .rub-head1 hr.top {
+    margin-right: 10px;
+  }
+  .rub-head1 hr.bottom {
+    margin-right: 10px;
+  }
+  .card-body {
+    min-width: 330px;
   }
 }
 
-@media (min-width: 375px) {}
-
-
-@media (min-width: 400px) {}
-
-
-@media (min-width: 568px) {
-  .card-body {
-    width: 345px !important;
-    margin-bottom: 0rem;
+@media (min-width: 375px) {
+  .rub-head1 hr.top {
+    margin-right: 18px;
   }
+  .rub-head1 hr.bottom {
+    margin-right: 18px;
+  }
+  .card-body {
+    min-width: 345px;
+  }
+}
 
-  h3 {
+@media (min-width: 410px) {
+  .rub-head1 hr.top {
+    max-width: 36px;
+    margin-right: 36px;
+  }
+  .rub-head1 hr.bottom {
+    margin-right: 36px;
+  }
+  .card-body {
+    margin-bottom: 20px !important;
+  }
+}
+
+@media (min-width: 414px) {
+  .rub-head1 hr.top {
+    max-width: 36px;
+    margin-right: 37px;
+  }
+  .rub-head1 hr.bottom {
+    margin-right: 37px;
+  }
+  .card-body {
+    margin-bottom: 24px !important;
+  }
+}
+
+@media (min-width: 445px) {
+  h5 {
     font-size: 20px !important;
   }
-}
-
-
-@media (min-width: 640px) {}
-
-
-@media (min-width: 768px) {}
-
-@media (min-width: 812px) {
-  h3 {
-    font-size: 24px !important;
+  .rub-head1 hr.top {
+    max-width: 40px;
+    margin-right: 45px;
+  }
+  .rub-head1 hr.bottom {
+    margin-right: 45px;
+  }
+  .card-body {
+    margin-bottom: 20px !important;
   }
 }
 
+@media (min-width: 568px) {
+  .rub-head1 hr.top {
+    max-width: 42px;
+    margin-right: 48px;
+  }
+  .rub-head1 hr.bottom {
+    margin-right: 48px;
+  }
+}
 
-@media (min-width: 1024px) {}
+@media (min-width: 640px) {
+  .rub-head1 hr.top {
+    max-width: 44px;
+  }
+}
+
+@media (min-width: 768px) {
+  .rub-head1 hr.top {
+    max-width: 42px;
+  }
+  .card-body {
+    margin-bottom: 140px !important;
+  }
+  .jumbotron-fluid {
+    padding-top: 75px !important;
+    padding-bottom: 12px !important;
+  }
+}
+
+@media (min-width: 812px) {
+  h5 {
+    font-size: 24px !important;
+  }
+  .rub-head1 hr.top {
+    margin-right: 28px;
+  }
+  .rub-head1 hr.bottom {
+    margin-right: 28px;
+  }
+  .card-body {
+    margin-bottom: 20px !important;
+  }
+  .jumbotron-fluid {
+    padding-top: 0px !important;
+    padding-bottom: 10px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rub-head1 hr.top {
+    max-width: 44px;
+    margin-right: 28px;
+  }
+  .rub-head1 hr.bottom {
+    margin-right: 28px;
+  }
+  .card-body {
+    margin-bottom: 320px !important;
+    padding-top: 20px !important;
+    padding-bottom: 25px !important;
+  }
+  .jumbotron-fluid {
+    padding-top: 180px !important;
+    padding-bottom: 28px !important;
+  }
+}
 
 @media (min-width: 1100px) {
-      h3 {
+  h5 {
     font-size: 27px !important;
   }
 }
 
-@media (min-width: 1280px) {}
+@media (min-width: 1280px) {
+  .rub-head1 hr.top {
+    margin-right: 45px;
+  }
+  .rub-head1 hr.bottom {
+    margin-right: 45px;
+  }
+  .card-body {
+    margin-bottom: 70px !important;
+  }
+  .jumbotron-fluid {
+    padding-top: 50px !important;
+    padding-bottom: 10px !important;
+  }
+}
 
-
-@media (min-width: 1320px) {}
+@media (min-width: 1320px) {
+}
