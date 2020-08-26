@@ -1,36 +1,359 @@
-.rub-head1{
-  position: relative;
-  margin-left: 95px;
-  margin-right: 95px;
+.rub-row-1{
+  margin-right: auto;
+  margin-left: auto;
+padding-left: 0;
+padding-right: 0px;
+contain: auto;}
+.rub-col-1{
+  margin-top: 15px;
+  margin-right: 0;
+  margin-left: 0;
+padding-left: 0;
+padding-right: 0px;
+contain: auto;}
+.rub-head3{
+  margin-left: 50px;
+  margin-right: 50px;
+  font-size: 18px;
 }
-.rub-head1 hr.top{
+.rub-head3 hr.top{
   width: 30%;
   min-width: 15px;
-  max-width: 30px;
+  max-width: 34px;
   position: relative;
-  margin-right: 15px;
+  margin-right: 0px;
   background-color: #00162dc0;
   height: 3px;
 }
-.rub-head1 hr.bottom{
+.rub-head3 hr.bottom{
   width: 10%;
   min-width: 15px;
   max-width: 30px;
   position: relative;
-  margin-right: 15px;
+  margin-right: 0px;
+  background-color: #00162dc0;
+  height: 3px;
+}
+.rub-head4{
+  margin-right: 50px;
+  margin-left: 50px;
+  font-size: 18px;
+}
+.rub-head4 hr.top{
+  width: 30%;
+  min-width: 15px;
+  max-width: 34px;
+  position: relative;
+  margin-right: 0px;
+  background-color: #00162dc0;
+  height: 3px;
+}
+.rub-head4 hr.bottom{
+  width: 10%;
+  min-width: 15px;
+  max-width: 30px;
+  position: relative;
+  margin-right: 0px;
   background-color: #00162dc0;
   height: 3px;
 }
 
 
-.card-body {
-  border-radius: 8px;
+.card1{
+  width: 100%;
+  height: 100%;
+  max-height: 300px;
+  min-height: 240px;
+  margin: 0;
+  contain: auto;}
+.invest-card{
+  height: 100%;
+  max-height: 230px;
+  overflow-y: auto;
+  overflow-x: scroll;
+contain: auto;}
+
+.rubai-table{
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: scroll;
+  contain: auto;
 }
 
-//media queries
-@media (min-width: 812px){
-  .card-body{
-    width: 100%;
-    max-width: 780px;
-min-width: 700px;  }
+h4 {
+  font-size: 18px !important;
+  text-align: center;
 }
+h5 {
+  font-size: 16px !important;
+  text-align: center;
+}
+
+
+
+//media queries
+@media (min-width:320px){
+  .rub-col-1{
+    margin-bottom: 5px !important;
+  }
+  .rub-head3{
+    margin-left: 38px !important;
+    margin-right: 38px !important;
+  }
+  .rub-head3 hr.top{
+    max-width: 34px;
+    margin-right: 0px;
+  }
+  .rub-head3 hr.bottom{
+    max-width: 30px;
+    margin-right: 0px;
+  }
+  .rub-head4{
+    margin-left: 30px !important;
+    margin-right: 30px !important;
+  }
+  .rub-head4 hr.top{
+    max-width: 34px;
+    margin-right: 0px;
+  }
+  .rub-head4 hr.bottom{
+    max-width: 30px;
+    margin-right: 0px;
+  }
+      }
+
+
+    @media (min-width:360px){
+  // .rub-head3{
+  //   margin-left: 60px !important;
+  //   margin-right: 60px !important;
+  // }
+  // .rub-head4{
+  //   margin-left: 52px !important;
+  //   margin-right: 52px !important;
+  // }
+  h4 {
+    font-size: 19px !important;
+    text-align: center;
+  }
+  h5 {
+    font-size: 17px !important;
+    text-align: center;
+  }
+    .rub-head3{
+    margin-left: 38px !important;
+    margin-right: 38px !important;
+  }
+  .rub-head3 hr.top{
+    max-width: 34px;
+    margin-right: 0px;
+  }
+  .rub-head3 hr.bottom{
+    max-width: 30px;
+    margin-right: 0px;
+  }
+  .rub-head4{
+    margin-left: 30px !important;
+    margin-right: 30px !important;
+  }
+  .rub-head4 hr.top{
+    max-width: 34px;
+    margin-right: 0px;
+  }
+  .rub-head4 hr.bottom{
+    max-width: 30px;
+    margin-right: 0px;
+  }
+    }
+
+
+  @media (min-width:375px){
+    .rub-head3{
+      margin-left: 65px !important;
+      margin-right: 65px !important;
+    }
+    .rub-head4{
+      margin-left: 58px !important;
+      margin-right: 58px !important;
+    }
+    }
+
+
+  @media (min-width:410px){
+    .rub-head3{
+      margin-left: 83px !important;
+      margin-right: 83px !important;
+    }
+    .rub-head4{
+      margin-left: 75px !important;
+      margin-right: 75px !important;
+    }
+  }
+
+
+  @media (min-width: 440px){
+    h4 {
+      font-size: 20px !important;
+      text-align: center;
+    }
+    h5 {
+      font-size: 18px !important;
+      text-align: center;
+    }
+        .rub-head3{
+      margin-left: 100px !important;
+      margin-right: 100px !important;
+    }
+    .rub-head4{
+      margin-left: 95px !important;
+      margin-right: 95px !important;
+    }
+    }
+
+
+    @media (min-width: 568px){
+      .rub-head3{
+        margin-left: 160px !important;
+        margin-right: 160px !important;
+      }
+      .rub-head4{
+        margin-left: 148px !important;
+        margin-right: 148px !important;
+      }
+      }
+
+
+      @media (min-width: 640px){
+        .rub-head3{
+          margin-left: 150px !important;
+          margin-right: 150px !important;
+        }
+        .rub-head4{
+          margin-left: 138px !important;
+          margin-right: 138px !important;
+        }
+        }
+
+
+        @media (min-width: 768px){
+  .container {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  h4 {
+    font-size: 22px !important;
+    text-align: center;
+  }
+  h5 {
+    font-size: 20px !important;
+    text-align: center;
+  }
+  .rub-head3{
+    margin-left: 235px !important;
+    margin-right: 235px !important;
+  }
+  .rub-head4{
+    margin-left: 222px !important;
+    margin-right: 222px !important;
+  }
+}
+
+
+  @media(min-width: 812px){
+  }
+
+  @media (min-width: 1024px){
+  .container {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .rub-col-1{
+    margin-top: 6px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 5px !important;
+  }
+  h4 {
+    font-size: 24px !important;
+    text-align: center;
+  }
+  h5 {
+    font-size: 22px !important;
+    text-align: center;
+  }
+    .card1{
+    max-height: 620px;
+    min-height: 530px;
+    margin: 0;
+}
+  .invest-card{
+    max-height: 590px;
+}
+.rub-head3{
+  margin-left: 365px !important;
+  margin-right: 365px !important;
+}
+.rub-head4{
+  margin-left: 352px !important;
+  margin-right: 352px !important;
+}
+  }
+
+
+  @media (min-width:1100px){
+  }
+
+  @media (min-width:1280px){
+    h4 {
+      font-size: 27px !important;
+      text-align: center;
+    }
+    h5 {
+      font-size: 23px !important;
+      text-align: center;
+    }
+    .container {
+    width: 100%;
+    max-width: 1260px;
+    min-width: 1232px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .card1 {
+    max-width: 1260px;
+    min-width: 1232px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+  .invest-card{
+    max-height: 590px;
+  }
+        .rubai-table {
+          max-width: 1400px !important;
+          margin-top: 15px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+              }
+.rub-head3{
+  margin-left: 590px !important;
+  margin-right: 590px !important;
+}
+.rub-head4{
+  margin-left: 570px !important;
+  margin-right: 570px !important;
+}
+  }
+
+
+  @media (min-width:1320px){
+    .container {
+      max-width: 1440px !important;
+      min-width: 1252px !important;
+    }
+    .card1 {
+      max-width: 1440px;
+      min-width: 1252px;
+    }
+  }
+
+

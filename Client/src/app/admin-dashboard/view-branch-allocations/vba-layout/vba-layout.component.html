@@ -1,11 +1,13 @@
-<div class="container">
-  <h5 class="rub-head1 text-info font-weight-bold mt-4 mb-3">
-  <hr class="top mt-1 mb-0" />
-  Allocations
-  <hr class="bottom mt-1 mb-0" />
-</h5>
-
-  <div class="col mt-0">
+<div
+  class="container-fluid d-flex flex-row justify-content-center mb-0 mt-md-1 mt-1 pt-md-0 pt-0 pb-3 shadow-lg col-xs-12 col-lg-8"
+>
+  <div class="jumbotron-fluid">
+    <h5 class="rub-head1 text-info text-center font-weight-bold mt-4 mb-4">
+      <hr class="top mt-1 mb-0" />
+      ALLOCATIONS
+      <hr class="bottom mt-0 mb-0" />
+    </h5>
+  <div class="card-body mt-1 pt-4 mb-0 pb-3 shadow-lg">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
       <div class="form-group text-primary">
         <label
@@ -45,9 +47,14 @@
         <!-- <ngx-alerts></ngx-alerts> -->
       </div>
     </form>
+    <div class="d-flex my-2 py-2 mx-auto">
+      <button
+        class="btn btn-danger col-6 mx-auto"
+        (click)="changeLocation()"      >
+        Refresh
+      </button>
+</div>
 
-    <button (click)="changeLocation()">REFRESH</button>
-
-
+</div>
 </div>
 </div>
