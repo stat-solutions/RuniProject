@@ -27,8 +27,8 @@ export class PostBankingComponent implements OnInit {
       values: any;
       numberValue: number;
       theBranches$: Observable<TheBranches[]>;
-      txntypeNow = [{txnType: 'DEPOSIT' } ];
-      // , { txnType: 'WITHDRAWAL' }
+  txntypeNow = [{txnType: 'Deposit' } ];
+      // , { txnType: 'Withdrawal' }
       // ShiftDetails[]
       constructor(
         private authService: AuthServiceService,

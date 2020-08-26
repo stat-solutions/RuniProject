@@ -22,7 +22,7 @@ import { RejectApprovalComponent } from './admin-dashboard-landing/reject-approv
 
 
 const routes: Routes = [
-  { path: 'dashboardadmin', redirectTo: '/dashboardadmin/landing', pathMatch: 'full' },
+  { path: 'dashboardadmin', redirectTo: '/dashboardadmin/landingpage', pathMatch: 'full' },
   {
     path: 'dashboardadmin', component: AdminDashboardComponent, children: [
       { path: 'landing', component: AdminDashboardLandingComponent, children: [
@@ -30,7 +30,7 @@ const routes: Routes = [
       ] },
       { path: 'postbankingperbranch', component: PostBankingPerBranchComponent },
       { path: 'postinvestmentperbranch', component: PostInvestmentPerBranchComponent },
-      { path: 'allocateperbranch', component: MakeAllocationsPerBranchComponent },
+      { path: 'makeallocationsperbranch', component: MakeAllocationsPerBranchComponent },
       { path: 'viewbranchbankings', component: ViewBranchBankingsComponent , children: [
 
         { path: 'viewportbankings', component: VbbViewPortComponent },
