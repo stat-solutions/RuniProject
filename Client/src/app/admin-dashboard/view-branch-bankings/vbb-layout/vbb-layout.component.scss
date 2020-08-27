@@ -8,8 +8,8 @@
 }
 .rub-head1 hr.top {
   width: 30%;
-  min-width: 15px;
-  max-width: 30px;
+  min-width: 10px;
+  max-width: 20px;
   position: relative;
   margin-right: 0px;
   margin-bottom: 0px;
@@ -18,8 +18,8 @@
 }
 .rub-head1 hr.bottom {
   width: 10%;
-  min-width: 15px;
-  max-width: 30px;
+  min-width: 10px;
+  max-width: 20px;
   position: relative;
   margin-right: 0px;
   background-color: #00162dc0;
@@ -81,8 +81,8 @@ h5 {
     margin-left: 60px;
     margin-right: 60px;
   }
-    .rub-head1 hr.top {
-    max-width: 34px;
+  .rub-head1 hr.top {
+    max-width: 24px;
     margin-right: 58px;
   }
   .rub-head1 hr.bottom {
@@ -102,7 +102,7 @@ h5 {
     margin-right: 30px;
   }
   .rub-head1 hr.top {
-    max-width: 36px;
+    max-width: 28px;
     margin-right: 94px;
   }
   .rub-head1 hr.bottom {
@@ -119,7 +119,6 @@ h5 {
     margin-right: 40px;
   }
   .rub-head1 hr.top {
-    max-width: 36px;
     margin-right: 83px;
   }
   .rub-head1 hr.bottom {
@@ -129,7 +128,6 @@ h5 {
 
 @media (min-width: 414px) {
   .rub-head1 hr.top {
-    max-width: 37px;
     margin-right: 84px;
   }
   .rub-head1 hr.bottom {
@@ -146,15 +144,17 @@ h5 {
     margin-right: 35px;
   }
   .rub-head1 hr.top {
-    max-width: 38px;
-    margin-right: 71px;
+    margin-right: 87px;
   }
   .rub-head1 hr.bottom {
-    margin-right: 71px;
+    margin-right: 87px;
   }
 }
 
 @media (min-width: 568px) {
+  .rub-head1 hr.top {
+    max-width: 30px;
+  }
 }
 
 @media (min-width: 640px) {
@@ -162,20 +162,14 @@ h5 {
     font-size: 22px !important;
   }
   .rub-head1 hr.top {
-    margin-right: 65px;
+    margin-right: 82px;
   }
   .rub-head1 hr.bottom {
-    margin-right: 65px;
+    margin-right: 82px;
   }
 }
 
 @media (min-width: 768px) {
-  // .rub-head1 hr.top {
-  //   margin-right: 50px;
-  // }
-  // .rub-head1 hr.bottom {
-  //   margin-right: 50px;
-  // }
   .card-body {
     margin-bottom: 20px !important;
   }
@@ -190,10 +184,10 @@ h5 {
     font-size: 24px !important;
   }
   .rub-head1 hr.top {
-    margin-right: 58px;
+    margin-right: 77px;
   }
   .rub-head1 hr.bottom {
-    margin-right: 58px;
+    margin-right: 77px;
   }
   .jumbotron-fluid {
     padding-top: 0px !important;
@@ -218,11 +212,11 @@ h5 {
     font-size: 27px !important;
   }
   .rub-head1 hr.top {
-    max-width: 40px;
-    margin-right: 47px;
+    max-width: 28px;
+    margin-right: 69px;
   }
   .rub-head1 hr.bottom {
-    margin-right: 47px;
+    margin-right: 69px;
   }
   .jumbotron-fluid {
     padding-top: 5px !important;

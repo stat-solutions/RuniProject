@@ -146,6 +146,9 @@ h5 {
     margin-left: 75px !important;
     margin-right: 75px !important;
   }
+  .card-body {
+    min-height: 200px;
+  }
 }
 
 @media (min-width: 440px) {

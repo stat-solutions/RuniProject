@@ -123,6 +123,12 @@ h5 {
     margin-left: 60px;
     margin-right: 60px;
   }
+  .rub-head4 hr.top {
+    margin-right: 1px;
+  }
+  .rub-head4 hr.bottom {
+    margin-right: 1px;
+  }
   .card-body {
     min-width: 330px;
   }
@@ -132,11 +138,9 @@ h5 {
   h5 {
     font-size: 19px !important;
   }
-  .rub-head4 hr.top {
-    margin-right: 1px;
-  }
-  .rub-head4 hr.bottom {
-    margin-right: 1px;
+  .rub-head4 {
+    margin-left: 55px;
+    margin-right: 55px;
   }
   .card-body {
     min-width: 345px;
@@ -145,15 +149,8 @@ h5 {
 
 @media (min-width: 410px) {
   .rub-head4 {
-    margin-left: 80px;
-    margin-right: 80px;
-  }
-  .rub-head4 hr.top {
-    // max-width: 36px;
-    margin-right: 1px;
-  }
-  .rub-head4 hr.bottom {
-    margin-right: 1px;
+    margin-left: 75px;
+    margin-right: 75px;
   }
   .card-body {
     min-height: 185px;
@@ -162,7 +159,7 @@ h5 {
 
 @media (min-width: 414px) {
   .rub-head4 hr.top {
-    max-width: 37px;
+    max-width: 36px;
   }
 }
 
@@ -171,29 +168,22 @@ h5 {
     font-size: 20px !important;
   }
   .rub-head4 {
-    margin-left: 35px;
-    margin-right: 35px;
-  }
-  .rub-head4 hr.top {
-    max-width: 38px;
-    margin-right: 71px;
-  }
-  .rub-head4 hr.bottom {
-    margin-right: 71px;
+    margin-left: 88px;
+    margin-right: 88px;
   }
 }
 
 @media (min-width: 568px) {
   .rub-head4 {
-    margin-left: 133px !important;
-    margin-right: 133px !important;
+    margin-left: 148px !important;
+    margin-right: 148px !important;
   }
 }
 
 @media (min-width: 640px) {
   .rub-head4 {
-    margin-left: 118px !important;
-    margin-right: 118px !important;
+    margin-left: 135px !important;
+    margin-right: 135px !important;
   }
 }
 
@@ -207,26 +197,23 @@ h5 {
     text-align: center;
   }
   .rub-head4 {
-    margin-left: 190px !important;
-    margin-right: 190px !important;
+    margin-left: 215px !important;
+    margin-right: 215px !important;
   }
   .rub-head4 hr.top {
-    max-width: 38px;
     margin-right: 0px;
   }
   .card1 {
     max-width: 750px;
     min-width: 690px;
-    max-height: 560px;
-    min-height: 500px;
+    max-height: 620px;
+    min-height: 550px;
   }
   .invest-card {
-    max-height: 500px;
-    // overflow-x: scroll;
+    max-height: 550px;
   }
 
   .rubai-table {
-    // overflow-x: scroll;
   }
 }
 
@@ -239,7 +226,6 @@ h5 {
   }
   .invest-card {
     max-height: 300px;
-    // overflow-x: scroll;
   }
 }
 
@@ -255,22 +241,17 @@ h5 {
     margin-bottom: 5px !important;
   }
   .rub-head4 {
-    margin-left: 320px !important;
-    margin-right: 320px !important;
+    margin-left: 335px !important;
+    margin-right: 335px !important;
   }
   .card1 {
     max-width: 980px;
     min-width: 900px;
-    max-height: 880px;
-    min-height: 820px;
+    max-height: 950px;
+    min-height: 870px;
   }
   .invest-card {
-    max-height: 700px;
-    // overflow-x: scroll;
-  }
-
-  .rubai-table {
-    // overflow-x: scroll;
+    max-height: 840px;
   }
 }
 
@@ -288,8 +269,8 @@ h5 {
     text-align: center;
   }
   .rub-head4 {
-    margin-left: 540px !important;
-    margin-right: 540px !important;
+    margin-left: 560px !important;
+    margin-right: 560px !important;
   }
   .card1 {
     max-width: 1400px;
