@@ -1,88 +1,80 @@
 <div class="d-flex flex-column">
-  <div class="container">
+  <div class="container pb-1">
     <div class="rub-row-1 row mx-sm-0 px-sm-0">
-      <div class="rub-col-1 col-6 col-md-3 col-xl-3 mx-sm-0 mb-3 px-sm-0">
-        <div class="rub-card-1 card shadow mx-sm-0 py-0">
-          <div class="card-body">
+      <div class="rub-col-1 col-12 col-md-12 col-lg-4 mx-sm-0 mb-3 px-sm-0">
+        <div class="rub-card-1 card shadow-lg mx-sm-0 py-0">
+          <div class="card-body mt-0 pt-2">
             <div class="row">
               <div class="col mx-0 px-0">
                 <div class="text-uppercase text-info font-weight-bold mb-1">
-                  <span class="rub-title-1 ml-0">ALLOCATIONS</span>
+                  <span class="rub-title-1 ml-2">ALLOCATIONS</span>
                 </div>
                 <div class="text-secondary font-weight-bold mb-0 pb-0" *ngFor="let allo of SummuryAllocationsBranch$|async">
-<ul>
-                  <span class="pl-0 pb-0">
-                   AMOUNT ALLOCATIED: {{ allo.totalAllocations | number }}
+                  <span class="pl-1 pb-0">
+                   Amount Allocated: {{ allo.totalAllocations | number }}
+                  </span><br>
+                  <span class="pl-1 pb-0">
+                  Amount Transferred:  {{ allo.totalTransfered| number }}
+                  </span><br>
+                  <span class="pl-1 pb-0">
+                  Balance Receivable:   {{ allo.totalBalance | number }}
                   </span>
-                  <span class="pl-0 pb-0">
-                  AMOUNT TRANSFERRED:  {{ allo.totalTransfered| number }}
-                  </span>
-                  <span class="pl-0 pb-0">
-                  BALANCE RECEIVABLE:   {{ allo.totalBalance | number }}
-                  </span>
-
-                </ul>
                 </div>
               </div>
               <div class="col-auto align-self-center mx-0 px-0">
-                <i class="fas fa-coins fa-2x text-primo"></i>
+                <i class="fas fa-tasks fa-2x text-primo"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="rub-col-2 col-6 col-md-3 col-xl-3 mb-3">
-        <div class="rub-card-2 card shadow py-0">
-          <div class="card-body">
+      <div class="rub-col-2 col-12 col-md-12 col-lg-4 mb-3">
+        <div class="rub-card-2 card shadow-lg mx-sm-0 py-0">
+          <div class="card-body mt-0 pt-2">
             <div class="row">
               <div class="col mx-0 px-0">
-                <div class="text-uppercase text-info font-weight-bold mb-1">
-                  <span class="rub-title-2 ml-0">INVESTMENTS</span>
+                <div class="text-uppercase text-primo font-weight-bold mb-1">
+                  <span class="rub-title-2 ml-2">INVESTMENTS</span>
                 </div>
                 <div class="text-secondary font-weight-bold mb-0 pb-0" *ngFor="let investt of SummuryInvestmentBranch$|async">
-                  <ul>
-                    <span class="pl-0 pb-0">
-                     AMOUNT DEPOSITED: {{ investt.totalAllocations| number }}
+                    <span class="pl-1 pb-0">
+                     Amount Deposited: {{ investt.totalAllocations| number }}
                     </span>
                     <span class="pl-0 pb-0">
-                    AMOUNT WITHDRAWN:  {{ investt.totalTransfered | number }}
+                    Amount Withdrawn  {{ investt.totalTransfered | number }}
                     </span>
                     <span class="pl-0 pb-0">
-                    BALANCE RUNNING:   {{ investt.totalBalance | number }}
+                    Balance Running:   {{ investt.totalBalance | number }}
                     </span>
-
-                  </ul>
                 </div>
               </div>
               <div class="col-auto align-self-center mx-0 px-0">
-                <i class="fas fa-balance-scale-left text-primo"></i>
+                <i class="fas fa-coins text-info"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="rub-col-1 col-6 col-md-3 col-xl-3 mx-sm-0 mb-3 px-sm-0">
-        <div class="rub-card-1 card shadow mx-sm-0 py-0">
-          <div class="card-body">
+      <div class="rub-col-3 col-12 col-md-12 col-lg-4 mb-3">
+        <div class="rub-card-3 card shadow-lg py-0">
+          <div class="card-body mt-0 pt-2">
             <div class="row">
               <div class="col mx-0 px-0">
                 <div class="text-uppercase text-info font-weight-bold mb-1">
-                  <span class="rub-title-1 ml-0">BANKINGS</span>
+                  <span class="rub-title-1 ml-2">BANKING</span>
                 </div>
                 <div class="text-secondary font-weight-bold mb-0 pb-0" *ngFor="let bankig of SummuryBankingtBranch$|async" >
-                  <ul>
+ 
                     <span class="pl-0 pb-0">
-                     AMOUNT DEPOSITED: {{ bankig.totalAllocations| number }}
+                     Amount Deposited: {{ bankig.totalAllocations| number }}
                     </span>
                     <span class="pl-0 pb-0">
-                    AMOUNT WITHDRAWN:  {{ bankig.totalTransfered | number }}
+                    Amount Withdrawn:  {{ bankig.totalTransfered | number }}
                     </span>
                     <span class="pl-0 pb-0">
-                    BALANCE RUNNING:   {{ bankig.totalBalance | number }}
+                    Balance Running:   {{ bankig.totalBalance | number }}
                     </span>
-
-                  </ul>
                 </div>
               </div>
               <div class="col-auto align-self-center mx-0 px-0">

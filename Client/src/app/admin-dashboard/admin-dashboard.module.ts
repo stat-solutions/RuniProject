@@ -13,7 +13,7 @@ import { ViewBranchInvestmentsComponent } from './view-branch-investments/view-b
 import { ViewAndEditUsersComponent } from './view-and-edit-users/view-and-edit-users.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AlertModule } from 'ngx-alerts';
-
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AgGridModule } from 'ag-grid-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -72,6 +72,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     BsDatepickerModule,
     DatepickerModule,
     TabsModule.forRoot(),
+    TooltipModule.forRoot(),
     NgxSpinnerModule,
     AlertModule.forRoot({maxMessages: 5, timeout: 10000, position: 'right'}),
     AgGridModule.withComponents([]),

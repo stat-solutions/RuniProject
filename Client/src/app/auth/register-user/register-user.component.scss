@@ -1,99 +1,126 @@
-  .card-body {
-    border-radius: 8px;
-  }
+.card-body {
+  width: 100%;
+  max-width: 300px;
+  min-width: 260px;
+  margin-bottom: 0rem;
+  border-radius: 8px;
+contain: auto;
+}
 
-  .btn-info {
-    color: #d9dbdd;
-    background-color: #51a416e0;
-    border-color: #51a416e0;
-  }
+.btn-info {
+  color: #d9dbdd;
+  background-color: #51a416e0;
+  border-color: #51a416e0;
+}
 
-  .btn-info:hover {
-    color: #d9dbdd;
-    background-color: #53a817e1;
-    border-color: #468d13d2
-  }
+.btn-info:hover {
+  color: #d9dbdd;
+  background-color: #53a817e1;
+  border-color: #468d13d2;
+}
 
-  .btn-info:focus {
-    color: #d9dbdd;
-    background-color: #53a817e1;
-    border-color: #468d13d2
-  }
+.btn-info:focus {
+  color: #d9dbdd;
+  background-color: #53a817e1;
+  border-color: #468d13d2;
+}
 
-  button.btn {
-    border-radius: 15px;
-  }
+button.btn {
+  border-radius: 15px;
+}
 
-  .text-danger {
-    color: #d3112bf3 !important;
-  }
+.pointerCursor {
+  cursor: pointer;
+}
 
-  .text-warning {
-    color: #eee206ef !important;
-  }
+h3 {
+  font-size: 15px !important;
+}
 
-  .bg-danger {
-    background-color: #d3112bf3 !important;
-  }
+//media queries
+@media (min-width: 320px) {
+}
 
-  .pointerCursor {
-    cursor: pointer;
-  }
-
+@media (min-width: 360px) {
   h3 {
-    font-size: 13px !important;
+    font-size: 17px !important;
   }
-
-
-  //media queries
-  @media (min-width: 280px) {}
-
-
-  @media (min-width: 360px) {
-    h3 {
-      font-size: 15px !important;
-    }
+  .card-body {
+    max-width: 350px;
+    min-width: 330px;
   }
-
-  @media (min-width: 375px) {}
-
-
-  @media (min-width: 400px) {}
-
-
-  @media (min-width: 568px) {
-    .card-body {
-      width: 345px !important;
-      margin-bottom: 0rem;
     }
 
-    h3 {
-      font-size: 20px !important;
-    }
+@media (min-width: 375px) {
+  h3 {
+    font-size: 18px !important;
   }
-
-
-  @media (min-width: 640px) {}
-
-
-  @media (min-width: 768px) {}
-
-  @media (min-width: 812px) {
-    h3 {
-      font-size: 24px !important;
-    }
+  .card-body {
+    max-width: 360px;
+    min-width: 350px;
   }
+}
 
-
-  @media (min-width: 1024px) {}
-
-  @media (min-width: 1100px) {
-        h3 {
-      font-size: 27px !important;
-    }
+@media (min-width: 410px) {
+  h3 {
+    font-size: 20px !important;
   }
+}
 
-  @media (min-width: 1280px) {}
+@media (min-width: 568px) {
+}
 
+@media (min-width: 640px) {
+}
 
-  @media (min-width: 1320px) {}
+@media (min-width: 768px) {
+  h3 {
+    font-size: 24px !important;
+  }
+  .card-body {
+    margin-top: 20px !important;
+    padding-top: 15px !important;
+    margin-bottom: 70px !important;
+  }
+  .jumbotron-fluid {
+    padding-top: 40px !important;
+    margin-bottom: 6px !important;
+  }
+}
+
+@media (min-width: 812px) {
+  .card-body {
+    margin-bottom: 0px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-body {
+    margin-top: 30px !important;
+    margin-bottom: 260px !important;
+  }
+  .jumbotron-fluid {
+    padding-top: 120px !important;
+    margin-bottom: 10px !important;
+  }
+}
+
+@media (min-width: 1100px) {
+  h3 {
+    font-size: 28px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .card-body {
+    margin-top: 0px !important;
+    margin-bottom: 10px !important;
+  }
+  .jumbotron-fluid {
+    padding-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+}
+
+@media (min-width: 1320px) {
+}

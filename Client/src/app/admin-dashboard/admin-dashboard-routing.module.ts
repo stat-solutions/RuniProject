@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'dashboardadmin', redirectTo: '/dashboardadmin/landingpage', pathMatch: 'full' },
   {
     path: 'dashboardadmin', component: AdminDashboardComponent, children: [
-      { path: 'landing', component: AdminDashboardLandingComponent, children: [
+      { path: 'landingpage', component: AdminDashboardLandingComponent, children: [
         { path: 'rejectapproval/:approvalId', component: RejectApprovalComponent }
       ] },
       { path: 'postbankingperbranch', component: PostBankingPerBranchComponent },
